@@ -61,7 +61,36 @@ export const constantRouterMap = [
       }
     ]
   },
-
+	{
+		path: '/message',
+		component: Layout,
+		meta: { title: '小道消息', icon: 'example' },
+		children: [{
+				path: 'index',
+				name: 'Index',
+				component: _import('message/index'),
+				meta: {
+					title: '小道消息'
+				}
+			},
+			{
+				path: 'editContent',
+				name: 'EditContent',
+				component: _import('editContent/index'),
+				meta: {
+					title: '编辑消息内容'
+				}
+			},
+			{
+				path: 'editContact',
+				name: 'EditContact',
+				component: _import('editContact/index'),
+				meta: {
+					title: '编辑联系人信息'
+				}
+			}
+		]
+	},
   {
     path: '/form',
     component: Layout,
