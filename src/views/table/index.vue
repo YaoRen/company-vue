@@ -132,7 +132,7 @@ export default {
       }, {
         value: '选项5',
         label: '北京烤鸭'
-      }],
+      }]
     }
   },
   filters: {
@@ -151,13 +151,14 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList(this.listQuery).then(response => {
+      getList().then(response => {
         this.list = response.data.items
         this.listLoading = false
       })
     }
   }
 }
+
 </script>
 
 <style>
