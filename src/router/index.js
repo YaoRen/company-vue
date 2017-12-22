@@ -37,21 +37,27 @@ export const constantRouterMap = [
   {
     path: '/example',
     component: Layout,
-    redirect: '/example/table',
+    redirect: '/example/index',
     name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    meta: { title: '焦小姐的朋友', icon: 'example' },
     children: [
+      {
+        path: 'index',
+        name: 'Index',
+        component: _import('index/index'),
+        meta: { title: '焦小姐的朋友', icon: 'table' }
+      },
       {
         path: 'table',
         name: 'Table',
         component: _import('table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '朋友详情', icon: 'table' }
       },
       {
         path: 'tree',
         name: 'Tree',
         component: _import('tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: '编辑朋友', icon: 'tree' }
       }
     ]
   },

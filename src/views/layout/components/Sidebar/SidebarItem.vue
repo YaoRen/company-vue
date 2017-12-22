@@ -1,5 +1,16 @@
 <template>
   <div class="menu-wrapper">
+    <div class="old_item">
+      <ul>
+        <li>adshbord</li>
+        <li>交易管理</li>
+        <li>用户管理</li>
+        <li>公司管理</li>
+        <li>积分商城</li>
+        <li>提现管理</li>
+        <li>广告位</li>
+      </ul>
+    </div>
     <template v-for="item in routes" v-if="!item.hidden&&item.children">
 
       <router-link v-if="item.children.length===1 && !item.children[0].children" :to="item.path+'/'+item.children[0].path" :key="item.children[0].name">

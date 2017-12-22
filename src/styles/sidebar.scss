@@ -97,4 +97,11 @@
   .el-menu--collapse .el-menu .el-submenu{
     min-width: 180px!important;
   }
+
+//  临时样式
+  .old_item ul li{
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+  }
 }
