@@ -27,7 +27,7 @@ npm run build --report
 ```
 
 ## Demo
-![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
+[demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
 
 ## Extra
 If you want router permission && generate menu by user role , you can use this branch [permission-control](https://github.com/PanJiaChen/vueAdmin-template/tree/permission-control)
