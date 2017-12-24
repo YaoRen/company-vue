@@ -23,7 +23,7 @@
         </el-button>
       </el-form-item>
       <div class="tips">
-        <span style="margin-right:20px;">username: shiyoujiao</span>
+        <span style="margin-right:20px;">username: shiyoujiao1</span>
         </span> password: shuanglian2017</span>
       </div>
     </el-form>
