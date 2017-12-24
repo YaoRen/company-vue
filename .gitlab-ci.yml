@@ -1,0 +1,9 @@
+job_test:
+  script:
+  - "npm run dev"
+  #- "nohup java -jar target/petrocoke-server-1.0.0.jar >/home/git/log/petrocoke-server/out.log &"
+  only:
+    - master
+  tags:
+    - test
+
