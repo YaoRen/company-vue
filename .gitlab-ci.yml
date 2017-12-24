@@ -1,7 +1,7 @@
 job_test:
   script:
   - "npm install --registry=https://registry.npm.taobao.org"
-  - "npm run dev"
+  - "nohup npm run dev &"
   #- "nohup java -jar target/petrocoke-server-1.0.0.jar >/home/git/log/petrocoke-server/out.log &"
   only:
     - test
