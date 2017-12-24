@@ -24,7 +24,7 @@
       </el-form-item>
       <div class="tips">
         <span style="margin-right:20px;">username: shiyoujiao</span>
-        </span> password: shuanglian20171</span>
+        </span> password: shuanglian2017</span>
       </div>
     </el-form>
   </div>
