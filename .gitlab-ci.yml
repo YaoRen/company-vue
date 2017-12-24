@@ -8,7 +8,7 @@ job_test:
   #build镜像
   - "docker build -t liyc/gpcmarket-ops-vue ."
   #运行对外端口9528
-  - "docker run --name gpcmarket-ops-vue -d -p 9528:9528 liyc/gpcmarket-ops-vue"
+  - "docker run --name gpcmarket-ops-vue -d -p 80:9528 liyc/gpcmarket-ops-vue"
   only:
     - test
   tags:
