@@ -81,39 +81,87 @@
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-			  value1: true,
-        value2: true,
-     		value3: true,
-        value4: true,
-				form: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
-				}
-			}
-		},
-		methods: {
-			//重新加载页面
-//			upload(){
-//				this.$router.replace("/");
-//			},
-			onSubmit() {
-				this.$message('submit!')
-			},
-			onCancel() {
-				this.$message({
-					message: 'cancel!',
-					type: 'warning'
-				})
-			}
-		}
-	}
+// 	export default {
+// 		data() {
+// 			return {
+// 			  value1: true,
+//         value2: true,
+//      		value3: true,
+//         value4: true,
+// 				form: {
+// 					name: '',
+// 					region: '',
+// 					date1: '',
+// 					date2: '',
+// 					delivery: false,
+// 					type: [],
+// 					resource: '',
+// 					desc: ''
+// 				}
+// 			}
+// 		},
+// 		methods: {
+// 			//重新加载页面
+// //			upload(){
+// //				this.$router.replace("/");
+// //			},
+// 			onSubmit() {
+// 				this.$message('submit!')
+// 			},
+// 			onCancel() {
+// 				this.$message({
+// 					message: 'cancel!',
+// 					type: 'warning'
+// 				})
+// 			}
+// 		}
+// 	}
+
+// export default {
+//   data() {
+//     return {
+//       list: null,
+//       listLoading: true,
+//       input: '',
+//       options: [{
+//         value: '选项1',
+//         label: '黄金糕'
+//       }, {
+//         value: '选项2',
+//         label: '双皮奶'
+//       }, {
+//         value: '选项3',
+//         label: '蚵仔煎'
+//       }, {
+//         value: '选项4',
+//         label: '龙须面'
+//       }, {
+//         value: '选项5',
+//         label: '北京烤鸭'
+//       }]
+//     }
+//   },
+//   filters: {
+//     statusFilter(status) {
+//       const statusMap = {
+//         published: 'success',
+//         draft: 'gray',
+//         deleted: 'danger'
+//       }
+//       return statusMap[status]
+//     }
+//   },
+//   created() {
+//     this.fetchData()
+//   },
+//   methods: {
+//     fetchData() {
+//       this.listLoading = true
+//       getList().then(response => {
+//         this.list = response.data.items
+//         this.listLoading = false
+//       })
+//     }
+//   }
+// }
 </script>
