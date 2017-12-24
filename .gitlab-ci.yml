@@ -1,8 +1,14 @@
+before_script:
+  #停止正在运行的容器
+  - "docker rm gpcmarket-ops-vue -f"
+  #- "docker rmi liyc/docker-maven-plugin-test:1.0.0-SNAPSHOT -f"
+
 job_test:
   script:
-  - "npm install --registry=https://registry.npm.taobao.org"
-  - "nohup npm run dev &"
-  #- "nohup java -jar target/petrocoke-server-1.0.0.jar >/home/git/log/petrocoke-server/out.log &"
+  #build镜像
+  - "docker build -t liyc/gpcmarket-ops-vue ."
+  #运行对外端口9528
+  - "docker run --name gpcmarket-ops-vue -d -p 9528:9528 liyc/gpcmarket-ops-vue"
   only:
     - test
   tags:
