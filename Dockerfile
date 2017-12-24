@@ -12,4 +12,4 @@ COPY . /usr/src/app
 CMD [ "npm", "start" ]
 
 # replace this with your application's default port
-EXPOSE 9528
+EXPOSE 80

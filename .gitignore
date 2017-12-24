@@ -14,4 +14,3 @@ package-lock.json
 *.njsproj
 *.sln
 
-.gitlab-ci.yml
