@@ -80,6 +80,8 @@ export default {
             this.$router.push({ path: '/' })
           }).catch(() => {
             this.loading = false
+            // console.log('hi')
+            // this.$router.push({ path: '/' })
           })
         } else {
           console.log('error submit!!')
