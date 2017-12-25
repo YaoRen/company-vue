@@ -5,39 +5,39 @@
       <el-row :gutter="60" >
         <el-col :span = "8">
           <el-form-item label="手机号码">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.mobile"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span = "8">
           <el-form-item label="用户名">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.username"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span = "8">
           <el-form-item label="注册时间">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.createTime"></el-input>
           </el-form-item>
         </el-col>
       </el-row>
       <el-row :gutter="60" >
         <el-col :span = "8">
           <el-form-item label="所属公司">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.company"></el-input>
           </el-form-item>
         </el-col>
         <el-col :span = "8">
           <el-form-item label="冻结状态">
-            <el-select v-model="form.region" placeholder="请选择活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+            <el-select v-model="form.status" placeholder="无限制">
+              <el-option label="未冻结" value="未冻结"></el-option>
+              <el-option label="已冻结" value="已冻结"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span = "8">
           <el-form-item label="用户类型">
-            <el-select v-model="form.region" placeholder="请选择活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+            <el-select v-model="form.userType" placeholder="全部用户">
+              <el-option label="类型一" value="类型一"></el-option>
+              <el-option label="类型二" value="类型二"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -150,14 +150,12 @@
     data() {
       return {
         form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          mobile: '',
+          username: '',
+          createTime: '',
+          company: '',
+          status: '',
+          userType: ''
         },
         list: null,
         listLoading: true,
@@ -193,6 +191,7 @@
         console.log(row.qq)
       },
       entryDetail() {
+        // console.log(this.form)
         this.$router.push({ path: '/example/table' })
       },
       handleLogin() {
@@ -217,7 +216,7 @@
         this.listLoading = true
         var params = {
           'companyId': '2',
-          'companyName': '',
+          'companyName': this.form.company,
           'creator': '',
           'department': '',
           'endDate': '',
@@ -226,7 +225,7 @@
           'idcard': '',
           'introduction': '',
           'isCompanyPublic': true,
-          'mobile': '',
+          'mobile': this.form.mobile,
           'modifier': '',
           'modifyTime': '',
           'nickname': '',
@@ -236,13 +235,13 @@
           'password': '',
           'position': '',
           'qq': '',
-          'realname': '',
+          'realname': this.form.username,
           'searchWord': '',
           'sex': '',
           'sort': '',
           'startDate': '',
           'startTime': '2017-12-25',
-          'status': ''
+          'status': this.form.status
         }
 
         // params = (params)
