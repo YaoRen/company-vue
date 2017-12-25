@@ -29,6 +29,7 @@ const user = {
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
       console.log(username)
+      console.log(userInfo.password)
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
           const data = response.data

@@ -1,85 +1,56 @@
 <template>
+
   <div class="app-container">
-    <el-row :gutter="20">
-      <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-      <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-      <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-      <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-    </el-row>
-    <div class = "input_info">
-      <el-row :gutter="80" >
-        <el-col :span="8" >
-          <el-row :gutter="10" >
-            <el-col :span="6"><label>手机号码</label></el-col>
-            <el-col :span="18"><el-input v-model="input" placeholder="请输入内容"></el-input></el-col>
-          </el-row>
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-row :gutter="60" >
+        <el-col :span = "8">
+          <el-form-item label="手机号码">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
         </el-col>
-        <el-col :span="8" >
-          <el-row :gutter="10" >
-            <el-col :span="6"><label>用户名</label></el-col>
-            <el-col :span="18"><el-input v-model="input" placeholder="请输入内容"></el-input></el-col>
-          </el-row>
+        <el-col :span = "8">
+          <el-form-item label="用户名">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
         </el-col>
-        <el-col :span="8" >
-          <el-row :gutter="10" >
-            <el-col :span="6"><label>注册时间</label></el-col>
-            <el-col :span="18"><el-input v-model="input" placeholder="请输入内容"></el-input></el-col>
-          </el-row>
+        <el-col :span = "8">
+          <el-form-item label="注册时间">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
         </el-col>
       </el-row>
-      <el-row :gutter="80" >
-        <el-col :span="8" >
-          <el-row :gutter="10" >
-            <el-col :span="6"><label>所属公司</label></el-col>
-            <el-col :span="18"><el-input v-model="input" placeholder="请输入内容"></el-input></el-col>
-          </el-row>
+      <el-row :gutter="60" >
+        <el-col :span = "8">
+          <el-form-item label="所属公司">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
         </el-col>
-        <el-col :span="8" >
-          <el-row :gutter="10" >
-            <el-col :span="6"><label>冻结状态</label></el-col>
-            <el-select v-model="value" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+        <el-col :span = "8">
+          <el-form-item label="冻结状态">
+            <el-select v-model="form.region" placeholder="请选择活动区域">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
             </el-select>
-          </el-row>
+          </el-form-item>
         </el-col>
-        <el-col :span="8" >
-          <el-row :gutter="10" >
-            <el-col :span="6"><label>用户类型</label></el-col>
-            <el-select v-model="value" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+        <el-col :span = "8">
+          <el-form-item label="用户类型">
+            <el-select v-model="form.region" placeholder="请选择活动区域">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
             </el-select>
-          </el-row>
+          </el-form-item>
         </el-col>
       </el-row>
-      <p class = "btn">
-        <el-button type="primary">查询</el-button>
-        <el-button type="primary">导出数据</el-button>
-      </p>
+    </el-form>
+    <el-button type="primary" @click="fetchData">查询数据</el-button>
+    <el-button type="primary" @click="onSubmit">导出数据</el-button>
 
-    </div>
-    <div class = "tabel_info">
-      <p class="title">
-
-          <el-col :span="12"><span>查询数据:</span></el-col>
-          <el-col :span="12" align="right"><el-button type="primary"><span></span></el-button></el-col>
-
-
-      </p>
     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
-      <el-table-column align="center" label='手机号' width="95">
-        <template slot-scope="scope">
-          {{scope.$index}}
-        </template>
+      <el-table-column align="center" label='手机号' width="95" props = "mobile">
+        <!--<template slot-scope="scope">-->
+          <!--{{scope.$index}}-->
+        <!--</template>-->
       </el-table-column>
       <el-table-column label="用户姓名">
         <template slot-scope="scope">
@@ -93,7 +64,7 @@
       </el-table-column>
       <el-table-column label="注册时间" width="110" align="center">
         <template slot-scope="scope">
-          {{scope.row.pageviews}}
+          {{scope.qq}}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="冻结状态" width="110" align="center">
@@ -120,34 +91,34 @@
         </template>
       </el-table-column>
     </el-table>
-    </div>
   </div>
 </template>
 
 <script>
-  // import { getList } from '@/api/table'
+  import { getList } from '@/api/table'
 
   export default {
     data() {
       return {
+        form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
         list: null,
         listLoading: true,
         input: '',
         options: [{
           value: '选项1',
-          label: '黄金糕'
+          label: '未解冻'
         }, {
           value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
+          label: '已解冻'
         }],
         value: ''
       }
@@ -166,15 +137,65 @@
       // this.fetchData()
     },
     methods: {
-      // fetchData() {
-      //   this.listLoading = true
-      //   // let params = {}
-      //   getList(params).then(response => {
-      //     // this.list = response.data.items
-      //     console.log(response)
-      //     this.listLoading = false
-      //   })
-      // }
+      onSubmit() {
+        console.log('submit!')
+      },
+      handleLogin() {
+        this.$refs.loginForm.validate(valid => {
+          if (valid) {
+            this.loading = true
+            this.$store.dispatch('Login', this.loginForm).then(() => {
+              this.loading = false
+              this.$router.push({ path: '/' })
+            }).catch(() => {
+              this.loading = false
+              // console.log('hi')
+              // this.$router.push({ path: '/' })
+            })
+          } else {
+            console.log('error submit!!')
+            return false
+          }
+        })
+      },
+      fetchData() {
+        this.listLoading = true
+        var params = {
+          'companyId': '2',
+          'companyName': '',
+          'creator': '',
+          'department': '',
+          'endDate': '',
+          'endTime': '',
+          'id': '',
+          'idcard': '',
+          'introduction': '',
+          'isCompanyPublic': true,
+          'mobile': '',
+          'modifier': '',
+          'modifyTime': '',
+          'nickname': '',
+          'order': '',
+          'pageNum': 1,
+          'pageSize': 10,
+          'password': '',
+          'position': '',
+          'qq': '',
+          'realname': '',
+          'searchWord': '',
+          'sex': '',
+          'sort': '',
+          'startDate': '',
+          'startTime': '2017-12-25',
+          'status': ''
+        }
+
+        // params = (params)
+        getList(params).then(response => {
+          this.list = response.data.content
+          this.listLoading = false
+        })
+      }
     }
   }
 </script>

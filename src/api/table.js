@@ -4,14 +4,14 @@ export function getList(params) {
   return request({
     url: '/xdFriend/list',
     method: 'post',
-    params: { params }
+    data: { params }
   })
 }
 export function addFriend(params) {
   return request({
     url: '/xdFriend/add',
     method: 'post',
-    params: { params }
+    data: params
   })
 }
 export function editFriend(params) {
