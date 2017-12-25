@@ -1,6 +1,6 @@
 before_script:
   #停止正在运行的容器
-  - "docker rm gpcmarket-ops-vue -f"
+  #- "docker rm gpcmarket-ops-vue -f"
   #- "docker rmi liyc/docker-maven-plugin-test:1.0.0-SNAPSHOT -f"
 
 job_test:
