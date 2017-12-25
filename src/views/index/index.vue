@@ -45,52 +45,101 @@
     </el-form>
     <el-button type="primary" @click="fetchData">查询数据</el-button>
     <el-button type="primary" @click="onSubmit">导出数据</el-button>
+    <template>
+      <el-table
+        :data="list"
+        style="width: 100%">
+        <el-table-column
+          prop="mobile"
+          label="手机号"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="realname"
+          label="用户姓名"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="companyName"
+          label="所属公司">
+        </el-table-column>
+        <el-table-column
+          prop="createTime"
+          label="注册时间"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="status"
+          label="冻结状态"
+          width="180">
+        </el-table-column>
 
-    <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
-      <el-table-column align="center" label='手机号' width="95" props = "mobile">
+        <el-table-column
+          prop="publishCount"
+          label="发布数">
+        </el-table-column>
+        <el-table-column
+          prop="commentCount"
+          label="评论数"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          label="操作"
+          width="220">
+          <template slot-scope="scope">
+            <el-button @click="entryDetail" type="text" size="small">详情</el-button>
+            <el-button @click="handleClick(scope.row)" type="text" size="small">冻结</el-button>
+            <el-button type="text" size="small">密码重置</el-button>
+            <el-button type="text" size="small">站内信</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </template>
+    <!--<el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>-->
+      <!--<el-table-column align="center" label='手机号' width="95" props = "mobile">-->
+        <!--&lt;!&ndash;<template slot-scope="scope">&ndash;&gt;-->
+          <!--&lt;!&ndash;{{scope.$index}}&ndash;&gt;-->
+        <!--&lt;!&ndash;</template>&ndash;&gt;-->
+      <!--</el-table-column>-->
+      <!--<el-table-column label="用户姓名">-->
         <!--<template slot-scope="scope">-->
-          <!--{{scope.$index}}-->
+          <!--{{scope.row.title}}-->
         <!--</template>-->
-      </el-table-column>
-      <el-table-column label="用户姓名">
-        <template slot-scope="scope">
-          {{scope.row.title}}
-        </template>
-      </el-table-column>
-      <el-table-column label="所属公司" width="110" align="center">
-        <template slot-scope="scope">
-          <span>{{scope.row.author}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="注册时间" width="110" align="center">
-        <template slot-scope="scope">
-          {{scope.qq}}
-        </template>
-      </el-table-column>
-      <el-table-column class-name="status-col" label="冻结状态" width="110" align="center">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="发布数" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span>{{scope.row.display_time}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="评论数" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span>{{scope.row.display_time}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="曹祖片" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span>{{scope.row.display_time}}</span>
-        </template>
-      </el-table-column>
-    </el-table>
+      <!--</el-table-column>-->
+      <!--<el-table-column label="所属公司" width="110" align="center">-->
+        <!--<template slot-scope="scope">-->
+          <!--<span>{{scope.row.author}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column label="注册时间" width="110" align="center">-->
+        <!--<template slot-scope="scope">-->
+          <!--{{scope.qq}}-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column class-name="status-col" label="冻结状态" width="110" align="center">-->
+        <!--<template slot-scope="scope">-->
+          <!--<el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column align="center" prop="created_at" label="发布数" width="200">-->
+        <!--<template slot-scope="scope">-->
+          <!--<i class="el-icon-time"></i>-->
+          <!--<span>{{scope.row.display_time}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column align="center" prop="created_at" label="评论数" width="200">-->
+        <!--<template slot-scope="scope">-->
+          <!--<i class="el-icon-time"></i>-->
+          <!--<span>{{scope.row.display_time}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+      <!--<el-table-column align="center" prop="created_at" label="曹祖片" width="200">-->
+        <!--<template slot-scope="scope">-->
+          <!--<i class="el-icon-time"></i>-->
+          <!--<span>{{scope.row.display_time}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+    <!--</el-table>-->
   </div>
 </template>
 
@@ -139,6 +188,12 @@
     methods: {
       onSubmit() {
         console.log('submit!')
+      },
+      handleClick(row) {
+        console.log(row.qq)
+      },
+      entryDetail() {
+        this.$router.push({ path: '/example/table' })
       },
       handleLogin() {
         this.$refs.loginForm.validate(valid => {

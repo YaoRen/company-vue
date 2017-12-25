@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
-    <el-collapse v-model="activeNames" @change="handleChange">
+    <el-collapse v-model="activeNames">
+      <!--<el-collapse v-model="activeNames" @change="handleChange">-->
       <el-collapse-item title="个人信息" name="1">
         <el-row :gutter="20">
           <el-col :span="4" align = "right">昵称:</el-col>
@@ -59,7 +60,7 @@
         <div>帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。</div>
       </el-collapse-item>
     </el-collapse>
-    <el-col :span="24" class = "total_info"><sapn>统计信息:</sapn></el-col>
+    <el-col :span="24" class = "total_info"><span>统计信息:</span></el-col>
     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
       <el-table-column align="center" label='手机号' width="95">
         <template slot-scope="scope">
@@ -117,6 +118,8 @@ export default {
       list: null,
       listLoading: true,
       input: '',
+      value: '',
+      activeNames: '',
       options: [{
         value: '选项1',
         label: '黄金糕'
@@ -149,6 +152,9 @@ export default {
     this.fetchData()
   },
   methods: {
+    handleChange() {
+      console.log('handleChange')
+    },
     fetchData() {
       this.listLoading = true
       getList().then(response => {
