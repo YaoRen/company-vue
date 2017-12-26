@@ -114,49 +114,49 @@
 </template>
 
 <script>
-	import { getList } from '@/api/table'
-	export default {
-		data() {
-			return {
-				list: null,
-				listLoading: true,
-				form: {
-					name: '',
-					region: '',
-					date1: '',
-					date2: '',
-					delivery: false,
-					type: [],
-					resource: '',
-					desc: ''
-				}
-			}
-		},
-		filters: {
-			statusFilter(status) {
-				const statusMap = {
-					published: 'success',
-					draft: 'gray',
-					deleted: 'danger'
-				}
-				return statusMap[status]
-			}
-		},
-		created() {
-			this.fetchData()
-		},
-		methods: {
-			onSubmit() {
-				this.$message('submit!')
-			},
-			fetchData() {
-				this.listLoading = true
-				getList(this.listQuery).then(response => {
-					console.log(response)
-					this.list = response.data.items
-					this.listLoading = false
-				})
-			}
-		}
-	}
+	// import { getList } from '@/api/table'
+	// export default {
+	// 	data() {
+	// 		return {
+	// 			list: null,
+	// 			listLoading: true,
+	// 			form: {
+	// 				name: '',
+	// 				region: '',
+	// 				date1: '',
+	// 				date2: '',
+	// 				delivery: false,
+	// 				type: [],
+	// 				resource: '',
+	// 				desc: ''
+	// 			}
+	// 		}
+	// 	},
+	// 	filters: {
+	// 		statusFilter(status) {
+	// 			const statusMap = {
+	// 				published: 'success',
+	// 				draft: 'gray',
+	// 				deleted: 'danger'
+	// 			}
+	// 			return statusMap[status]
+	// 		}
+	// 	},
+	// 	created() {
+	// 		this.fetchData()
+	// 	},
+	// 	methods: {
+	// 		onSubmit() {
+	// 			this.$message('submit!')
+	// 		},
+	// 		fetchData() {
+	// 			this.listLoading = true
+	// 			getList(this.listQuery).then(response => {
+	// 				console.log(response)
+	// 				this.list = response.data.items
+	// 				this.listLoading = false
+	// 			})
+	// 		}
+	// 	}
+	// }
 </script>
