@@ -43,8 +43,11 @@
         </el-col>
       </el-row>
     </el-form>
+    <el-col>
     <el-button type="primary" @click="fetchData">查询数据</el-button>
     <el-button type="primary" @click="onSubmit">导出数据</el-button>
+    <el-button type="primary" @click="addFriend" class = "right">新建朋友</el-button>
+    </el-col>
     <template>
       <el-table
         :data="list"
@@ -87,7 +90,9 @@
           label="操作"
           width="220">
           <template slot-scope="scope">
-            <el-button @click="entryDetail" type="text" size="small">详情</el-button>
+
+            <el-button type="text" size="small"><router-link :to=" {path :'/friends/detail/'+scope.row.id}">详情</router-link></el-button>
+            <!--<el-button @click="entryDetail" type="text" size="small">详情</el-button>-->
             <el-button @click="handleClick(scope.row)" type="text" size="small">冻结</el-button>
             <el-button type="text" size="small">密码重置</el-button>
             <el-button type="text" size="small">站内信</el-button>
@@ -192,7 +197,8 @@
       },
       entryDetail() {
         // console.log(this.form)
-        this.$router.push({ path: '/example/table' })
+        console.log()
+        // this.$router.push({ path: '/example/table' })
       },
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
@@ -211,6 +217,9 @@
             return false
           }
         })
+      },
+      addFriend() {
+        console.log('add')
       },
       fetchData() {
         this.listLoading = true
@@ -270,6 +279,9 @@
     padding-bottom: 10px;
     height: 40px;
     line-height: 40px;
+  }
+  .right{
+    float: right;
   }
 </style>
 <!--<style>-->
