@@ -73,38 +73,90 @@
 				<el-col :span="4">50</el-col>
 			</el-form-item>
 			<el-form-item>
-				<el-button @click="onSubmit">上一步</el-button>
-				<el-button type="primary" @click="onCancel">预览</el-button>
+				<el-button>上一步</el-button>
+				<el-button type="primary">预览</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
 </template>
 
 <script>
-// 	export default {
-// 		data() {
-// 			return {
-// 			  value1: true,
-//         value2: true,
-//      		value3: true,
-//         value4: true,
-// 				form: {
-// 					name: '',
-// 					region: '',
-// 					date1: '',
-// 					date2: '',
-// 					delivery: false,
-// 					type: [],
-// 					resource: '',
-// 					desc: ''
-// 				}
-// 			}
-// 		},
+//	form: {
+//					ai: '',
+//					ash: '',
+//					bagPrice: '',
+//					ca: '',
+//					companyId: '',
+//					companyName: '',
+//					consultCount: '',
+//					creator: '',
+//					density: '',
+//					description: '',
+//					endDate: '',
+//					endTime: '',
+//					fe: '',
+//					friendId: '',
+//					friendNickname: '',
+//					friendRealname: '',
+//					id: '',
+//					images: '',
+//					inspectionReport: '',
+//					isCompanyPublic: '',
+//					label: '',
+//					modifier: '',
+//					modifyTime: '',
+//					na: '',
+//					ni: '',
+//					order: '',
+//					pageNum: '',
+//					pageSize: '',
+//					particle: '',
+//					petrolType: '',
+//					ph: '',
+//					pi: '',
+//					productArea: '',
+//					reservePrice: '',
+//					resistance: '',
+//					searchWord: '',
+//					si: '',
+//					sort: '',
+//					startDate: '',
+//					startTime: '',
+//					status: '',
+//					su: '',
+//					tenderNum: '',
+//					title: '',
+//					totalQuantity: '',
+//					type: '',
+//					va: '',
+//					vibration: '',
+//					volatiles: '',
+//					water: ''
+//				}
+   	export default {
+   		data() {
+   			return {
+   				value1: true,
+   				value2: true,
+   				value3: true,
+   				value4: true,
+   				form: {
+   					name:'',
+   					region: '',
+   					date1: '',
+   					date2: '',
+   					delivery: false,
+   					type: [],
+   					resource: '',
+   					desc: ''
+   				}
+   			}
+   		}
 // 		methods: {
 // 			//重新加载页面
-// //			upload(){
-// //				this.$router.replace("/");
-// //			},
+// 			upload(){
+// 				this.$router.replace("/");
+// 			},
 // 			onSubmit() {
 // 				this.$message('submit!')
 // 			},
@@ -115,7 +167,7 @@
 // 				})
 // 			}
 // 		}
-// 	}
+   	}
 
 // export default {
 //   data() {

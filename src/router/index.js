@@ -61,6 +61,33 @@ export const constantRouterMap = [
       }
     ]
   },
+   {
+    path: '/message',
+    component: Layout,
+    name: 'Message',
+    redirect: '/message/index',
+    meta: { title: '小道消息', icon: 'form' },
+    children: [
+      {
+        path: 'index',
+        name: 'Index',
+        component: _import('message/index'),
+        meta: { title: '小道消息', icon: 'form' }
+      },
+      {
+        path: 'editContent',
+        name: 'EditContent',
+        component: _import('editContent/index'),
+        meta: { title: '编辑内容', icon: 'form' }
+      },
+      {
+        path: 'editContact',
+        name: 'EditContact',
+        component: _import('editContact/index'),
+        meta: { title: '编辑联系人', icon: 'form' }
+      }
+    ]
+  },
   {
     path: '/form',
     component: Layout,
@@ -78,8 +105,10 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
-  // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
+ 	mode: 'history', 
+  	scrollBehavior: () => ({
+  		y: 0
+  	}),
+  	routes: constantRouterMap
 })
 
