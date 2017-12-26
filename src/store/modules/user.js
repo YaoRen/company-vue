@@ -28,6 +28,8 @@ const user = {
     // 登录
     Login({ commit }, userInfo) {
       const username = userInfo.username.trim()
+      console.log(username)
+      console.log(userInfo.password)
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
           const data = response.data
@@ -45,9 +47,10 @@ const user = {
       return new Promise((resolve, reject) => {
         getInfo(state.token).then(response => {
           const data = response.data
-          commit('SET_ROLES', data.role)
-          commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
+          console.log(data)
+          commit('SET_ROLES', data.roleId)
+          // commit('SET_NAME', data.rolename)
+          // commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {
           reject(error)
