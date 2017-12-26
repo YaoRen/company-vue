@@ -12,5 +12,5 @@ job_test:
   only:
     - test
   tags:
-    - shell_1
-
+    #- shell_1
+    - shell_01
