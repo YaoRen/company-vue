@@ -4,7 +4,7 @@ export function getList(params) {
   return request({
     url: '/xdFriend/list',
     method: 'post',
-    data: { params }
+    data: params
   })
 }
 export function addFriend(params) {
@@ -18,13 +18,12 @@ export function editFriend(params) {
   return request({
     url: '/xdFriend/edit',
     method: 'post',
-    params: { params }
+    data: params
   })
 }
-export function detailFriend(params) {
+export function detailFriend(id) {
   return request({
-    url: '/xdFriend/edit',
-    method: 'get',
-    params
+    url: '/xdFriend/detail/' + id,
+    method: 'get'
   })
 }
