@@ -9,13 +9,8 @@
         <li>积分商城</li>
         <li>提现管理</li>
         <li>广告位</li>
-<<<<<<< HEAD
-        <router-link :to="{path:'/example/index'}"><li>焦小姐的朋友</li></router-link>
-        <router-link :to="{path:'/message/index'}"><li>小道消息</li></router-link>
-      </ul>
-    </div>
-=======
         <router-link :to=" {path :'/friends/index/'}"><li>焦小姐的朋友</li></router-link>
+        <router-link :to="{path:'/message/index'}"><li>小道消息</li></router-link>
       </ul>
     </div>
 
@@ -47,7 +42,6 @@
       <!--</el-submenu>-->
 
     <!--</template>-->
->>>>>>> 4931357c124e059fcf929465510fe8b4430e70d0
   </div>
 </template>
 
