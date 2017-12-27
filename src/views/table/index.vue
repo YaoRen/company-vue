@@ -129,7 +129,7 @@ export default {
       info: 'hi',
       input: '',
       value: '',
-      activeNames: '',
+      activeNames: ['1'],
       disabled: true,
       isShow: true,
       isShoww: true,
@@ -162,7 +162,9 @@ export default {
     }
   },
   created() {
-    this.fetchData()
+    if (this.$route.path !== '/friends/create') {
+      this.fetchData()
+    }
   },
   methods: {
     editState(event) {

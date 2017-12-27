@@ -46,6 +46,11 @@ export const constantRouterMap = [
         component: _import('index/index')
       },
       {
+        path: 'create',
+        // name: 'Table',
+        component: _import('create/index')
+      },
+      {
         path: 'detail/:id',
         // name: 'Table',
         component: _import('table/index')
@@ -58,7 +63,7 @@ export const constantRouterMap = [
       }
     ]
   },
-   {
+  {
     path: '/message',
     component: Layout,
     name: 'Message',
@@ -102,7 +107,7 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
- 	mode: 'history', 
+ 	mode: 'history',
   	scrollBehavior: () => ({
   		y: 0
   	}),

@@ -14,8 +14,15 @@
           </el-form-item>
         </el-col>
         <el-col :span = "8">
-          <el-form-item label="注册时间">
-            <el-input v-model="form.createTime"></el-input>
+          <el-form-item label="注册时间"  >
+            <el-date-picker
+              v-model="date"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+            >
+            </el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
@@ -28,16 +35,8 @@
         <el-col :span = "8">
           <el-form-item label="冻结状态">
             <el-select v-model="form.status" placeholder="无限制">
-              <el-option label="未冻结" value="未冻结"></el-option>
-              <el-option label="已冻结" value="已冻结"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span = "8">
-          <el-form-item label="用户类型">
-            <el-select v-model="form.userType" placeholder="全部用户">
-              <el-option label="类型一" value="类型一"></el-option>
-              <el-option label="类型二" value="类型二"></el-option>
+              <el-option label="未冻结" value="1"></el-option>
+              <el-option label="已冻结" value="2"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
@@ -67,14 +66,18 @@
           label="所属公司">
         </el-table-column>
         <el-table-column
-          prop="createTime"
           label="注册时间"
           width="180">
+          <template slot-scope="scope">
+            <span>{{scope.row.createTime | date}}</span>
+          </template>
         </el-table-column>
         <el-table-column
-          prop="status"
           label="冻结状态"
           width="180">
+          <template slot-scope="scope">
+            <span>{{scope.row.status | state}}</span>
+          </template>
         </el-table-column>
 
         <el-table-column
@@ -157,22 +160,23 @@
         form: {
           mobile: '',
           username: '',
-          createTime: '',
           company: '',
           status: '',
           userType: ''
         },
+        time: {},
         list: null,
-        listLoading: true,
         input: '',
         options: [{
-          value: '选项1',
+          value: '1',
           label: '未解冻'
         }, {
-          value: '选项2',
+          value: '2',
           label: '已解冻'
         }],
-        value: ''
+        value: '',
+        value8: '',
+        date: ''
       }
     },
     filters: {
@@ -183,7 +187,22 @@
           deleted: 'danger'
         }
         return statusMap[status]
+      },
+      date(input) {
+        var d = new Date(input)
+        var year = d.getFullYear()
+        var month = d.getMonth() + 1
+        var day = d.getDate() < 10 ? '0' + d.getDate() : '' + d.getDate()
+        return year + '-' + month + '-' + day
+      },
+      state(value) {
+        if (value === 1) {
+          return '未冻结'
+        } else if (value === 2) {
+          return '冻结'
+        }
       }
+
     },
     created() {
       // this.fetchData()
@@ -195,11 +214,6 @@
       handleClick(row) {
         console.log(row.qq)
       },
-      entryDetail() {
-        // console.log(this.form)
-        console.log()
-        // this.$router.push({ path: '/example/table' })
-      },
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
           if (valid) {
@@ -209,8 +223,6 @@
               this.$router.push({ path: '/' })
             }).catch(() => {
               this.loading = false
-              // console.log('hi')
-              // this.$router.push({ path: '/' })
             })
           } else {
             console.log('error submit!!')
@@ -218,45 +230,41 @@
           }
         })
       },
+      // 进入新建朋友界面
       addFriend() {
-        console.log('add')
+        this.$router.push({ path: '/friends/create' })
       },
+      // 查询数据
       fetchData() {
-        this.listLoading = true
-        var params = {
-          'companyId': '2',
-          'companyName': this.form.company,
-          'creator': '',
-          'department': '',
-          'endDate': '',
-          'endTime': '',
-          'id': '',
-          'idcard': '',
-          'introduction': '',
-          'isCompanyPublic': true,
-          'mobile': this.form.mobile,
-          'modifier': '',
-          'modifyTime': '',
-          'nickname': '',
-          'order': '',
-          'pageNum': 1,
-          'pageSize': 10,
-          'password': '',
-          'position': '',
-          'qq': '',
-          'realname': this.form.username,
-          'searchWord': '',
-          'sex': '',
-          'sort': '',
-          'startDate': '',
-          'startTime': '2017-12-25',
-          'status': this.form.status
+        if (this.date.length !== 0) {
+          var start = new Date(this.date[0])
+          var end = new Date(this.date[1])
+          this.time = {
+            startTime : start.getFullYear() + '-' + (start.getMonth() + 1) + '-' + start.getDate(),
+            endTime : end.getFullYear() + '-' + (end.getMonth() + 1) + '-' + end.getDate()
+          }
+        } else {
+          this.time = {}
         }
-
-        // params = (params)
+        // var time = {
+        //    startTime : start.getFullYear() + '-' + (start.getMonth() + 1) + '-' + start.getDate(),
+        //    endTime : end.getFullYear() + '-' + (end.getMonth() + 1) + '-' + end.getDate()
+        // }
+        // 不能为空
+        // if (Object.keys(this.form).every((key, index, arry) => {
+        //   return this.form[key] === '' })) {
+        //   console.log('无输入个人信息')
+        //   return
+        // }
+        // if (this.form.mobile && !/^\d$/.test(this.form.mobile)) {
+        //   console.log(this.form.mobile)
+        //   console.log('请输入11位正确电话号码')
+        //   return
+        // }
+        var params = Object.assign(this.form, this.time, { 'pageSize': 10 })
         getList(params).then(response => {
           this.list = response.data.content
-          this.listLoading = false
+          console.log(this.list)
         })
       }
     }
