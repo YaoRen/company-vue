@@ -63,7 +63,7 @@ export const constantRouterMap = [
       }
     ]
   },
-  {
+   {
     path: '/message',
     component: Layout,
     name: 'Message',
@@ -72,21 +72,23 @@ export const constantRouterMap = [
     children: [
       {
         path: 'index',
-        name: 'Index',
-        component: _import('message/index'),
-        meta: { title: '小道消息', icon: 'form' }
+        component: _import('message/index')
       },
       {
-        path: 'editContent',
-        name: 'EditContent',
-        component: _import('editContent/index'),
-        meta: { title: '编辑内容', icon: 'form' }
+        path: 'editContent/:id',
+        component: _import('editContent/index')
+      },
+	  {
+        path: 'addContent',
+        component: _import('addContent/index')
       },
       {
-        path: 'editContact',
-        name: 'EditContact',
-        component: _import('editContact/index'),
-        meta: { title: '编辑联系人', icon: 'form' }
+        path: 'editContact/:id',
+        component: _import('editContact/index')
+      },
+	  {
+        path: 'addContact',
+        component: _import('addContact/index')
       }
     ]
   },

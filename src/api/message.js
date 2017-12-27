@@ -15,30 +15,29 @@ export function addMessage(params) {
 	    data: {params}
 	})
 }
-////编辑消息
-//export function editMessage(params) {
-//return request({
-//  url: '/xdXiaoxi/edit',
-//  method: 'post',
-//  params: { params }
-//})
-//}
-////消息详情
-//export function detailMessage(params) {
-//return request({
-//  url: '/xdXiaoxi/detail/{id}',
-//  method: 'get',
-//  data: {params}
-//})
-//}
-////验真
-//export function confirmMessage(params) {
-//	return request({
-//	    url: '/xdXiaoxi/verify',
-//	    method: 'post',
-//	    data: {params}
-//	})
-//}
+//编辑消息
+export function editMessage(params) {
+	return request({
+	    url: '/xdXiaoxi/edit',
+	    method: 'post',
+	    data: params
+	})
+}
+//消息详情
+export function detailMessage(id) {
+	return request({
+	    url: '/xdXiaoxi/detail/'+id,
+	    method: 'get'
+	})
+}
+//验真
+export function confirmMessage(params) {
+	return request({
+	    url: '/xdXiaoxi/verify',
+	    method: 'post',
+	    data: {params}
+	})
+}
 //发布消息
 //export function detailMessage(params) {
 //return request({
