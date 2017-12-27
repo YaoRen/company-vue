@@ -71,14 +71,14 @@
 			</el-form-item>
 			<el-form-item>
 				<router-link :to="{path:'/message/editContent/'+this.id}"><el-button>上一步</el-button></router-link>
-				<el-button type="primary">预览</el-button>
+				<el-button type="primary" @click="preview">预览</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
 </template>
 
 <script>
-	import {detailMessage} from '@/api/message'
+	import {addMessage} from '@/api/message'
 	export default {
 		data() {
 			return {
@@ -103,10 +103,19 @@
 		},
 		methods: {
 			//获取编辑页信息
-			fetchDetail(){
-				detailMessage(this.id).then(response => {
+			preview(){
+				var list={
+					'friendNickname': this.form.friendNickname,
+					'friendRealname': this.form.friendRealname,
+					'title': this.form.title,
+					'isCompanyPublic': this.form.isCompanyPublic,
+					'isMessagePublic': this.form.isMessagePublic,
+					'companyName': this.form.companyName
+				}
+				addMessage(list).then(response => {
 			        this.form = response.data
 	      		})
+				this.$router.push({path:'/message/addContent'});
 			}
 			
 			//编辑下一步
