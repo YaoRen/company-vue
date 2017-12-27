@@ -46,6 +46,11 @@ export const constantRouterMap = [
         component: _import('index/index')
       },
       {
+        path: 'create',
+        // name: 'Table',
+        component: _import('create/index')
+      },
+      {
         path: 'detail/:id',
         // name: 'Table',
         component: _import('table/index')
@@ -67,21 +72,23 @@ export const constantRouterMap = [
     children: [
       {
         path: 'index',
-        name: 'Index',
-        component: _import('message/index'),
-        meta: { title: '小道消息', icon: 'form' }
+        component: _import('message/index')
       },
       {
-        path: 'editContent',
-        name: 'EditContent',
-        component: _import('editContent/index'),
-        meta: { title: '编辑内容', icon: 'form' }
+        path: 'editContent/:id',
+        component: _import('editContent/index')
+      },
+	  {
+        path: 'addContent',
+        component: _import('addContent/index')
       },
       {
-        path: 'editContact',
-        name: 'EditContact',
-        component: _import('editContact/index'),
-        meta: { title: '编辑联系人', icon: 'form' }
+        path: 'editContact/:id',
+        component: _import('editContact/index')
+      },
+	  {
+        path: 'addContact',
+        component: _import('addContact/index')
       }
     ]
   },
@@ -102,7 +109,7 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
- 	mode: 'history', 
+ 	mode: 'history',
   	scrollBehavior: () => ({
   		y: 0
   	}),

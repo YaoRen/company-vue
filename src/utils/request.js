@@ -29,7 +29,8 @@ service.interceptors.response.use(
     const res = response.data
     if (res.code !== 0) {
       Message({
-        message: res.data,
+        // message: res.data, 
+        message: res.exception, // code!=0, exception为错误说明
         type: 'error',
         duration: 5 * 1000
       })
@@ -47,6 +48,7 @@ service.interceptors.response.use(
         })
       }
       return Promise.reject('error')
+      // return Promise.reject(res.exception)
     } else {
       return response.data
     }
