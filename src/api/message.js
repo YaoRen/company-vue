@@ -4,7 +4,7 @@ export function getList(params) {
   return request({
     url: '/xdXiaoxi/list',
     method: 'post',
-    data: { params }
+    data: params
   })
 }
 //添加消息列表
@@ -12,7 +12,7 @@ export function addMessage(params) {
 	return request({
 	    url: '/xdXiaoxi/add',
 	    method: 'post',
-	    data: {params}
+	    data: params
 	})
 }
 //编辑消息
@@ -35,7 +35,7 @@ export function confirmMessage(params) {
 	return request({
 	    url: '/xdXiaoxi/verify',
 	    method: 'post',
-	    data: {params}
+	    data: params
 	})
 }
 //发布消息

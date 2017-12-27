@@ -77,7 +77,7 @@
 			</el-table-column>
 			<el-table-column label="创建时间" width="110px" align="center">
 				<template slot-scope="scope">
-					{{scope.row.createTime}}
+					{{scope.row.createTime | date}}
 				</template>
 			</el-table-column>
 			<el-table-column align="center" prop="created_at" label="消息状态" width="200px">
@@ -186,7 +186,14 @@
 					deleted: 'danger'
 				}
 				return statusMap[status]
-			}
+			},
+			 date(input) {
+		        var d = new Date(input)
+		        var year = d.getFullYear()
+		        var month = d.getMonth() + 1
+		        var day = d.getDate() < 10 ? '0' + d.getDate() : '' + d.getDate()
+		        return year + '-' + month + '-' + day
+	      	}
 		},
 		created() {
 			this.fetchData()
