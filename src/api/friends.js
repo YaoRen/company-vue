@@ -27,3 +27,10 @@ export function detailFriend(id) {
     method: 'get'
   })
 }
+export function companyList(params) {
+  return request({
+    url: '/company/list',
+    method: 'post',
+    data: params
+  })
+}

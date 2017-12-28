@@ -1,20 +1,15 @@
 <template>
 
   <div class="app-container">
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-row :gutter="60" >
-        <el-col :span = "8">
-          <el-form-item label="手机号码">
+    <el-form ref="form" :model="form" label-width="100px" class = "cl">
+
+          <el-form-item label="手机号码" class = "left width_280 mr_40">
             <el-input v-model="form.mobile"></el-input>
           </el-form-item>
-        </el-col>
-        <el-col :span = "8">
-          <el-form-item label="用户名">
+          <el-form-item label="用户名" class = "left width_280 mr_40">
             <el-input v-model="form.username"></el-input>
           </el-form-item>
-        </el-col>
-        <el-col :span = "8">
-          <el-form-item label="注册时间"  >
+          <el-form-item label="注册时间" class = "left mr_40">
             <el-date-picker
               v-model="date"
               type="daterange"
@@ -24,23 +19,16 @@
             >
             </el-date-picker>
           </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row :gutter="60" >
-        <el-col :span = "8">
-          <el-form-item label="所属公司">
+          <el-form-item label="所属公司" class = "left width_280 mr_40">
             <el-input v-model="form.company"></el-input>
           </el-form-item>
-        </el-col>
-        <el-col :span = "8">
-          <el-form-item label="冻结状态">
+
+          <el-form-item label="冻结状态" class = "left width_280 mr_40">
             <el-select v-model="form.status" placeholder="无限制">
               <el-option label="未冻结" value="1"></el-option>
               <el-option label="已冻结" value="2"></el-option>
             </el-select>
           </el-form-item>
-        </el-col>
-      </el-row>
     </el-form>
     <el-col>
     <el-button type="primary" @click="fetchData">查询数据</el-button>
@@ -48,111 +36,40 @@
     <el-button type="primary" @click="addFriend" class = "right">新建朋友</el-button>
     </el-col>
     <template>
-      <el-table
-        :data="list"
-        style="width: 100%">
-        <el-table-column
-          prop="mobile"
-          label="手机号"
-          width="180">
+      <el-table :data="list" style="width: 100%">
+        <el-table-column prop="mobile" label="手机号" width="120" align="center">
         </el-table-column>
-        <el-table-column
-          prop="realname"
-          label="用户姓名"
-          width="180">
+        <el-table-column prop="realname" label="用户姓名" width="120" align="center">
         </el-table-column>
-        <el-table-column
-          prop="companyName"
-          label="所属公司">
+        <el-table-column prop="companyName" label="所属公司" width="120" align="center">
         </el-table-column>
-        <el-table-column
-          label="注册时间"
-          width="180">
+        <el-table-column label="注册时间" width="120" align="center">
           <template slot-scope="scope">
             <span>{{scope.row.createTime | date}}</span>
           </template>
         </el-table-column>
-        <el-table-column
-          label="冻结状态"
-          width="180">
+        <el-table-column label="冻结状态" width="120" align="center">
           <template slot-scope="scope">
             <span>{{scope.row.status | state}}</span>
           </template>
         </el-table-column>
-
-        <el-table-column
-          prop="publishCount"
-          label="发布数">
-        </el-table-column>
-        <el-table-column
-          prop="commentCount"
-          label="评论数"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          label="操作"
-          width="220">
+        <el-table-column prop="publishCount" label="发布数" width="120" align="center"></el-table-column>
+        <el-table-column prop="commentCount" label="评论数" width="120" align="center"></el-table-column>
+        <el-table-column label="操作" width="218" fixed = "right" align="center">
           <template slot-scope="scope">
-
             <el-button type="text" size="small"><router-link :to=" {path :'/friends/detail/'+scope.row.id}">详情</router-link></el-button>
-            <!--<el-button @click="entryDetail" type="text" size="small">详情</el-button>-->
-            <el-button @click="handleClick(scope.row)" type="text" size="small">冻结</el-button>
-            <el-button type="text" size="small">密码重置</el-button>
-            <el-button type="text" size="small">站内信</el-button>
+            <el-button @click="updateStatus(scope.row.id)" size="small" type="text" >{{scope.row.status | state}}</el-button>
+            <el-button type="text" size="small" disabled>密码重置</el-button>
+            <el-button type="text" size="small" disabled>站内信</el-button>
           </template>
         </el-table-column>
       </el-table>
     </template>
-    <!--<el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>-->
-      <!--<el-table-column align="center" label='手机号' width="95" props = "mobile">-->
-        <!--&lt;!&ndash;<template slot-scope="scope">&ndash;&gt;-->
-          <!--&lt;!&ndash;{{scope.$index}}&ndash;&gt;-->
-        <!--&lt;!&ndash;</template>&ndash;&gt;-->
-      <!--</el-table-column>-->
-      <!--<el-table-column label="用户姓名">-->
-        <!--<template slot-scope="scope">-->
-          <!--{{scope.row.title}}-->
-        <!--</template>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column label="所属公司" width="110" align="center">-->
-        <!--<template slot-scope="scope">-->
-          <!--<span>{{scope.row.author}}</span>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column label="注册时间" width="110" align="center">-->
-        <!--<template slot-scope="scope">-->
-          <!--{{scope.qq}}-->
-        <!--</template>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column class-name="status-col" label="冻结状态" width="110" align="center">-->
-        <!--<template slot-scope="scope">-->
-          <!--<el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column align="center" prop="created_at" label="发布数" width="200">-->
-        <!--<template slot-scope="scope">-->
-          <!--<i class="el-icon-time"></i>-->
-          <!--<span>{{scope.row.display_time}}</span>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column align="center" prop="created_at" label="评论数" width="200">-->
-        <!--<template slot-scope="scope">-->
-          <!--<i class="el-icon-time"></i>-->
-          <!--<span>{{scope.row.display_time}}</span>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
-      <!--<el-table-column align="center" prop="created_at" label="曹祖片" width="200">-->
-        <!--<template slot-scope="scope">-->
-          <!--<i class="el-icon-time"></i>-->
-          <!--<span>{{scope.row.display_time}}</span>-->
-        <!--</template>-->
-      <!--</el-table-column>-->
-    <!--</el-table>-->
   </div>
 </template>
 
 <script>
-  import { getList } from '@/api/table'
+  import { getList, editFriend } from '@/api/friends'
 
   export default {
     data() {
@@ -175,7 +92,6 @@
           label: '已解冻'
         }],
         value: '',
-        value8: '',
         date: ''
       }
     },
@@ -211,8 +127,16 @@
       onSubmit() {
         console.log('submit!')
       },
-      handleClick(row) {
-        console.log(row.qq)
+      updateStatus(item_id) {
+        console.log(item_id)
+        let params = {
+          status: this.form.status === 1 ? 2 : 1,
+          id:item_id
+        }
+        editFriend(params).then(response => {
+          // correct
+          this.list = response.data || this.list
+        })
       },
       handleLogin() {
         this.$refs.loginForm.validate(valid => {
@@ -246,10 +170,6 @@
         } else {
           this.time = {}
         }
-        // var time = {
-        //    startTime : start.getFullYear() + '-' + (start.getMonth() + 1) + '-' + start.getDate(),
-        //    endTime : end.getFullYear() + '-' + (end.getMonth() + 1) + '-' + end.getDate()
-        // }
         // 不能为空
         // if (Object.keys(this.form).every((key, index, arry) => {
         //   return this.form[key] === '' })) {
@@ -264,7 +184,6 @@
         var params = Object.assign(this.form, this.time, { 'pageSize': 10 })
         getList(params).then(response => {
           this.list = response.data.content
-          console.log(this.list)
         })
       }
     }
@@ -288,35 +207,27 @@
     height: 40px;
     line-height: 40px;
   }
+  .el-date-editor--daterange.el-input__inner{
+    width: 200px;
+  }
+  .el-date-editor .el-range-separator{
+    padding: 0px;
+    width: 14px;
+  }
   .right{
     float: right;
   }
+  .left{
+    float: left;
+  }
+  .width_280{
+    width: 300px;
+  }
+  .mr_40{
+    margin-right: 40px;
+  }
+  .cl{
+    overflow: hidden;
+  }
+
 </style>
-<!--<style>-->
-  <!--.el-row {-->
-    <!--margin-bottom: 20px;-->
-  <!--&:last-child {-->
-     <!--margin-bottom: 0;-->
-   <!--}-->
-  <!--}-->
-  <!--.el-col {-->
-    <!--border-radius: 4px;-->
-  <!--}-->
-  <!--.bg-purple-dark {-->
-    <!--background: #99a9bf;-->
-  <!--}-->
-  <!--.bg-purple {-->
-    <!--background: #d3dce6;-->
-  <!--}-->
-  <!--.bg-purple-light {-->
-    <!--background: #e5e9f2;-->
-  <!--}-->
-  <!--.grid-content {-->
-    <!--border-radius: 4px;-->
-    <!--min-height: 36px;-->
-  <!--}-->
-  <!--.row-bg {-->
-    <!--padding: 10px 0;-->
-    <!--background-color: #f9fafc;-->
-  <!--}-->
-<!--</style>-->

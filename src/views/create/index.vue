@@ -1,59 +1,52 @@
 <template>
   <div class="app-container">
-
     <el-collapse v-model="activeNames">
       <!--<el-collapse v-model="activeNames" @change="handleChange">-->
       <el-collapse-item title="个人信息" name="1" >
-        <el-row :gutter="20">
-          <el-col :span="4" align = "right">昵称:</el-col>
-          <el-col :span="8"><el-input v-model="info.nickname"  ></el-input></el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="4" align = "right">姓名：</el-col>
-          <el-col :span="8"><el-input v-model="info.realname" ></el-input></el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="4" align = "right">性别：</el-col>
-          <el-col :span="8"><el-input v-model="info.sex" ></el-input></el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="4" align = "right">联系电话：</el-col>
-          <el-col :span="8"><el-input v-model="info.mobile" ></el-input></el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="4" align = "right">身份证号：</el-col>
-          <el-col :span="8"><el-input v-model="info.idcard" ></el-input></el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="4" align = "right">QQ:</el-col>
-          <el-col :span="8"><el-input v-model="info.qq" ></el-input></el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="4" align = "right">一句话简介</el-col>
-          <el-col :span="20"><el-input v-model="info.introduction"></el-input></el-col>
-        </el-row>
+        <el-form :label-position="right" label-width="100px">
+          <el-form-item label="昵称：">
+            <el-input v-model="info.nickname"></el-input>
+          </el-form-item>
+          <el-form-item label="姓名：" >
+            <el-input v-model="info.realname"></el-input>
+          </el-form-item>
+          <el-form-item label="性别：" >
+            <el-input v-model="info.sex"  ></el-input>
+          </el-form-item>
+          <el-form-item label="联系电话：">
+            <el-input v-model="info.mobile" ></el-input>
+          </el-form-item>
+          <el-form-item label="身份证号：">
+            <el-input v-model="info.idcard" ></el-input>
+          </el-form-item>
+          <el-form-item label="QQ：">
+            <el-input v-model="info.qq" ></el-input>
+          </el-form-item>
+          <el-form-item label="一句话简介：">
+            <el-input v-model="info.introduction" ></el-input>
+          </el-form-item>
+        </el-form>
       </el-collapse-item>
       <el-collapse-item title="公司信息" name="2">
-        <el-row :gutter="20">
-          <el-col :span="4" align = "right">公司名称:</el-col>
-          <el-col :span="8">
-            <el-select v-model="value" placeholder="请选择">
+        <el-form :label-position="right" label-width="100px">
+          <el-form-item label="公司名称：">
+            <el-select v-model="value" placeholder="请选择公司名称">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item in companyList"
+                :key="item.id"
+                :label="item.companyName"
+                :value="item.companyName">
               </el-option>
-            </el-select></el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="4" align = "right">部门：</el-col>
-          <el-col :span="8"><el-input v-model="info.department"></el-input></el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="4" align = "right">职位：</el-col>
-          <el-col :span="8"><el-input v-model="info.position"></el-input></el-col>
-        </el-row>
+            </el-select>
+          </el-form-item>
+          <div class="tip">找不到公司？尝试 <span class="tips" @click = "reFresh"> 刷新本页</span> 或者 <span class="tips" @click = "createCompany">新建一个公司</span></div>
+          <el-form-item label="部门：">
+            <el-input v-model="info.department"></el-input>
+          </el-form-item>
+          <el-form-item label="职位：">
+            <el-input v-model="info.position"></el-input>
+          </el-form-item>
+        </el-form>
       </el-collapse-item>
       <el-col>
         <el-button  @click="addFriend" >完成</el-button>
@@ -65,7 +58,7 @@
 </template>
 
 <script>
-  import { addFriend } from '@/api/table'
+  import { addFriend, companyList } from '@/api/friends'
   export default {
     data() {
       return {
@@ -78,28 +71,14 @@
           qq: '',
           introduction: ''
         },
+        right: 'right',
         input: '',
         value: '',
         activeNames: ['1', '2'],
         disabled: true,
         isShow: true,
         isShoww: true,
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }]
+        companyList: []
       }
     },
     filters: {
@@ -113,11 +92,16 @@
       }
     },
     created() {
-      if (this.$route.path !== '/friends/create') {
-        this.fetchData()
-      }
+      this.getCompany()
     },
     methods: {
+      open3() {
+        this.$notify({
+          title: '成功',
+          message: '这是一条成功的提示消息',
+          type: 'success'
+        })
+      },
       addFriend() {
         //  验证信息不能为空
         if (Object.keys(this.info).every((key, index, arry) => {
@@ -128,38 +112,27 @@
         }
 
         var params = {
-          'companyId': '2',
-          'companyName': '',
-          'creator': '',
-          'department': '',
-          'endDate': '',
-          'endTime': '',
+
           'id': this.id,
           'idcard': this.info.idcard,
           'introduction': this.info.introduction,
           'isCompanyPublic': true,
           'mobile': this.info.mobile,
-          'modifier': '',
-          'modifyTime': '',
           'nickname': this.info.nickname,
-          'order': '',
           'pageNum': 1,
           'pageSize': 10,
-          'password': '',
-          'position': '',
           'qq': this.info.qq,
           'realname': this.info.realname,
-          'searchWord': '',
-          'sex': this.info.sex,
-          'sort': '',
-          'startDate': '',
-          'startTime': '',
-          'status': ''
+          'sex': this.info.sex
         }
         addFriend(params).then(response => {
+          this.$notify({
+            title: '创建成功',
+            type: 'success'
+          })
           if (response.success) {
             this.info = response.data || this.info
-            alert('SUCCESS')
+
             this.$router.push({ path: '/friends/index' })
           }
         })
@@ -171,6 +144,18 @@
       },
       handleChange() {
         console.log('handleChange')
+      },
+      getCompany() {
+        companyList({}).then(response => {
+          this.companyList = response.data.content
+          this.companyList.unshift({ companyName: '未知' })
+        })
+      },
+      createCompany() {
+        this.value = '未知'
+      },
+      reFresh() {
+        window.location.reload()
       }
     }
   }
@@ -188,5 +173,16 @@
   .hide{
     display: none;
   }
-
+  .el-form-item{
+    width: 300px;
+  }
+  .tip{
+    position: relative;
+    top: -10px;
+    left: 30px;
+  }
+  .tips{
+    color: blue;
+    cursor: pointer;
+  }
 </style>
