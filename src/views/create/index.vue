@@ -31,6 +31,7 @@
         <el-form :label-position="right" label-width="100px">
           <el-form-item label="公司名称：">
             <el-select v-model="value" placeholder="请选择公司名称">
+
               <el-option
                 v-for="item in companyList"
                 :key="item.id"
@@ -62,14 +63,18 @@
   export default {
     data() {
       return {
+        // 添加接口只需传页面需要的字段
         info: {
-          nickname: '',
-          realname: '',
-          sex: '',
-          mobile: '',
-          idcard: '',
-          qq: '',
-          introduction: ''
+          nickname: '', // 昵称
+          realname: '', // 姓名
+          sex: '', // 性别：1男2女
+          mobile: '', // 联系电话
+          idcard: '', // 身份证
+          qq: '', // qq
+          introduction: '', // 简介
+          companyId: '', // 公司id
+          department: '', // 部门
+          position: '' // 职位
         },
         right: 'right',
         input: '',
@@ -110,7 +115,6 @@
           console.log('无输入个人信息')
           return
         }
-
         var params = {
 
           'id': this.id,
@@ -135,6 +139,8 @@
 
             this.$router.push({ path: '/friends/index' })
           }
+        },error => {
+          console.log(error);
         })
       },
       cancelEdit() {

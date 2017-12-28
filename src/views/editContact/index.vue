@@ -4,76 +4,73 @@
 		  <el-form-item label="联系人信息" style="border-bottom: 1px solid #ccc;"></el-form-item>
 			<el-form-item label="用户昵称">
 				<el-col :span="4">
-					<el-input v-model="form.name"></el-input>
+					<el-input v-model="form.friendNickname" :disabled="disabled"></el-input>
 				</el-col>
 			</el-form-item>
 			<el-form-item label="用户名">
 				<el-col :span="4">
-					<el-select v-model="form.region" placeholder="焦小姐的朋友1">
-						<el-option label="焦小姐的朋友1" value="shanghai"></el-option>
-						<el-option label="焦小姐的朋友2" value="beijing"></el-option>
-						<el-option label="焦小姐的朋友3" value="beijing"></el-option>
-						<el-option label="焦小姐的朋友4" value="beijing"></el-option>
-						<el-option label="焦小姐的朋友5" value="beijing"></el-option>
+					<el-select v-model="form.friendRealname" placeholder="焦小姐的朋友1" :disabled="disabled">
+						<el-option v-for="item in friendOptions" :key="item" :label="item" :value="item">
+        				</el-option>
 					</el-select>
 				</el-col>
 				<el-col :span="8" style="text-align: center;">找不到用户？尝试&nbsp;
-					<a href="javascript:;" style="color: #1482F0;">刷新本页</a>&nbsp;或者
-					<a href="#" style="color: #1482F0;">&nbsp;新建一个朋友</a>
+					<router-link :to="{path:'/message/editContact/'+this.id}" style="color: #1482F0;">刷新本页</router-link>&nbsp;或者&nbsp;
+					<router-link :to="{path:'/friends/index'}" style="color: #1482F0;">新建一个朋友</router-link>
 				</el-col>
 			</el-form-item>
 			<el-form-item label="电话*">
 				<el-col :span="4">
-					<el-input v-model="form.name" placeholder="400-777-8700" disabled></el-input>
+					<el-input  placeholder="400-777-8700" :disabled="disabled"></el-input>
 				</el-col>
 			</el-form-item>
 			<el-form-item label="QQ">
 				<el-col :span="4">
-					<el-input v-model="form.name" placeholder="如果有QQ号" disabled></el-input>
+					<el-input  placeholder="如果有QQ号" :disabled="disabled"></el-input>
 				</el-col>
 			</el-form-item>
 			<el-form-item label="微信">
 				<el-col :span="4">
-					<el-input v-model="form.name" placeholder="如果有微信号" disabled></el-input>
+					<el-input  placeholder="如果有微信号" :disabled="disabled"></el-input>
 				</el-col>
 			</el-form-item>
 			<el-form-item label="一句话简介">
-				<el-input v-model="form.name" placeholder="谁的客户谁负责" disabled></el-input>
+				<el-input v-model="form.title" placeholder="谁的客户谁负责" :disabled="disabled"></el-input>
 			</el-form-item>
 			<el-form-item label="公司信息" style="border-bottom: 1px solid #ccc;">
 				<div style="float: right;">
 					公开
-				<el-switch v-model="value2" active-color="#13ce66" inactive-color="#ff4949">
+				<el-switch v-model="form.isMessagePublic" active-color="#13ce66" inactive-color="#ff4949">
 				</el-switch>
 				</div>
 			</el-form-item>
 			<el-form-item label="公司名称">
 				<el-col :span="8">
-					<el-input v-model="form.name" placeholder="400-777-8700" disabled></el-input>
+					<el-input v-model="form.companyName " placeholder="400-777-8700" :disabled="disabled"></el-input>
 				</el-col>
-				<el-switch v-model="value3" active-color="#13ce66" inactive-color="#ccc" style="float: right;">
+				<el-switch v-model="form.isCompanyPublic" active-color="#13ce66" inactive-color="#ccc" style="float: right;">
 				</el-switch>
 			</el-form-item>
 			<el-form-item label="公司性质">
 				<el-col :span="8">
-					<el-input v-model="form.name" placeholder="如果有QQ号" disabled></el-input>
+					<el-input  placeholder="贸易商" :disabled="disabled"></el-input>
 				</el-col>
 			</el-form-item>
 			<el-form-item label="公司位置">
 				<el-col :span="8">
-					<el-input v-model="form.name" placeholder="如果有微信号" disabled></el-input>
+					<el-input  placeholder="山东 淄博" :disabled="disabled"></el-input>
 				</el-col>
 			</el-form-item>
 			<el-form-item label="联系电话">
 				<el-col :span="8">
-					<el-input v-model="form.name" placeholder="如果有微信号" disabled></el-input>
+					<el-input placeholder="18618287052" :disabled="disabled"></el-input>
 				</el-col>
 			</el-form-item>
 			<el-form-item label="信誉值">
 				<el-col :span="4">50</el-col>
 			</el-form-item>
 			<el-form-item>
-				<el-button>上一步</el-button>
+				<router-link :to="{path:'/message/editContent/'+this.id}"><el-button>上一步</el-button></router-link>
 				<el-button type="primary">预览</el-button>
 			</el-form-item>
 		</el-form>
@@ -81,139 +78,54 @@
 </template>
 
 <script>
-//	form: {
-//					ai: '',
-//					ash: '',
-//					bagPrice: '',
-//					ca: '',
-//					companyId: '',
-//					companyName: '',
-//					consultCount: '',
-//					creator: '',
-//					density: '',
-//					description: '',
-//					endDate: '',
-//					endTime: '',
-//					fe: '',
-//					friendId: '',
-//					friendNickname: '',
-//					friendRealname: '',
-//					id: '',
-//					images: '',
-//					inspectionReport: '',
-//					isCompanyPublic: '',
-//					label: '',
-//					modifier: '',
-//					modifyTime: '',
-//					na: '',
-//					ni: '',
-//					order: '',
-//					pageNum: '',
-//					pageSize: '',
-//					particle: '',
-//					petrolType: '',
-//					ph: '',
-//					pi: '',
-//					productArea: '',
-//					reservePrice: '',
-//					resistance: '',
-//					searchWord: '',
-//					si: '',
-//					sort: '',
-//					startDate: '',
-//					startTime: '',
-//					status: '',
-//					su: '',
-//					tenderNum: '',
-//					title: '',
-//					totalQuantity: '',
-//					type: '',
-//					va: '',
-//					vibration: '',
-//					volatiles: '',
-//					water: ''
-//				}
-   	export default {
-   		data() {
-   			return {
-   				value1: true,
-   				value2: true,
-   				value3: true,
-   				value4: true,
-   				form: {
-   					name:'',
-   					region: '',
-   					date1: '',
-   					date2: '',
-   					delivery: false,
-   					type: [],
-   					resource: '',
-   					desc: ''
-   				}
-   			}
-   		}
-// 		methods: {
-// 			//重新加载页面
-// 			upload(){
-// 				this.$router.replace("/");
-// 			},
-// 			onSubmit() {
-// 				this.$message('submit!')
-// 			},
-// 			onCancel() {
-// 				this.$message({
-// 					message: 'cancel!',
-// 					type: 'warning'
-// 				})
-// 			}
-// 		}
-   	}
-
-// export default {
-//   data() {
-//     return {
-//       list: null,
-//       listLoading: true,
-//       input: '',
-//       options: [{
-//         value: '选项1',
-//         label: '黄金糕'
-//       }, {
-//         value: '选项2',
-//         label: '双皮奶'
-//       }, {
-//         value: '选项3',
-//         label: '蚵仔煎'
-//       }, {
-//         value: '选项4',
-//         label: '龙须面'
-//       }, {
-//         value: '选项5',
-//         label: '北京烤鸭'
-//       }]
-//     }
-//   },
-//   filters: {
-//     statusFilter(status) {
-//       const statusMap = {
-//         published: 'success',
-//         draft: 'gray',
-//         deleted: 'danger'
-//       }
-//       return statusMap[status]
-//     }
-//   },
-//   created() {
-//     this.fetchData()
-//   },
-//   methods: {
-//     fetchData() {
-//       this.listLoading = true
-//       getList().then(response => {
-//         this.list = response.data.items
-//         this.listLoading = false
-//       })
-//     }
-//   }
-// }
+	import {detailMessage} from '@/api/message'
+	import {bus} from '@/bus'
+	export default {
+		data() {
+			return {
+				disabled:true,
+				id:this.$route.params.id,
+				friendOptions: ['焦小姐的朋友1', '焦小姐的朋友2', '焦小姐的朋友3', '焦小姐的朋友4', '焦小姐的朋友5'],
+				cancelStatus: '',
+				nextStatus: '',
+				textMap: {
+					update: '编辑',
+					create: '添加'
+				},
+				form:{
+					friendNickname: '',
+					friendRealname: '',
+					title: '',
+					isCompanyPublic:true,
+					isMessagePublic:true,
+					companyName: ''
+				}
+			}
+		},
+		created() {
+			this.fetchDetail();
+			bus.$on('sub', (msg) => {
+				this.disabled = msg;
+				console.log(this.disabled)
+			})
+		},
+		methods: {
+			//获取编辑页信息
+			fetchDetail(){
+				detailMessage(this.id).then(response => {
+			        this.form = response.data
+	      		})
+			}
+			
+			//编辑下一步
+//			editNext() {
+//				addMessage(this.list).then(response => {
+//			 		console.log(response.data)
+//			        this.form = response.data.content
+//		      	})
+//				this.$router.push({path:'/message/editContact'})
+//			}
+			
+		}
+	}
 </script>
