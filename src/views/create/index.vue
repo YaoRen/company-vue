@@ -3,7 +3,7 @@
     <el-collapse v-model="activeNames">
       <!--<el-collapse v-model="activeNames" @change="handleChange">-->
       <el-collapse-item title="个人信息" name="1" >
-        <el-form :label-position="right" label-width="100px">
+        <el-form :label-position="right" label-width="96px">
           <el-form-item label="昵称：">
             <el-input v-model="info.nickname"></el-input>
           </el-form-item>
@@ -186,7 +186,7 @@
     display: none;
   }
   .el-form-item{
-    width: 300px;
+    width: 280px;
   }
   .tip{
     position: relative;

@@ -1,7 +1,7 @@
 <template>
 
   <div class="app-container">
-    <el-form ref="form" :model="form" label-width="100px" class = "cl">
+    <el-form ref="form" :model="form" label-width="80px" class = "cl">
 
           <el-form-item label="手机号码" class = "left width_280 mr_40">
             <el-input v-model="form.mobile"></el-input>
@@ -31,9 +31,9 @@
           </el-form-item>
     </el-form>
     <el-col>
-    <el-button type="primary" @click="fetchData">查询数据</el-button>
-    <el-button type="primary" @click="onSubmit">导出数据</el-button>
-    <el-button type="primary" @click="addFriend" class = "right">新建朋友</el-button>
+    <el-button type="primary" @click="fetchData" size = "small">查询数据</el-button>
+    <el-button type="primary" @click="onSubmit" size = "small">导出数据</el-button>
+    <el-button type="primary" @click="addFriend" class = "right" size = "small">新建朋友</el-button>
     </el-col>
     <template>
       <el-table :data="list" style="width: 100%" align="left">
@@ -221,7 +221,7 @@
     float: left;
   }
   .width_280{
-    width: 300px;
+    width: 280px;
   }
   .mr_40{
     margin-right: 40px;

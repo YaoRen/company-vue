@@ -7,8 +7,8 @@
           <el-button  @click="editFriend" v-show='!isShow' size="mini">完成</el-button>
           <el-button  @click="cancelEdit" v-show='!isShow' size="mini" >取消编辑</el-button>
         </p>
-        <el-form :label-position="right" label-width="100px">
-          <el-form-item label="昵称：">
+        <el-form :label-position="right" label-width="96px">
+          <el-form-item label="昵称：" >
             <el-input v-model="info.nickname" :disabled="disabled" ></el-input>
           </el-form-item>
           <el-form-item label="姓名：" >
@@ -20,13 +20,13 @@
               <el-option :label = "girl" value = "女"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="联系电话：">
+          <el-form-item label="联系电话：" >
             <el-input v-model="info.mobile" :disabled="disabled" ></el-input>
           </el-form-item>
           <el-form-item label="身份证号：">
             <el-input v-model="info.idcard" :disabled="disabled" ></el-input>
           </el-form-item>
-          <el-form-item label="QQ：">
+          <el-form-item label="QQ：" >
             <el-input v-model="info.qq" :disabled="disabled" ></el-input>
           </el-form-item>
           <el-form-item label="一句话简介：">
@@ -251,7 +251,7 @@ export default {
     display: none;
   }
   .el-form-item{
-    width: 300px;
+    width: 280px;
   }
   .tip{
     position: relative;
