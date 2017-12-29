@@ -16,7 +16,7 @@
 				</el-col>
 				<el-col :span="8" style="text-align: center;">找不到用户？尝试&nbsp;
 					<router-link :to="{path:'/message/addContact'}" style="color: #1482F0;">刷新本页</router-link>&nbsp;或者&nbsp;
-					<router-link :to="{path:'/friends/index'}" style="color: #1482F0;">新建一个朋友</router-link>
+					<router-link :to="{path:'/friends/create'}" style="color: #1482F0;">新建一个朋友</router-link>
 				</el-col>
 			</el-form-item>
 			<el-form-item label="电话*">
@@ -70,8 +70,8 @@
 				<el-col :span="4">50</el-col>
 			</el-form-item>
 			<el-form-item>
-				<router-link :to="{path:'/message/editContent/'+this.id}"><el-button>上一步</el-button></router-link>
-				<el-button type="primary" @click="preview">预览</el-button>
+				<router-link :to="{path:'/message/addContent/'}"><el-button>上一步</el-button></router-link>
+				<el-button type="primary" @click="preview">确定</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -79,18 +79,13 @@
 
 <script>
 	import {addMessage} from '@/api/message'
+	import {bus} from '@/bus'
 	export default {
 		data() {
 			return {
 				disabled:false,
 				id:this.$route.params.id,
 				friendOptions: ['焦小姐的朋友1', '焦小姐的朋友2', '焦小姐的朋友3', '焦小姐的朋友4', '焦小姐的朋友5'],
-				cancelStatus: '',
-				nextStatus: '',
-				textMap: {
-					update: '编辑',
-					create: '添加'
-				},
 				form:{
 					friendNickname: '',
 					friendRealname: '',
@@ -100,6 +95,11 @@
 					companyName: ''
 				}
 			}
+		},
+		created(){
+			bus.$on('adds', (msg) => {
+				this.form=Object.assign(this.form, msg);
+			})
 		},
 		methods: {
 			//获取编辑页信息
@@ -113,9 +113,9 @@
 					'companyName': this.form.companyName
 				}
 				addMessage(list).then(response => {
-			        this.form = response.data
+			        this.form = Object.assign(this.form, response.data);
 	      		})
-				this.$router.push({path:'/message/addContent'});
+				this.$router.push({path:'/message/index'});
 			}
 			
 			//编辑下一步

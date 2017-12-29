@@ -143,10 +143,10 @@
 			</el-form-item>
 			<el-form-item label="质检报告"></el-form-item>
 			<el-form-item>
-				<!--<el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" multiple :limit="3" :on-exceed="handleExceed" :file-list="fileList">
+				<el-upload class="upload-demo" action="http://petrocoke-ops-dev.obaymax.com/file/uploadFiles/"  type="file" :limit="1"  :show-file-list="false" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess">
 					<el-button size="small" type="primary">添加质检报告</el-button>
-					<e-col slot="tip" class="el-upload__tip" style="margin-left: 20px;">一份标准的质检报告会大大缩短交易时间 （请上传小于5MB的pdf文件）</e-col>
-				</el-upload>-->
+					<el-col slot="tip" class="el-upload__tip" style="margin-left: 20px;">一份标准的质检报告会大大缩短交易时间 （请上传小于5MB的pdf文件）</el-col>
+				</el-upload>
 			</el-form-item>
 
 			<el-form-item label="其他"></el-form-item>
@@ -158,25 +158,23 @@
 				<el-col :span="10">如您可提供此项服务供买家选择，请填写相关价格（选填）</el-col>
 			</el-form-item>
 			<el-form-item label="商品图片">
-				<!--<el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :file-list="fileList2" list-type="picture">
+				<el-upload class="upload-demo" action="http://petrocoke-ops-dev.obaymax.com/file/uploadImage/" list-type="picture" type="file" :before-upload="beforeUpload" :on-success="handleSuccess">
 					<el-button size="small" type="primary">+相关图片</el-button>
-					<e-col slot="tip" class="el-upload__tip" style="margin-left: 20px;">请上传小于2M PNG、JPG、GIF、JPEG商品相关图片</e-col>
+					<el-col slot="tip" class="el-upload__tip" style="margin-left: 20px;">请上传小于2M PNG、JPG、GIF、JPEG商品相关图片</el-col>
 					<div>上传历史</div>
-				</el-upload>-->
+				</el-upload>
 			</el-form-item>
 		</el-form>
 		<div slot="footer" class="dialog-footer">
-			<!--<el-button v-if="cancelStatus=='create'">取消编辑</el-button>-->
 			<router-link :to="{path:'/message/index'}"><el-button>取消</el-button></router-link>
 			<el-button type="primary" @click="addNext">下一步</el-button>
-			<!--<el-button type="primary" @click="editNext()">下一步</el-button>-->
-			<!--<el-button v-else type="primary" @click="dataDetail">下一步</el-button>-->
 		</div>
 	</div>
 </template>
 
 <script>
 	import {addMessage} from '@/api/message'
+	import {bus} from '@/bus'
 	export default {
 		data() {
 			return {
@@ -184,8 +182,6 @@
 				id:this.$route.params.id,
 				petrolTypeOptions: ['石油焦', '煅后焦'],
 				productAreaOptions: ['东北地区', '华北地区', '华东地区', '华南地区', '华中地区', '西北地区', '西南地区', '其他', '请选择产地'],
-				cancelStatus: '',
-				nextStatus: '',
 				form:{
 					ai: '',
 					ash: '',
@@ -255,6 +251,7 @@
 				};
 				addMessage(list).then(response => {
 			        this.form = response.data
+			        bus.$emit('adds', this.form);
 	      		})
 				this.$router.push({path:'/message/addContact'});
 			},
@@ -266,7 +263,38 @@
 //			        console.log(response.data)
 //	      		})
 //			}
-			
+			//添加质检报告
+			 beforeAvatarUpload(file) {
+		        const isPDF = file.type === 'image/pdf';
+		        const isLt5M = file.size / 1024 / 1024 < 5;
+		
+		        if (!isPDF) {
+		          this.$message.error('上传头像图片只能是 PDF 格式!');
+		        }
+		        if (!isLt5M) {
+		          this.$message.error('上传头像图片大小不能超过 5MB!');
+		        }
+		        return isPDF && isLt5M;
+      		},
+      		handleAvatarSuccess(res, file) {
+		        this.form.inspectionReport = URL.createObjectURL(file.raw);
+	      	},
+		    //添加图片
+			beforeUpload(file) {
+		        const isImg = file.type !== 'image/pdf';
+		        const isLt2M = file.size / 1024 / 1024 < 2;
+		
+		        if (!isImg) {
+		          this.$message.error('上传头像图片只能是 PNG、JPG、GIF、JPEG 格式!');
+		        }
+		        if (!isLt2M) {
+		          this.$message.error('上传头像图片大小不能超过 2MB!');
+		        }
+		        return isImg && isLt2M;
+      		},
+		    handleSuccess(res, file) {
+	        	this.form.images = URL.createObjectURL(file.raw);
+	      	}
 			
 		}
 	}
