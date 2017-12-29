@@ -167,9 +167,10 @@
 		</el-form>
 		<div slot="footer" class="dialog-footer">
 			<!--<el-button v-if="cancelStatus=='create'">取消编辑</el-button>-->
-			<el-button v-if="editStatus" @click="editMs">编辑</el-button>
-			<el-button v-if="!editStatus" @click="cancelEditMs">取消编辑</el-button>
-			<el-button type="primary" @click="nextEditMs">下一步</el-button>
+			<el-button v-if="editStatus" @click="fetchEdit">编辑</el-button>
+			<el-button v-else @click="cancelEditMs">取消编辑</el-button>
+			<el-button v-if="editStatus" type="primary" @click="nextDetailMs">下一步</el-button>
+			<el-button v-else type="primary" @click="nextEditMs">下一步</el-button>
 			<!--<el-button type="primary" @click="editNext()">下一步</el-button>-->
 			<!--<el-button v-else type="primary" @click="dataDetail">下一步</el-button>-->
 		</div>
@@ -191,61 +192,33 @@
 					update: '编辑',
 					create: '添加'
 				},
-				form:{
-					ai: '',
-					ash: '',
-					bagPrice: '',
-					ca: '',
-					density: '',
-					description: '',
-					fe: '',
-					images: '',
-					inspectionReport: '',
-					label: '',
-					na: '',
-					ni: '',
-					particle: '',
-					petrolType: '',
-					ph: '',
-					pi: '',
-					reservePrice: '',
-					resistance: '',
-					si: '',
-					status: '',
-					su: '',
-					productArea: '',
-					va: '',
-					vibration: '',
-					volatiles: '',
-					water: ''
-				},
+				form:{}
 //				list:{
-//					'ai': this.form.ai,
-//					'ash': this.form.ash,
-//					'bagPrice': this.form.bagPrice,
-//					'ca': this.form.ca,
-//					'density': this.form.density,
-//					'description': this.form.description,
-//					'fe': this.form.fe,
-//					'images': this.form.images,
-//					'inspectionReport': this.form.inspectionReport,
-//					'label': this.form.label,
-//					'na': this.form.na,
-//					'ni': this.form.ni,
-//					'particle': this.form.particle,
-//					'petrolType': this.form.petrolType,
-//					'ph': this.form.ph,
-//					'pi': this.form.pi,
-//					'reservePrice': this.form.reservePrice,
-//					'resistance': this.form.resistance,
-//					'si': this.form.si,
-//					'status': this.form.status,
-//					'su': this.form.su,
-//					'productArea': this.form.productArea,
-//					'va': this.form.va,
-//					'vibration': this.form.vibration,
-//					'volatiles': this.form.volatiles,
-//					'water': this.form.water
+//					ai: '',
+//					ash: '',
+//					bagPrice: '',
+//					ca: '',
+//					density: '',
+//					description: '',
+//					fe: '',
+////					images: '',
+////					inspectionReport: '',
+//					label: '',
+//					na: '',
+//					ni: '',
+//					particle: '',
+//					petrolType: '',
+//					ph: '',
+//					pi: '',
+//					reservePrice: '',
+//					resistance: '',
+//					si: '',
+//					su: '',
+//					productArea: '',
+//					va: '',
+//					vibration: '',
+//					volatiles: '',
+//					water: ''
 //				}
 			}
 		},
@@ -255,28 +228,74 @@
 		methods: {
 			//获取详情页信息
 			fetchDetail(){
-				detailMessage(this.id).then(response => {
-			        this.form = response.data;
-//			        console.log(this.$refs.form)
-	      		})
+				bus.$on('sub', (msg) => {
+					this.disabled=msg;
+				})
+				if(this.disabled){
+					detailMessage(this.id).then(response => {
+			        	this.form = response.data;
+			        	console.log(11)
+	      			})
+				}else{
+					this.disabled=false;
+					detailMessage(this.id).then(response => {
+			        	this.form = response.data;
+			        	console.log(11)
+	      			})
+				}
+				
 			},
-			//获取编辑页面
-			editMs(){
+			//获取编辑页信息
+			fetchEdit(){
 				this.editStatus = !this.editStatus;
 				this.disabled=false;
-				editMessage(this.form).then(response => {
-			        console.log(response.data)
-	      		})
+//				bus.$emit('sub', this.disabled);
 			},
 			//下一个编辑页面
 			nextEditMs(){
-				bus.$emit('sub', this.disabled);
+				var params={
+					'ai': this.form.ai,
+					'ash': this.form.ash,
+					'bagPrice': this.form.bagPrice,
+					'ca': this.form.ca,
+					'density': this.form.density,
+					'description': this.form.description,
+					'fe': this.form.fe,
+//					'images': this.form.images,
+//					'inspectionReport': this.form.inspectionReport,
+					'label': this.form.label,
+					'na': this.form.na,
+					'ni': this.form.ni,
+					'particle': this.form.particle,
+					'petrolType': this.form.petrolType,
+					'ph': this.form.ph,
+					'pi': this.form.pi,
+					'reservePrice': this.form.reservePrice,
+					'resistance': this.form.resistance,
+					'si': this.form.si,
+					'su': this.form.su,
+					'productArea': this.form.productArea,
+					'va': this.form.va,
+					'vibration': this.form.vibration,
+					'volatiles': this.form.volatiles,
+					'water': this.form.water,
+					'id':this.$route.params.id
+				}
+				//提交编辑内容页面
+				editMessage(params).then(response => {
+			        this.form = response.data;
+	      		})
+				this.$router.push({path:'/message/editContact/'+this.id})
+			},
+			//下一个详情页面
+			nextDetailMs(){
 				this.$router.push({path:'/message/editContact/'+this.id})
 			},
 			//取消编辑
 			cancelEditMs(){
 				this.editStatus = !this.editStatus;
 				this.disabled=true;
+				bus.$emit('sub', this.disabled);
 			}
 			
 			

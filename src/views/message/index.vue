@@ -10,7 +10,8 @@
 					</el-col>
 					<el-col :span="2" style="text-align: center;">创建时间</el-col>
 					<el-col :span="4">
-						<el-date-picker type="datetime" placeholder="点击选择时间区间" v-model="listQuery.createTime" class="filter-item"></el-date-picker>
+						<el-date-picker style="width: 200px;" v-model="date" type="daterange" start-placeholder="开始日期"  end-placeholder="结束日期" class="filter-item">
+						</el-date-picker>
 					</el-col>
 					<el-col :span="2" style="text-align: center;">询价量</el-col>
 					<el-col :span="4">
@@ -25,21 +26,21 @@
 					<el-col :span="2" style="text-align: center;">商品类型</el-col>
 					<el-col :span="4">
 						<el-select v-model="listQuery.petrolType" placeholder="全部商品" class="filter-item">
-							<el-option v-for="item in petrolTypeOptions" :key="item" :label="item" :value="item">
+							<el-option v-for="(item,index) in petrolTypeOptions" :key="item" :label="item" :value="index+1">
 	        				</el-option>
 						</el-select>
 					</el-col>
 					<el-col :span="2" style="text-align: center;">消息类型</el-col>
 					<el-col :span="4">
-						<el-select v-model="listQuery.type" placeholder="全部招标" class="filter-item">
-							<el-option v-for="item in typeOptions" :key="item" :label="item" :value="item">
+						<el-select v-model="listQuery.type" placeholder="请选择" class="filter-item">
+							<el-option v-for="(item,index) in typeOptions" :key="item" :label="item" :value="index+1">
 	        				</el-option>
 						</el-select>
 					</el-col>
 					<el-col :span="2" style="text-align: center;">消息状态</el-col>
 					<el-col :span="4">
 						<el-select v-model="listQuery.status" placeholder="草稿" class="filter-item">
-							<el-option v-for="item in statusOptions" :key="item" :label="item" :value="item">
+							<el-option v-for="(item,index) in statusOptions" :key="item" :label="item" :value="index">
 	        				</el-option>
 						</el-select>
 					</el-col>
@@ -72,7 +73,7 @@
 			<el-table-column label="消息类型" width="110px" align="center">
 				<template slot-scope="scope">
 					<span v-if="scope.row.type === 1">供给标</span>
-					<span v-else>需求标</span>
+					<span v-else-if="scope.row.type === 2">需求标</span>
 				</template>
 			</el-table-column>
 			<el-table-column label="创建时间" width="110px" align="center">
@@ -111,17 +112,22 @@
 			</el-table-column>
 			<el-table-column class-name="status-col" label="操作" width="110" align="center">
 				<template slot-scope="scope">
-					<span v-if="scope.row.status === 2" @click="confirmTrue(scope.row.id)" style="color: #1482F0;cursor: pointer;">验真</span>
-					<span v-else>验真</span>
+					<span @click="confirmTrue(scope.row.id)" style="color: #1482F0;cursor: pointer;">验真</span>
+					<!--<span v-else>验真</span>-->
 				</template>
 			</el-table-column>
 		</el-table>
+		<!--分页-->
+		<div class="block">
+		  <el-pagination layout="prev, pager, next" @current-change="handleCurrentChange" :current-page.sync="listQuery.pageNum" :total="all">
+		  </el-pagination>
+		</div>
 		<!--验真-->
 		<el-dialog title="验真凭据" :visible.sync="dialogFormVisible">
 			<el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
 				<div style='margin:0 0 5px 20px'>可多选</div>
 				<el-form-item>
-					<el-checkbox-group v-model="checkboxVal">
+					<el-checkbox-group v-model="temp.options">
 						<el-checkbox label="1">已取得质检报告</el-checkbox><br />
 						<el-checkbox label="2">已取得其它验真凭据</el-checkbox><br />
 						<el-checkbox label="3">已电话联系发布消息人核实信息</el-checkbox><br />
@@ -135,7 +141,7 @@
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
-				<router-link :to="{path:'/message/editContent/'+this.id}"><el-button type="primary">补充完善资料</el-button></router-link>
+				<el-button type="primary" @click="addData">补充完善资料</el-button>
 				<el-button @click="dialogFormVisible = false">无需完善</el-button>
 			</div>
 		</el-dialog>
@@ -148,19 +154,19 @@
 	export default {
 		data() {
 			return {
-				petrolTypeOptions: ['石油焦','煅后焦','海绵焦','针状焦','弹丸焦'],
-				typeOptions: ['全部招标','供应招标','采购招标'],
+				petrolTypeOptions: ['石油焦','煅后焦'],
+				typeOptions: ['供应招标','采购招标','请选择'],
 				statusOptions: ['草稿','未验证','验证中','已验证','已招标'],
-				checkboxVal:null,
 				temp: {
-					remark: '',
-					title: '',
-					type: ''
+					options:[],
+					remark: ''
 				},
 				dialogFormVisible: false,
 				list: null,
 				total: null,
+				all:null,
 				id:'',
+				date:'',
 				listQuery:{
 					pageNum: 1,
           			pageSize: 10,
@@ -172,7 +178,7 @@
 					friendNickname: '',
 					type:[],
 					petrolType: [],
-					status: '',
+					status: [],
 					friendRealname: ''
 				},
 				listLoading: true
@@ -199,46 +205,75 @@
 			this.fetchData()
 		},
 		methods: {
+			//显示验真页面
 			confirmTrue(row) {
 				this.dialogFormVisible = true;
 				this.id=row;
-//				confirmMessage(this.checkboxVal).then(reponse => {
-//					console.log(response.data)
-//				})
 			},
-		//	 		handleUpdate(row) {
-		//		      this.temp = Object.assign({}, row) 
-		//		      this.temp.timestamp = new Date(this.temp.timestamp)
-		//		      this.dialogStatus = 'update'
-		//		      this.dialogFormVisible = true
-		//		      this.$nextTick(() => {
-		//		        this.$refs['dataForm'].clearValidate()
-		//		      })
-		//		    },
-		//			addMessage() {
-		//				this.$router.push({ path: '/editContent' })
-		//			},
+			//补充完善资料
+			addData(){
+				var opts=this.temp.options.join(',');
+				var params={
+					  "id": this.id,
+					  "options": opts,
+					  "remark": this.temp.remark
+				}
+				//验真
+//				confirmMessage(params).then(reponse => {
+//					console.log(response)
+//				})
+				//跳转到详情页
+				this.$router.push({path:'/message/editContent/'+this.id})
+			},
 			//获取消息列表
 			fetchData() {
 				this.listLoading = true
 			 	getList(this.listQuery).then(response => {
 			        this.list = response.data.content
+			        this.all = response.data.totalElements
 			        this.listLoading = false
 		      	})
 			},
 			//查询列表
-			queryData() {
+			query(){
+				if (this.date.length !== 0) {
+		          var start = new Date(this.date[0])
+		          var end = new Date(this.date[1])
+		          this.time = {
+		            startTime : start.getFullYear() + '-' + (start.getMonth() + 1) + '-' + start.getDate(),
+		            endTime : end.getFullYear() + '-' + (end.getMonth() + 1) + '-' + end.getDate()
+		          }
+		        } else {
+		          this.time = {}
+		        }
+	          	var params = Object.assign(this.listQuery, this.time)
+//				var params={
+//					'pageNum': 1,
+//        			'pageSize': 10,
+//        			'totalPages':this.listQuery.totalPages,
+//        			'totalElements': this.listQuery.totalElements,
+//					'tenderNum': this.listQuery.tenderNum,
+//					'createTime': this.listQuery.createTime,
+//					'consultCount': this.listQuery.consultCount,
+//					'friendNickname': this.listQuery.friendNickname,
+//					'type': this.listQuery.type,
+//					'petrolType': this.listQuery.petrolType,
+//					'status': this.listQuery.status,
+//					'friendRealname': this.listQuery.friendRealname,
+//				}
 				this.listLoading = true
-			 	getList(this.listQuery).then(response => {
+				getList(params).then(response => {
 			        this.list = response.data.content
 			        this.total = response.data.totalElements
+			        this.all = response.data.totalElements
 			        this.listLoading = false
 		      	})
 			},
-			query(){
-				this.listQuery.pageNum = 1
-				this.queryData()
-			}
+			//分页
+		 	handleCurrentChange(val) {
+				this.listQuery.page = val
+				this.fetchData()
+		    }
 		}
 	}
 </script>
