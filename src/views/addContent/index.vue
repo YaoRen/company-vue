@@ -156,7 +156,7 @@
 			</el-form-item>
 			<el-form-item label="质检报告"></el-form-item>
 			<el-form-item>
-				<el-upload class="upload-demo" accept=".pdf" action="http://petrocoke-ops-dev.obaymax.com/file/uploadFiles/"  type="file" :limit="1" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess">
+				<el-upload class="upload-demo" accept=".pdf" action="http://petrocoke-ops-dev.obaymax.com/file/uploadImage"  type="file" :on-preview="handlePreview" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess">
 					<el-button size="small" type="primary">添加质检报告</el-button>
 					<el-col slot="tip" class="el-upload__tip">一份标准的质检报告会大大缩短交易时间 （请上传小于5MB的pdf文件）</el-col>
 				</el-upload>
@@ -171,7 +171,7 @@
 				<el-col :span="10">如您可提供此项服务供买家选择，请填写相关价格（选填）</el-col>
 			</el-form-item>
 			<el-form-item label="商品图片">
-				<el-upload class="upload-demo" action="http://petrocoke-ops-dev.obaymax.com/file/uploadImage/" list-type="picture" type="file" :before-upload="beforeUpload" :on-success="handleSuccess">
+				<el-upload class="upload-demo" action="http://petrocoke-ops-dev.obaymax.com/file/uploadImage" list-type="picture" type="file" :on-preview="handlePreviews" :before-upload="beforeUpload" :on-success="handleSuccess">
 					<el-button size="small" type="primary">+相关图片</el-button>
 					<el-col slot="tip" class="el-upload__tip" style="margin-left: 20px;">请上传小于2M PNG、JPG、GIF、JPEG商品相关图片</el-col>
 					<div>上传历史</div>
@@ -295,19 +295,22 @@
 //			}
 			//添加质检报告
 			 beforeAvatarUpload(file) {
-//		        const isPDF = file.type === 'image/pdf';
+		        const isPDF = file.type !== 'image/pdf';
 		        const isLt5M = file.size / 1024 / 1024 < 5;
 		
-//		        if (!isPDF) {
-//		          this.$message.error('上传头像图片只能是 PDF 格式!');
-//		        }
+		        if (!isPDF) {
+		          this.$message.error('上传头像图片只能是 PDF 格式!');
+		        }
 		        if (!isLt5M) {
 		          this.$message.error('上传头像图片大小不能超过 5MB!');
 		        }
-		        return isLt5M;
+		        return isPDF && isLt5M;
       		},
       		handleAvatarSuccess(res, file) {
-		        this.form.inspectionReport = URL.createObjectURL(file.raw);
+		        this.form.inspectionReport = res.data;
+	      	},
+	      	handlePreview(file){
+	      		window.open(file.response.data,'_blank');
 	      	},
 		    //添加图片
 			beforeUpload(file) {
@@ -323,9 +326,11 @@
 		        return isImg && isLt2M;
       		},
 		    handleSuccess(res, file) {
-	        	this.form.images = URL.createObjectURL(file.raw);
-	      	}
-			
+	        	this.form.images = res.data;
+	      },
+			handlePreviews(file){
+	      		window.open(file.response.data,'_blank');
+	      	},
 		}
 	}
 </script>
