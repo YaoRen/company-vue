@@ -22,10 +22,10 @@
           Sign in
         </el-button>
       </el-form-item>
-      <div class="tips">
+      <!-- <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
         <span> password: 123456</span>
-      </div>
+      </div> -->
     </el-form>
   </div>
 </template>
@@ -44,16 +44,16 @@ export default {
       }
     }
     const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('密码不能小于5位'))
+      if (value.length < 6) {
+        callback(new Error('密码不能小于6位'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'shiyoujiao',
-        password: 'shuanglian2017'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],

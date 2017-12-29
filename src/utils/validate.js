@@ -3,8 +3,9 @@
  */
 
 export function isvalidUsername(str) {
-  const valid_map = ['shiyoujiao', 'shuanglian2017']
-  return valid_map.indexOf(str.trim()) >= 0
+  // const valid_map = ['shiyoujiao', 'shuanglian2017']
+  // return valid_map.indexOf(str.trim()) >= 0
+  return str!=null && str!=undefined && str.trim().length>0;
 }
 
 /* 合法uri*/
