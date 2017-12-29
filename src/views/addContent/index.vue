@@ -32,17 +32,17 @@
 				</el-col>
 			</el-form-item>
 			<el-form-item label="类型标签*">
-				<el-radio-group v-model="form.label">
-					<el-radio-button v-for="(tag,index) in labelTag" :label=tag ></el-radio-button>
-				</el-radio-group>
-				<!--<span v-for="item in form.label" :key="item">
-					<el-tag v-if="item ==1">海绵焦</el-tag>
-					<el-tag v-else-if="item ==2" type="success">弹丸焦</el-tag>
-					<el-tag v-else-if="item ==3" type="info">针状焦</el-tag>
-					<el-tag v-else-if="item ==4" type="danger">煅后石油焦</el-tag>
-					<el-tag v-else-if="item ==5" type="warning">增碳剂</el-tag>
-					<el-tag v-else>收尘粉</el-tag>
-				</span>-->
+				<!--<el-radio-group v-model="form.label">-->
+					<!--<el-radio-button v-for="(tag,index) in labelTag" :label=tag ></el-radio-button>-->
+				<!--</el-radio-group>-->
+				<!--<span v-for="item in form.label" :key="item">-->
+					<!--<el-tag v-if="item ==1">海绵焦</el-tag>-->
+					<!--<el-tag v-else-if="item ==2" type="success">弹丸焦</el-tag>-->
+					<!--<el-tag v-else-if="item ==3" type="info">针状焦</el-tag>-->
+					<!--<el-tag v-else-if="item ==4" type="danger">煅后石油焦</el-tag>-->
+					<!--<el-tag v-else-if="item ==5" type="warning">增碳剂</el-tag>-->
+					<!--<el-tag v-else>收尘粉</el-tag>-->
+				<!--</span>-->
 			</el-form-item>
 
 			<el-form-item label="常规指标"></el-form-item>
@@ -297,7 +297,7 @@
 			 beforeAvatarUpload(file) {
 //		        const isPDF = file.type === 'image/pdf';
 		        const isLt5M = file.size / 1024 / 1024 < 5;
-		
+
 //		        if (!isPDF) {
 //		          this.$message.error('上传头像图片只能是 PDF 格式!');
 //		        }
@@ -313,7 +313,7 @@
 			beforeUpload(file) {
 		        const isImg = file.type !== 'image/pdf';
 		        const isLt2M = file.size / 1024 / 1024 < 2;
-		
+
 		        if (!isImg) {
 		          this.$message.error('上传头像图片只能是 PNG、JPG、GIF、JPEG 格式!');
 		        }
@@ -325,7 +325,7 @@
 		    handleSuccess(res, file) {
 	        	this.form.images = URL.createObjectURL(file.raw);
 	      	}
-			
+
 		}
 	}
 </script>
