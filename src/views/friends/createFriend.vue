@@ -115,12 +115,12 @@
       },
       addFriend() {
         //  验证信息不能为空
-        if (Object.keys(this.info).every((key, index, arry) => {
-          return this.info[key] === ''
-        })) {
-          console.log('无输入个人信息')
-          return
-        }
+        // if (Object.keys(this.info).every((key, index, arry) => {
+        //     return this.info[key] === '')
+        //   ){
+        //   console.log('无输入个人信息')
+        //   return
+        // }
         var params = {
 
           'id': this.id,
@@ -158,7 +158,7 @@
         console.log('handleChange')
       },
       getCompany() {
-        companyList({ 'businessStatus': '1', status: '2' }).then(response => {
+        companyList({ 'businessStatus': '1', status: '2', 'pageSize': 0 }).then(response => {
           this.companyList = response.data.content
           this.companyList.unshift({ companyName: '未知' })
         })

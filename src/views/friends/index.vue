@@ -3,37 +3,37 @@
   <div class="app-container">
     <el-form ref="form" :model="form" label-width="80px" class = "cl">
 
-          <el-form-item label="手机号码" class = "left width_280 mr_40">
-            <el-input v-model="form.mobile"></el-input>
-          </el-form-item>
-          <el-form-item label="用户名" class = "left width_280 mr_40">
-            <el-input v-model="form.username"></el-input>
-          </el-form-item>
-          <el-form-item label="注册时间" class = "left mr_40">
-            <el-date-picker
-              v-model="date"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-            >
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="所属公司" class = "left width_280 mr_40">
-            <el-input v-model="form.company"></el-input>
-          </el-form-item>
+      <el-form-item label="手机号码" class = "left width_280 mr_40">
+        <el-input v-model="form.mobile"></el-input>
+      </el-form-item>
+      <el-form-item label="用户名" class = "left width_280 mr_40">
+        <el-input v-model="form.username"></el-input>
+      </el-form-item>
+      <el-form-item label="注册时间" class = "left mr_40">
+        <el-date-picker
+          v-model="date"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        >
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="所属公司" class = "left width_280 mr_40">
+        <el-input v-model="form.company"></el-input>
+      </el-form-item>
 
-          <el-form-item label="冻结状态" class = "left width_280 mr_40">
-            <el-select v-model="form.status" placeholder="无限制">
-              <el-option label="未冻结" value="1"></el-option>
-              <el-option label="已冻结" value="2"></el-option>
-            </el-select>
-          </el-form-item>
+      <el-form-item label="冻结状态" class = "left width_280 mr_40">
+        <el-select v-model="form.status" placeholder="无限制">
+          <el-option label="未冻结" value="1"></el-option>
+          <el-option label="已冻结" value="2"></el-option>
+        </el-select>
+      </el-form-item>
     </el-form>
     <el-col>
-    <el-button type="primary" @click="fetchData" size = "small">查询数据</el-button>
-    <el-button type="primary" @click="onSubmit" size = "small">导出数据</el-button>
-    <el-button type="primary" @click="addFriend" class = "right" size = "small">新建朋友</el-button>
+      <el-button type="primary" @click="fetchData" size = "small">查询数据</el-button>
+      <el-button type="primary" @click="onSubmit" size = "small">导出数据</el-button>
+      <el-button type="primary" @click="addFriend" class = "right" size = "small">新建朋友</el-button>
     </el-col>
     <template>
       <el-table :data="list" style="width: 100%" align="left">
