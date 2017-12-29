@@ -192,48 +192,37 @@
 					update: '编辑',
 					create: '添加'
 				},
-				form:{
-					ai: '',
-					ash: '',
-					bagPrice: '',
-					ca: '',
-					density: '',
-					description: '',
-					fe: '',
-//					images: '',
-//					inspectionReport: '',
-					label: '',
-					na: '',
-					ni: '',
-					particle: '',
-					petrolType: '',
-					ph: '',
-					pi: '',
-					reservePrice: '',
-					resistance: '',
-					si: '',
-					status: '',
-					su: '',
-					productArea: '',
-					va: '',
-					vibration: '',
-					volatiles: '',
-					water: ''
-				}
+				form:{}
+//				list:{
+//					ai: '',
+//					ash: '',
+//					bagPrice: '',
+//					ca: '',
+//					density: '',
+//					description: '',
+//					fe: '',
+////					images: '',
+////					inspectionReport: '',
+//					label: '',
+//					na: '',
+//					ni: '',
+//					particle: '',
+//					petrolType: '',
+//					ph: '',
+//					pi: '',
+//					reservePrice: '',
+//					resistance: '',
+//					si: '',
+//					su: '',
+//					productArea: '',
+//					va: '',
+//					vibration: '',
+//					volatiles: '',
+//					water: ''
+//				}
 			}
 		},
 		created(){
-//			bus.$on('sub', (msg) => {
-////				console.log(msg)
-//				if(msg){
-////					console.log(111)
-//					this.fetchDetail()
-//				}else{
-////					console.log(222)
-//					this.fetchEdit()
-//				}
-////				console.log(this.disabled)
-//			})
 			this.fetchDetail()
 		},
 		methods: {
@@ -245,11 +234,13 @@
 				if(this.disabled){
 					detailMessage(this.id).then(response => {
 			        	this.form = response.data;
+			        	console.log(11)
 	      			})
 				}else{
 					this.disabled=false;
 					detailMessage(this.id).then(response => {
 			        	this.form = response.data;
+			        	console.log(11)
 	      			})
 				}
 				
@@ -258,7 +249,7 @@
 			fetchEdit(){
 				this.editStatus = !this.editStatus;
 				this.disabled=false;
-				bus.$emit('sub', this.disabled);
+//				bus.$emit('sub', this.disabled);
 			},
 			//下一个编辑页面
 			nextEditMs(){
@@ -282,18 +273,18 @@
 					'reservePrice': this.form.reservePrice,
 					'resistance': this.form.resistance,
 					'si': this.form.si,
-					'status': this.form.status,
 					'su': this.form.su,
 					'productArea': this.form.productArea,
 					'va': this.form.va,
 					'vibration': this.form.vibration,
 					'volatiles': this.form.volatiles,
-					'water': this.form.water
+					'water': this.form.water,
+					'id':this.$route.params.id
 				}
 				//提交编辑内容页面
-//				editMessage(params).then(response => {
-//			        console.log(111)
-//	      		})
+				editMessage(params).then(response => {
+			        this.form = response.data;
+	      		})
 				this.$router.push({path:'/message/editContact/'+this.id})
 			},
 			//下一个详情页面

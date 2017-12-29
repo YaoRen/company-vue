@@ -31,7 +31,7 @@
 					</el-col>
 					<el-col :span="2" style="text-align: center;">消息类型</el-col>
 					<el-col :span="4">
-						<el-select v-model="listQuery.type" placeholder="全部招标" class="filter-item">
+						<el-select v-model="listQuery.type" placeholder="请选择" class="filter-item">
 							<el-option v-for="(item,index) in typeOptions" :key="item" :label="item" :value="index+1">
 	        				</el-option>
 						</el-select>
@@ -72,7 +72,7 @@
 			<el-table-column label="消息类型" width="110px" align="center">
 				<template slot-scope="scope">
 					<span v-if="scope.row.type === 1">供给标</span>
-					<span v-else>需求标</span>
+					<span v-else-if="scope.row.type === 2">需求标</span>
 				</template>
 			</el-table-column>
 			<el-table-column label="创建时间" width="110px" align="center">
@@ -154,7 +154,7 @@
 		data() {
 			return {
 				petrolTypeOptions: ['石油焦','煅后焦'],
-				typeOptions: ['供应招标','采购招标'],
+				typeOptions: ['供应招标','采购招标','请选择'],
 				statusOptions: ['草稿','未验证','验证中','已验证','已招标'],
 				temp: {
 					options:[],
@@ -234,18 +234,13 @@
 			},
 			//查询列表
 			query(){
-				//格式化时间
-				var d = new Date(this.listQuery.createTime);  
-				var day = d.getDate() < 10 ? '0' + d.getDate() : '' + d.getDate()
-				var dd=d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + day;
-				console.log(dd)
 				var params={
 					'pageNum': 1,
           			'pageSize': 10,
           			'totalPages':this.listQuery.totalPages,
           			'totalElements': this.listQuery.totalElements,
 					'tenderNum': this.listQuery.tenderNum,
-					'createTime': dd,
+					'createTime': this.listQuery.createTime,
 					'consultCount': this.listQuery.consultCount,
 					'friendNickname': this.listQuery.friendNickname,
 					'type': this.listQuery.type,
@@ -259,7 +254,6 @@
 			        this.total = response.data.totalElements
 			        this.all = response.data.totalElements
 			        this.listLoading = false
-			        console.log(this.list)
 		      	})
 			},
 			//分页
