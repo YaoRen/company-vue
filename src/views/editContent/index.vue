@@ -4,7 +4,7 @@
 			<el-form-item label="基本信息"></el-form-item>
 			<el-form-item label="商品类型*">
 				<el-select v-model="form.petrolType === 1 ? '石油焦' : '煅后焦'" placeholder="煅后焦" :disabled="disabled">
-					<el-option v-for="item in petrolTypeOptions" :key="item" :label="item" :value="item">
+					<el-option v-for="item in petrolTypeOptions" :key="item" :label="item" :value="index+1">
 					</el-option>
 				</el-select>
 			</el-form-item>

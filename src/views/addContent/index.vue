@@ -163,13 +163,23 @@
 			</el-form-item>
 
 			<el-form-item label="其他"></el-form-item>
-			<el-form-item label="吨袋">
-				<el-col :span="2">
-					<el-input v-model="form.bagPrice" ></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;"> 元/吨</el-col>
-				<el-col :span="10">如您可提供此项服务供买家选择，请填写相关价格（选填）</el-col>
-			</el-form-item>
+			<span v-if="form.petrolType == 2">
+				<el-form-item label="吨袋">
+					<el-col :span="2">
+						<el-input v-model="form.bagPrice" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;"> 元/吨</el-col>
+					<el-col :span="10">如您可提供此项服务供买家选择，请填写相关价格（选填）</el-col>
+				</el-form-item>
+			</span>	
+			<span v-if="form.petrolType == 1">
+				<el-form-item label="扣水量*">
+					<el-col :span="2">
+						<el-input v-model="form.buckleWaterRate" placeholder="输入扣水量或扣水方式"></el-input>
+					</el-col>
+					<el-col :span="10" style="margin-left: 20px;">实际发货量=发货量x(1-扣水量)</el-col>
+				</el-form-item>
+			</span>
 			<el-form-item label="商品图片">
 				<el-upload class="upload-demo" action="http://petrocoke-ops-dev.obaymax.com/file/uploadImage" list-type="picture" type="file" :on-preview="handlePreviews" :before-upload="beforeUpload" :on-success="handleSuccess">
 					<el-button size="small" type="primary">+相关图片</el-button>
@@ -222,7 +232,8 @@
 					va: '',
 					vibration: '',
 					volatiles: '',
-					water: ''
+					water: '',
+					buckleWaterRate:''
 				}
 			}
 		},
@@ -269,7 +280,8 @@
 					'va': this.form.va,
 					'vibration': this.form.vibration,
 					'volatiles': this.form.volatiles,
-					'water': this.form.water
+					'water': this.form.water,
+					'buckleWaterRate':this.form.buckleWaterRate
 				};
 				addMessage(list).then(response => {
 			        this.form = response.data;
