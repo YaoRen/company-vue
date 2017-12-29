@@ -11,8 +11,12 @@
             <el-input v-model="info.realname"></el-input>
           </el-form-item>
           <el-form-item label="性别：" >
-            <el-input v-model="info.sex"  ></el-input>
+            <el-select v-model="info.sex" placeholder="">
+              <el-option :label = "boy" value = "男"></el-option>
+              <el-option :label = "girl" value = "女"></el-option>
+            </el-select>
           </el-form-item>
+
           <el-form-item label="联系电话：">
             <el-input v-model="info.mobile" ></el-input>
           </el-form-item>
@@ -83,7 +87,9 @@
         disabled: true,
         isShow: true,
         isShoww: true,
-        companyList: []
+        companyList: [],
+        boy: '男',
+        girl: '女'
       }
     },
     filters: {
@@ -152,7 +158,7 @@
         console.log('handleChange')
       },
       getCompany() {
-        companyList({}).then(response => {
+        companyList({ 'businessStatus': '1', status: '2' }).then(response => {
           this.companyList = response.data.content
           this.companyList.unshift({ companyName: '未知' })
         })

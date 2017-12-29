@@ -36,26 +36,26 @@
     <el-button type="primary" @click="addFriend" class = "right">新建朋友</el-button>
     </el-col>
     <template>
-      <el-table :data="list" style="width: 100%">
-        <el-table-column prop="mobile" label="手机号" width="120" align="center">
+      <el-table :data="list" style="width: 100%" align="left">
+        <el-table-column prop="mobile" label="手机号" width="160" >
         </el-table-column>
-        <el-table-column prop="realname" label="用户姓名" width="120" align="center">
+        <el-table-column prop="realname" label="用户姓名" >
         </el-table-column>
-        <el-table-column prop="companyName" label="所属公司" width="120" align="center">
+        <el-table-column prop="companyName" label="所属公司" >
         </el-table-column>
-        <el-table-column label="注册时间" width="120" align="center">
+        <el-table-column label="注册时间" >
           <template slot-scope="scope">
             <span>{{scope.row.createTime | date}}</span>
           </template>
         </el-table-column>
-        <el-table-column label="冻结状态" width="120" align="center">
+        <el-table-column label="冻结状态" >
           <template slot-scope="scope">
             <span>{{scope.row.status | state}}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="publishCount" label="发布数" width="120" align="center"></el-table-column>
-        <el-table-column prop="commentCount" label="评论数" width="120" align="center"></el-table-column>
-        <el-table-column label="操作" width="218" fixed = "right" align="center">
+        <el-table-column prop="publishCount" label="发布数" align="center" width="140"></el-table-column>
+        <el-table-column prop="commentCount" label="评论数"  align="center" width="140"></el-table-column>
+        <el-table-column label="操作"  align="center" width="220">
           <template slot-scope="scope">
             <el-button type="text" size="small"><router-link :to=" {path :'/friends/detail/'+scope.row.id}">详情</router-link></el-button>
             <el-button @click="updateStatus(scope.row.id)" size="small" type="text" >{{scope.row.status | state}}</el-button>
@@ -121,7 +121,7 @@
 
     },
     created() {
-      // this.fetchData()
+      this.fetchData()
     },
     methods: {
       onSubmit() {
@@ -228,6 +228,13 @@
   }
   .cl{
     overflow: hidden;
+  }
+  .el-date-range-picker{
+    width: 258px;
+
+  }
+  .el-date-range-picker__content{
+    float: none;
   }
 
 </style>
