@@ -115,127 +115,127 @@
 </template>
 
 <script>
-import { detailFriend, editFriend, companyList } from '@/api/friends'
+  import { detailFriend, editFriend, companyList } from '@/api/friends'
 
-export default {
-  data() {
-    return {
-      id: this.$route.params.id,
-      list: [],
-      listLoading: true,
-      info: 'hi',
-      input: '',
-      value: '',
-      activeNames: ['1'],
-      disabled: true,
-      isShow: true,
-      isShoww: true,
-      companyList: [],
-      right: 'right',
-      boy: '男',
-      girl: '女'
-    }
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
-  created() {
-    this.fetchData()
-    this.getCompany()
-  },
-  methods: {
-    editState(event) {
-      this.isShow = !this.isShow
-      if (!this.isShow) {
-        this.disabled = false
-      } else {
-        this.disabled = true
+  export default {
+    data() {
+      return {
+        id: this.$route.params.id,
+        list: [],
+        listLoading: true,
+        info: 'hi',
+        input: '',
+        value: '',
+        activeNames: ['1'],
+        disabled: true,
+        isShow: true,
+        isShoww: true,
+        companyList: [],
+        right: 'right',
+        boy: '男',
+        girl: '女'
       }
     },
-    editFriend() {
-      console.log('addFriend')
+    filters: {
+      statusFilter(status) {
+        const statusMap = {
+          published: 'success',
+          draft: 'gray',
+          deleted: 'danger'
+        }
+        return statusMap[status]
+      }
+    },
+    created() {
+      this.fetchData()
+      this.getCompany()
+    },
+    methods: {
+      editState(event) {
+        this.isShow = !this.isShow
+        if (!this.isShow) {
+          this.disabled = false
+        } else {
+          this.disabled = true
+        }
+      },
+      editFriend() {
+        console.log('addFriend')
 
-      var params = {
-        'companyId': '2',
-        'companyName': '',
-        'creator': '',
-        'department': '',
-        'endDate': '',
-        'endTime': '',
-        'id': this.id,
-        'idcard': this.info.idcard,
-        'introduction': this.info.introduction,
-        'isCompanyPublic': true,
-        'mobile': this.info.mobile,
-        'modifier': '',
-        'modifyTime': '',
-        'nickname': this.info.nickname,
-        'order': '',
-        'pageNum': 1,
-        'pageSize': 10,
-        'password': '',
-        'position': '',
-        'qq': this.info.qq,
-        'realname': this.info.realname,
-        'searchWord': '',
-        'sex': this.info.sex,
-        'sort': '',
-        'startDate': '',
-        'startTime': '2017-12-25',
-        'status': ''
+        var params = {
+          'companyId': '2',
+          'companyName': '',
+          'creator': '',
+          'department': '',
+          'endDate': '',
+          'endTime': '',
+          'id': this.id,
+          'idcard': this.info.idcard,
+          'introduction': this.info.introduction,
+          'isCompanyPublic': true,
+          'mobile': this.info.mobile,
+          'modifier': '',
+          'modifyTime': '',
+          'nickname': this.info.nickname,
+          'order': '',
+          'pageNum': 1,
+          'pageSize': 10,
+          'password': '',
+          'position': '',
+          'qq': this.info.qq,
+          'realname': this.info.realname,
+          'searchWord': '',
+          'sex': this.info.sex,
+          'sort': '',
+          'startDate': '',
+          'startTime': '2017-12-25',
+          'status': ''
+        }
+        editFriend(params).then(response => {
+          // 后面需要改一下
+          console.log(response.data)
+          this.info = response.data || this.info
+        })
+        this.hide()
+      },
+      cancelEdit() {
+        console.log('cancel')
+        this.hide()
+      },
+      hide() {
+        this.isShow = !this.isShow
+        if (this.isShow) {
+          this.disabled = true
+        } else {
+          this.disabled = false
+        }
+      },
+      handleChange() {
+        console.log('handleChange')
+      },
+      fetchData() {
+        this.listLoading = true
+        // const id = this.$route.params.id
+        detailFriend(this.id).then(response => {
+          this.info = response.data
+          this.list.push(this.info)
+          this.listLoading = false
+        })
+      },
+      getCompany() {
+        companyList({ 'businessStatus': '1', status: '2', 'pageSize': 0 }).then(response => {
+          this.companyList = response.data.content
+          this.companyList.unshift({ companyName: '未知' })
+        })
+      },
+      createCompany() {
+        this.value = '未知'
+      },
+      reFresh() {
+        window.location.reload()
       }
-      editFriend(params).then(response => {
-        // 后面需要改一下
-        console.log(response.data)
-        this.info = response.data || this.info
-      })
-      this.hide()
-    },
-    cancelEdit() {
-      console.log('cancel')
-      this.hide()
-    },
-    hide() {
-      this.isShow = !this.isShow
-      if (this.isShow) {
-        this.disabled = true
-      } else {
-        this.disabled = false
-      }
-    },
-    handleChange() {
-      console.log('handleChange')
-    },
-    fetchData() {
-      this.listLoading = true
-      // const id = this.$route.params.id
-      detailFriend(this.id).then(response => {
-        this.info = response.data
-        this.list.push(this.info)
-        this.listLoading = false
-      })
-    },
-    getCompany() {
-      companyList({ 'businessStatus': '1', status: '2' }).then(response => {
-        this.companyList = response.data.content
-        this.companyList.unshift({ companyName: '未知' })
-      })
-    },
-    createCompany() {
-      this.value = '未知'
-    },
-    reFresh() {
-      window.location.reload()
     }
   }
-}
 
 </script>
 
