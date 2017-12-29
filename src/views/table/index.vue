@@ -188,6 +188,7 @@ export default {
       }
       editFriend(params).then(response => {
         // 后面需要改一下
+        console.log(response.data)
         this.info = response.data || this.info
       })
       this.hide()

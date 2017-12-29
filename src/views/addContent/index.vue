@@ -3,8 +3,8 @@
 		<el-form ref="form" :model="form" label-width="120px">
 			<el-form-item label="基本信息"></el-form-item>
 			<el-form-item label="商品类型*">
-				<el-select v-model="form.petrolType == 1 ? '石油焦' : '煅后焦'" placeholder="煅后焦" >
-					<el-option v-for="item in petrolTypeOptions" :key="item" :label="item" :value="item">
+				<el-select v-model="form.petrolType" placeholder="请选择">
+					<el-option v-for="(item,index) in petrolTypeOptions" :key="item" :label="item" :value="index+1">
 					</el-option>
 				</el-select>
 			</el-form-item>
@@ -166,7 +166,7 @@
 			</el-form-item>
 		</el-form>
 		<div slot="footer" class="dialog-footer">
-			<router-link :to="{path:'/message/index'}"><el-button>取消</el-button></router-link>
+			<el-button @click="cancelAdd">取消</el-button>
 			<el-button type="primary" @click="addNext">下一步</el-button>
 		</div>
 	</div>
@@ -212,6 +212,14 @@
 				}
 			}
 		},
+		created(){
+			if(localStorage.getItem("table")){
+//				console.log(localStorage.getItem("table"))
+				var jsons=localStorage.getItem("table");
+				var obj=JSON.parse(jsons);
+				this.form=obj
+			}
+		},
 		methods: {
 			//获取添加内容页信息
 			addNext() {
@@ -250,10 +258,18 @@
 					'water': this.form.water
 				};
 				addMessage(list).then(response => {
-			        this.form = response.data
-			        bus.$emit('adds', this.form);
+			        this.form = response.data;
+			        var str=JSON.stringify(this.form);
+			        localStorage.setItem("table",str);
+//			        bus.$emit('adds', this.form);
 	      		})
 				this.$router.push({path:'/message/addContact'});
+			},
+			//取消添加
+			cancelAdd(){
+				localStorage.removeItem("table");
+				this.form = {}
+				this.$router.push({path:'/message/index'});
 			},
 			//获取添加页面
 //			addMessages(){
