@@ -33,7 +33,7 @@
 			</el-form-item>
 			<el-form-item label="类型标签*">
 				<el-radio-group v-model="form.label">
-					<el-radio-button v-for="(tag,index) in labelTag" :label=tag ></el-radio-button>
+					<el-radio-button v-for="(tag,index) in labelTag" :label=tag :value="index+1" ></el-radio-button>
 				</el-radio-group>
 				<!--<span v-for="item in form.label" :key="item">
 					<el-tag v-if="item ==1">海绵焦</el-tag>
