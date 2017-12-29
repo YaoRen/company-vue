@@ -10,7 +10,8 @@
 					</el-col>
 					<el-col :span="2" style="text-align: center;">创建时间</el-col>
 					<el-col :span="4">
-						<el-date-picker type="date" placeholder="点击选择时间区间" v-model="listQuery.createTime" class="filter-item"></el-date-picker>
+						<el-date-picker style="width: 200px;" v-model="date" type="daterange" start-placeholder="开始日期"  end-placeholder="结束日期" class="filter-item">
+						</el-date-picker>
 					</el-col>
 					<el-col :span="2" style="text-align: center;">询价量</el-col>
 					<el-col :span="4">
@@ -165,6 +166,7 @@
 				total: null,
 				all:null,
 				id:'',
+				date:'',
 				listQuery:{
 					pageNum: 1,
           			pageSize: 10,
@@ -234,20 +236,31 @@
 			},
 			//查询列表
 			query(){
-				var params={
-					'pageNum': 1,
-          			'pageSize': 10,
-          			'totalPages':this.listQuery.totalPages,
-          			'totalElements': this.listQuery.totalElements,
-					'tenderNum': this.listQuery.tenderNum,
-					'createTime': this.listQuery.createTime,
-					'consultCount': this.listQuery.consultCount,
-					'friendNickname': this.listQuery.friendNickname,
-					'type': this.listQuery.type,
-					'petrolType': this.listQuery.petrolType,
-					'status': this.listQuery.status,
-					'friendRealname': this.listQuery.friendRealname,
-				}
+				if (this.date.length !== 0) {
+		          var start = new Date(this.date[0])
+		          var end = new Date(this.date[1])
+		          this.time = {
+		            startTime : start.getFullYear() + '-' + (start.getMonth() + 1) + '-' + start.getDate(),
+		            endTime : end.getFullYear() + '-' + (end.getMonth() + 1) + '-' + end.getDate()
+		          }
+		        } else {
+		          this.time = {}
+		        }
+	          	var params = Object.assign(this.listQuery, this.time)
+//				var params={
+//					'pageNum': 1,
+//        			'pageSize': 10,
+//        			'totalPages':this.listQuery.totalPages,
+//        			'totalElements': this.listQuery.totalElements,
+//					'tenderNum': this.listQuery.tenderNum,
+//					'createTime': this.listQuery.createTime,
+//					'consultCount': this.listQuery.consultCount,
+//					'friendNickname': this.listQuery.friendNickname,
+//					'type': this.listQuery.type,
+//					'petrolType': this.listQuery.petrolType,
+//					'status': this.listQuery.status,
+//					'friendRealname': this.listQuery.friendRealname,
+//				}
 				this.listLoading = true
 				getList(params).then(response => {
 			        this.list = response.data.content
