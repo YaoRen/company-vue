@@ -32,14 +32,17 @@
 				</el-col>
 			</el-form-item>
 			<el-form-item label="类型标签*">
-				<span v-for="item in form.label" :key="item">
+				<el-radio-group v-model="form.label">
+					<el-radio-button v-for="(tag,index) in labelTag" :label=tag ></el-radio-button>
+				</el-radio-group>
+				<!--<span v-for="item in form.label" :key="item">
 					<el-tag v-if="item ==1">海绵焦</el-tag>
 					<el-tag v-else-if="item ==2" type="success">弹丸焦</el-tag>
 					<el-tag v-else-if="item ==3" type="info">针状焦</el-tag>
 					<el-tag v-else-if="item ==4" type="danger">煅后石油焦</el-tag>
 					<el-tag v-else-if="item ==5" type="warning">增碳剂</el-tag>
 					<el-tag v-else>收尘粉</el-tag>
-				</span>
+				</span>-->
 			</el-form-item>
 
 			<el-form-item label="常规指标"></el-form-item>
@@ -49,11 +52,13 @@
 					<el-input v-model="form.su" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">%</el-col>
-				<el-col :span="2" style="text-align: center;">真密度</el-col>
-				<el-col :span="2">
-					<el-input v-model="form.density" ></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;">g/cm³</el-col>
+				<span v-if="form.petrolType == 2">
+					<el-col :span="2" style="text-align: center;">真密度</el-col>
+					<el-col :span="2">
+						<el-input v-model="form.density" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;">g/cm³</el-col>
+				</span>
 				<el-col :span="2" style="text-align: center;">灰分*</el-col>
 				<el-col :span="2">
 					<el-input v-model="form.ash" ></el-input>
@@ -71,18 +76,22 @@
 					<el-input v-model="form.water" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">%</el-col>
-				<el-col :span="2" style="text-align: center;">粉末比电阻</el-col>
-				<el-col :span="2">
-					<el-input v-model="form.resistance" ></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;">μΩm</el-col>
+				<span v-if="form.petrolType == 2">
+					<el-col :span="2" style="text-align: center;">粉末比电阻</el-col>
+					<el-col :span="2">
+						<el-input v-model="form.resistance" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;">μΩm</el-col>
+				</span>
 			</el-form-item>
 			<el-form-item>
-				<el-col :span="2" style="text-align: center;">振实密度</el-col>
-				<el-col :span="2">
-					<el-input v-model="form.vibration" ></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;">g/cm³</el-col>
+				<span v-if="form.petrolType == 2">
+					<el-col :span="2" style="text-align: center;">振实密度</el-col>
+					<el-col :span="2">
+						<el-input v-model="form.vibration" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;">g/cm³</el-col>
+				</span>
 				<el-col :span="2" style="text-align: center;">粒度</el-col>
 				<el-col :span="2">
 					<el-input v-model="form.particle" ></el-input>
@@ -130,22 +139,26 @@
 					<el-input v-model="form.na" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">ppm</el-col>
-				<el-col :span="2" style="text-align: center;">镍</el-col>
-				<el-col :span="2">
-					<el-input v-model="form.ni" ></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;">ppm</el-col>
-				<el-col :span="2" style="text-align: center;">铅</el-col>
-				<el-col :span="2">
-					<el-input v-model="form.pi" ></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;">ppm</el-col>
+				<span v-if="form.petrolType == 2">
+					<el-col :span="2" style="text-align: center;">镍</el-col>
+					<el-col :span="2">
+						<el-input v-model="form.ni" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;">ppm</el-col>
+				</span>
+				<span v-if="form.petrolType == 2">
+					<el-col :span="2" style="text-align: center;">铅</el-col>
+					<el-col :span="2">
+						<el-input v-model="form.pi" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;">ppm</el-col>
+				</span>
 			</el-form-item>
 			<el-form-item label="质检报告"></el-form-item>
 			<el-form-item>
-				<el-upload class="upload-demo" action="http://petrocoke-ops-dev.obaymax.com/file/uploadFiles/"  type="file" :limit="1"  :show-file-list="false" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess">
+				<el-upload class="upload-demo" accept=".pdf" action="http://petrocoke-ops-dev.obaymax.com/file/uploadFiles/"  type="file" :limit="1" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess">
 					<el-button size="small" type="primary">添加质检报告</el-button>
-					<el-col slot="tip" class="el-upload__tip" style="margin-left: 20px;">一份标准的质检报告会大大缩短交易时间 （请上传小于5MB的pdf文件）</el-col>
+					<el-col slot="tip" class="el-upload__tip">一份标准的质检报告会大大缩短交易时间 （请上传小于5MB的pdf文件）</el-col>
 				</el-upload>
 			</el-form-item>
 
@@ -182,6 +195,7 @@
 				id:this.$route.params.id,
 				petrolTypeOptions: ['石油焦', '煅后焦'],
 				productAreaOptions: ['东北地区', '华北地区', '华东地区', '华南地区', '华中地区', '西北地区', '西南地区', '其他', '请选择产地'],
+				labelTag:['海绵焦','弹丸焦','针状焦','煅后石油焦','增碳剂','收尘粉'],
 				form:{
 					ai: '',
 					ash: '',
@@ -237,8 +251,8 @@
 					'density': this.form.density,
 					'description': this.form.description,
 					'fe': this.form.fe,
-//					'images': this.form.images,
-//					'inspectionReport': this.form.inspectionReport,
+					'images': this.form.images,
+					'inspectionReport': this.form.inspectionReport,
 					'label': this.form.label,
 					'na': this.form.na,
 					'ni': this.form.ni,
@@ -281,16 +295,16 @@
 //			}
 			//添加质检报告
 			 beforeAvatarUpload(file) {
-		        const isPDF = file.type === 'image/pdf';
+//		        const isPDF = file.type === 'image/pdf';
 		        const isLt5M = file.size / 1024 / 1024 < 5;
 		
-		        if (!isPDF) {
-		          this.$message.error('上传头像图片只能是 PDF 格式!');
-		        }
+//		        if (!isPDF) {
+//		          this.$message.error('上传头像图片只能是 PDF 格式!');
+//		        }
 		        if (!isLt5M) {
 		          this.$message.error('上传头像图片大小不能超过 5MB!');
 		        }
-		        return isPDF && isLt5M;
+		        return isLt5M;
       		},
       		handleAvatarSuccess(res, file) {
 		        this.form.inspectionReport = URL.createObjectURL(file.raw);
