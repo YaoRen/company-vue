@@ -7,7 +7,7 @@
         <el-input v-model="form.mobile"></el-input>
       </el-form-item>
       <el-form-item label="用户名" class = "left width_280 mr_40">
-        <el-input v-model="form.nickname"></el-input>
+        <el-input v-model="form.realname"></el-input>
       </el-form-item>
       <el-form-item label="注册时间" class = "left mr_40">
         <el-date-picker
@@ -76,7 +76,7 @@
       return {
         form: {
           mobile: '',
-          nickname: '',
+          realname: '',
           company: '',
           status: '',
           userType: ''
