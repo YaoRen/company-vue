@@ -33,7 +33,7 @@
 			</el-form-item>
 			<el-form-item label="类型标签*">
 				<el-radio-group v-model="form.label">
-					<el-radio-button v-for="(tag,index) in labelTag" :label=tag :value="index+1" ></el-radio-button>
+					<el-radio-button v-for="(tag,index) in labelTag" :label=index+1>{{tag}}</el-radio-button>
 				</el-radio-group>
 				<!--<span v-for="item in form.label" :key="item">
 					<el-tag v-if="item ==1">海绵焦</el-tag>
@@ -228,6 +228,7 @@
 					si: '',
 					status: '',
 					su: '',
+					totalQuantity :'',
 					productArea: '',
 					va: '',
 					vibration: '',
@@ -281,13 +282,14 @@
 					'vibration': this.form.vibration,
 					'volatiles': this.form.volatiles,
 					'water': this.form.water,
+					'totalQuantity':this.totalQuantity ,
 					'buckleWaterRate':this.form.buckleWaterRate
 				};
 				addMessage(list).then(response => {
 			        this.form = response.data;
 			        var str=JSON.stringify(this.form);
 			        localStorage.setItem("table",str);
-//			        bus.$emit('adds', this.form);
+			        bus.$emit('adds', this.form);
 	      		})
 				this.$router.push({path:'/message/addContact'});
 			},

@@ -231,6 +231,7 @@
 			 	getList(this.listQuery).then(response => {
 			        this.list = response.data.content
 			        this.all = response.data.totalElements
+			        this.total = response.data.totalElements
 			        this.listLoading = false
 		      	})
 			},
