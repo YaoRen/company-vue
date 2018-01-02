@@ -38,6 +38,13 @@ export function confirmMessage(params) {
 	    data: params
 	})
 }
+//公司详情
+export function detailCompany(id) {
+	return request({
+	    url: '/company/info/'+id,
+	    method: 'post'
+	})
+}
 //发布消息
 //export function detailMessage(params) {
 //return request({

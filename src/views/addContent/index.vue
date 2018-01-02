@@ -2,6 +2,12 @@
 	<div class="app-container">
 		<el-form ref="form" :model="form" label-width="120px">
 			<el-form-item label="基本信息"></el-form-item>
+			<el-form-item label="消息类型*">
+				<el-select v-model="form.type" placeholder="请选择">
+					<el-option v-for="(item,index) in typeOptions" :key="item" :label="item" :value="index+1">
+					</el-option>
+				</el-select>
+			</el-form-item>
 			<el-form-item label="商品类型*">
 				<el-select v-model="form.petrolType" placeholder="请选择">
 					<el-option v-for="(item,index) in petrolTypeOptions" :key="item" :label="item" :value="index+1">
@@ -33,7 +39,7 @@
 			</el-form-item>
 			<el-form-item label="类型标签*">
 				<el-radio-group v-model="form.label">
-					<el-radio-button v-for="(tag,index) in labelTag" :label=tag :value="index+1" ></el-radio-button>
+					<el-radio-button v-for="(tag,index) in labelTag" :label=index+1>{{tag}}</el-radio-button>
 				</el-radio-group>
 				<!--<span v-for="item in form.label" :key="item">
 					<el-tag v-if="item ==1">海绵焦</el-tag>
@@ -203,6 +209,7 @@
 			return {
 				disabled:false,
 				id:this.$route.params.id,
+				typeOptions: ['供应标', '采购标'],
 				petrolTypeOptions: ['石油焦', '煅后焦'],
 				productAreaOptions: ['东北地区', '华北地区', '华东地区', '华南地区', '华中地区', '西北地区', '西南地区', '其他', '请选择产地'],
 				labelTag:['海绵焦','弹丸焦','针状焦','煅后石油焦','增碳剂','收尘粉'],
@@ -221,6 +228,7 @@
 					ni: '',
 					particle: '',
 					petrolType: '',
+					type: '',
 					ph: '',
 					pi: '',
 					reservePrice: '',
@@ -228,6 +236,7 @@
 					si: '',
 					status: '',
 					su: '',
+					totalQuantity :'',
 					productArea: '',
 					va: '',
 					vibration: '',
@@ -268,6 +277,7 @@
 					'na': this.form.na,
 					'ni': this.form.ni,
 					'particle': this.form.particle,
+					'type': this.form.type,
 					'petrolType': this.form.petrolType,
 					'ph': this.form.ph,
 					'pi': this.form.pi,
@@ -281,13 +291,14 @@
 					'vibration': this.form.vibration,
 					'volatiles': this.form.volatiles,
 					'water': this.form.water,
+					'totalQuantity':this.totalQuantity ,
 					'buckleWaterRate':this.form.buckleWaterRate
 				};
 				addMessage(list).then(response => {
 			        this.form = response.data;
 			        var str=JSON.stringify(this.form);
 			        localStorage.setItem("table",str);
-//			        bus.$emit('adds', this.form);
+			        bus.$emit('adds', this.form);
 	      		})
 				this.$router.push({path:'/message/addContact'});
 			},
