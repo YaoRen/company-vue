@@ -20,7 +20,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item label="所属公司" class = "left width_280 mr_40">
-        <el-input v-model="form.company"></el-input>
+        <el-input v-model="form.companyName"></el-input>
       </el-form-item>
 
       <el-form-item label="冻结状态" class = "left width_280 mr_40">
@@ -77,7 +77,7 @@
         form: {
           mobile: '',
           realname: '',
-          company: '',
+          companyName: '',
           status: '',
           userType: ''
         },
