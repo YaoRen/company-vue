@@ -35,7 +35,7 @@
       <el-button type="primary" @click="onSubmit" size = "small">导出数据</el-button>
       <el-button type="primary" @click="addFriend" class = "right" size = "small">新建朋友</el-button>
     </el-col>
-    <template>
+    <p class="rownum">查询数量：{{listSize}}</p>
       <el-table :data="list" style="width: 100%" align="left">
         <el-table-column prop="mobile" label="手机号" width="160" >
         </el-table-column>
@@ -58,13 +58,12 @@
         <el-table-column label="操作"  align="center" width="220">
           <template slot-scope="scope">
             <el-button type="text" size="small"><router-link :to=" {path :'/friends/detail/'+scope.row.id}">详情</router-link></el-button>
-            <el-button @click="updateStatus(scope.row.id)" size="small" type="text" >{{scope.row.status | state}}</el-button>
+            <el-button @click="updateStatus(scope.row.id)" size="small" type="text" >{{scope.row.status | togoState}}</el-button>
             <el-button type="text" size="small" disabled>密码重置</el-button>
             <el-button type="text" size="small" disabled>站内信</el-button>
           </template>
         </el-table-column>
       </el-table>
-    </template>
   </div>
 </template>
 
@@ -83,6 +82,7 @@
         },
         time: {},
         list: null,
+        listSize:null,
         input: '',
         options: [{
           value: '1',
@@ -117,6 +117,13 @@
         } else if (value === 2) {
           return '冻结'
         }
+      },
+      togoState(value) {
+        if (value === 1) {
+          return '冻结'
+        } else if (value === 2) {
+          return '解冻'
+        }
       }
 
     },
@@ -134,7 +141,6 @@
           id:item_id
         }
         editFriend(params).then(response => {
-          // correct
           this.list = response.data || this.list
         })
       },
@@ -181,9 +187,10 @@
         //   console.log('请输入11位正确电话号码')
         //   return
         // }
-        var params = Object.assign(this.form, this.time, { 'pageSize': 10 })
+        var params = Object.assign(this.form, this.time, { 'pageSize': 0 })
         getList(params).then(response => {
           this.list = response.data.content
+          this.listSize = response.data.totalElements
         })
       }
     }
@@ -213,6 +220,15 @@
   .el-date-editor .el-range-separator{
     padding: 0px;
     width: 14px;
+  }
+  .rownum{
+    font-size: 14px;
+    line-height: 28px;
+    padding-left: 10px;
+    margin-bottom: 0px;
+    padding-top: 40px;
+    color: #555;
+
   }
   .right{
     float: right;

@@ -11,7 +11,7 @@
             <el-input v-model="info.realname"></el-input>
           </el-form-item>
           <el-form-item label="性别：" >
-            <el-select v-model="info.sex" placeholder="">
+            <el-select v-model="info.sex ">
               <el-option :label = "boy" value = "1"></el-option>
               <el-option :label = "girl" value = "2"></el-option>
             </el-select>

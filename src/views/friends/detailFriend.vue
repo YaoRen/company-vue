@@ -42,7 +42,7 @@
         </p>
         <el-form :label-position="right" label-width="100px">
           <el-form-item label="公司名称：">
-            <el-select v-model="info.companyId" placeholder="请选择公司名称" :disabled="disabled">
+            <el-select v-model="info.companyId" :disabled="disabled">
               <el-option
                 v-for="item in companyList"
                 :key="item.id"
@@ -81,7 +81,7 @@
       </el-table-column>
       <el-table-column label="注册时间" width="110" align="center">
         <template slot-scope="scope">
-          {{scope.row.createTime}}
+          {{scope.row.createTime | date}}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="最近登录时间" width="110" align="center">
@@ -107,7 +107,7 @@
       </el-table-column>
       <el-table-column align="center" prop="created_at" label="冻结状态" width="200">
         <template slot-scope="scope">
-          <span>{{scope.row.status}}</span>
+          <span>{{scope.row.status | state}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -144,7 +144,28 @@
           deleted: 'danger'
         }
         return statusMap[status]
-      }
+      },
+      date(input) {
+        var d = new Date(input)
+        var year = d.getFullYear()
+        var month = d.getMonth() + 1
+        var day = d.getDate() < 10 ? '0' + d.getDate() : '' + d.getDate()
+        return year + '-' + month + '-' + day
+      },
+      sexFilter(value) {
+        if (value === 1) {
+          return '男'
+        } else if (value === 2) {
+          return '女'
+        }
+      },
+      state(value) {
+        if (value === 1) {
+          return '未冻结'
+        } else if (value === 2) {
+          return '冻结'
+        }
+      },
     },
     created() {
       this.fetchData()
@@ -160,8 +181,6 @@
         }
       },
       editFriend() {
-        console.log('addFriend')
-
         var params = {
           'companyId': '2',
           'companyName': '',
@@ -202,6 +221,7 @@
         this.hide()
       },
       cancelEdit() {
+        this.fetchData()
         console.log('cancel')
         this.hide()
       },
