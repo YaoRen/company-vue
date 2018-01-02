@@ -73,7 +73,7 @@
 			<el-table-column label="消息类型" width="110px" align="center">
 				<template slot-scope="scope">
 					<span v-if="scope.row.type === 1">供给标</span>
-					<span v-else-if="scope.row.type === 2">需求标</span>
+					<span v-else-if="scope.row.type === 2">采购标</span>
 				</template>
 			</el-table-column>
 			<el-table-column label="创建时间" width="110px" align="center">
