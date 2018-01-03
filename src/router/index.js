@@ -65,19 +65,23 @@ export const constantRouterMap = [
       },
       {
         path: 'editContent/:id',
-        component: _import('editContent/index')
+        component: _import('message/editContent')
       },
 	  {
         path: 'addContent',
-        component: _import('addContent/index')
+        component: _import('message/addContent')
       },
       {
         path: 'editContact/:id',
-        component: _import('editContact/index')
+        component: _import('message/editContact')
       },
 	  {
-        path: 'addContact',
-        component: _import('addContact/index')
+        path: 'addContact/:id',
+        component: _import('message/addContact')
+     },
+     {
+        path: 'detail/:id',
+        component: _import('message/detail')
       }
     ]
   },

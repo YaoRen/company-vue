@@ -1,6 +1,6 @@
 <template>
 	<div class="app-container">
-				<el-form ref="form" :model="form" label-width="120px">
+		<el-form ref="form" :model="form" label-width="120px">
 		  <el-form-item label="联系人信息" style="border-bottom: 1px solid #ccc;"></el-form-item>
 			<el-form-item label="用户昵称">
 				<el-col :span="4">
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-	import {detailCompany,editMessage,detailMessage} from '@/api/message'
+	import {detailCompany,editMessage} from '@/api/message'
 	import {getList,detailFriend} from '@/api/friends'
 	import {bus} from '@/bus'
 	export default {
@@ -104,27 +104,27 @@
 				form:{}
 			}
 		},
-		created() {
-			this.fetchDetail()
-			this.getFriend()
-//			bus.$on('sub', (msg) => {
-////				console.log(msg)
-//				if(msg){
-//					console.log(111)
-//					this.fetchDetail()
-//				}else{
-//					console.log(222)
-//					this.fetchEdit()
-//				}
-////				console.log(this.disabled)
-//			})
+		created(){
+			this.getFriend();
+			bus.$on('adds', (msg) => {
+				this.form=Object.assign(this.form, msg);
+			})
 		},
 		methods: {
-			//获取详情页信息
-			fetchDetail(){
-				detailMessage(this.id).then(response => {
-			        this.form = response.data
+			//获取编辑页信息
+			preview(){
+//				var list={
+//					'friendNickname': this.form.nickname ,
+//					'friendRealname': this.form.realname 
+//					'friendId': this.form.id
+//					'companyId': this.companyList.id,
+//					'companyName': this.companyList.companyName
+//				}
+				editMessage(this.form).then(response => {
+			        this.form = Object.assign(this.form, response.data);
 	      		})
+				localStorage.removeItem("table");
+				this.$router.push({path:'/message/detail/'+this.id});
 			},
 			//获取焦小姐的朋友列表
 			getFriend(){
@@ -152,37 +152,16 @@
 						
 					}
 				})
-			},
-			//获取编辑页信息
-//			fetchEdit(){
-//				detailMessage(this.id).then(response => {
-//			        this.form = response.data
-//	      		})
-//				this.disabled=false;
-//			},
-			//上一步详情页面
-			upDetailContent(){
-//				bus.$emit('sub', this.disabled);
-				this.$router.push({path:'/message/editContent/'+this.id});
-			},
-			//上一步编辑页面
-//			upEditContent(){
-//				bus.$emit('sub', this.disabled);
-//				this.$router.push({path:'/message/editContent/'+this.id});
-//			},
-			//预览
-			preview(){
-				var params={
-					'friendNickname': this.form.friendNickname,
-					'id':this.$route.params.id,
-					'friendRealname': this.form.friendRealname
-				}
-				//显示编辑内容页面
-				editMessage(params).then(response => {
-			        this.form = response.data
-	      		})
-				this.$router.push({path:'/message/editContent/'+this.id});
 			}
+			//编辑下一步
+//			editNext() {
+//				addMessage(this.list).then(response => {
+//			 		console.log(response.data)
+//			        this.form = response.data.content
+//		      	})
+//				this.$router.push({path:'/message/editContact'})
+//			}
+			
 		}
 	}
 </script>

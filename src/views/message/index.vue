@@ -159,7 +159,7 @@
 			</el-form>
 			<div slot="footer" class="dialog-footer">
 				<el-button type="primary" @click="addData">补充完善资料</el-button>
-				<el-button @click="dialogFormVisible = false">无需完善</el-button>
+				<el-button @click="cancels">无需完善</el-button>
 			</div>
 		</el-dialog>
 	</div>
@@ -186,9 +186,9 @@
 				date:'',
 				listQuery:{
 					pageNum: 1,
-          pageSize: 10,
-          totalPages:'',
-          totalElements:'',
+		          	pageSize: 10,
+		          	totalPages:'',
+		          	totalElements:'',
 					tenderNum: '',
 					createTime: '',
 					consultCount: '',
@@ -227,6 +227,10 @@
 				this.dialogFormVisible = true;
 				this.id=row;
 			},
+			//关闭验真
+			cancels(){
+				this.dialogFormVisible = false;
+			},
 			//补充完善资料
 			addData(){
 				var opts=this.temp.options.join(',');
@@ -236,9 +240,14 @@
 					  "remark": this.temp.remark
 				}
 				//验真
-//				confirmMessage(params).then(reponse => {
-//					console.log(response)
-//				})
+				confirmMessage(params).then(reponse => {
+					var me=this;
+					me.list.map(function(v,i){
+						if(v.id === me.id){
+							v.status = 3
+						}
+					})
+				})
 				//跳转到详情页
 				this.$router.push({path:'/message/editContent/'+this.id})
 			},

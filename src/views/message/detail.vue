@@ -1,7 +1,8 @@
 <template>
 	<div class="app-container">
+		<el-collapse v-model="activeNames">
 		<el-form ref="form" :model="form" label-width="120px">
-			<el-form-item label="基本信息"></el-form-item>
+			<el-collapse-item title="基本信息" name="1" >
 			<el-form-item label="消息类型*">
 				<el-select v-model="form.type === 1 ? '供应标' : '采购标'" placeholder="供应标" :disabled="disabled">
 					<el-option v-for="(item,index) in typeOptions" :key="item" :label="item" :value="index+1">
@@ -47,7 +48,8 @@
 					<el-tag v-else>收尘粉</el-tag>
 				</span>
 			</el-form-item>
-			<el-form-item label="常规指标"></el-form-item>
+			</el-collapse-item>
+			<el-collapse-item title="常规指标" name="2" >
 			<el-form-item>
 				<el-col :span="2" style="text-align: center;">硫*</el-col>
 				<el-col :span="2">
@@ -100,7 +102,8 @@
 				</el-col>
 				<el-col :span="2" style="text-align: center;">mm</el-col>
 			</el-form-item>
-			<el-form-item label="微量元素指标"></el-form-item>
+			</el-collapse-item>
+			<el-collapse-item title="微量元素指标" name="3" >
 			<el-form-item>
 				<el-col :span="2" style="text-align: center;">钒</el-col>
 				<el-col :span="2">
@@ -155,16 +158,17 @@
 					</el-col>
 					<el-col :span="2" style="text-align: center;">ppm</el-col>
 				</span>
-			</el-form-item>			
-			<el-form-item label="质检报告"></el-form-item>
+			</el-form-item>	
+			</el-collapse-item>
+			<el-collapse-item title="质检报告" name="4" >
 			<el-form-item>
 				<el-upload class="upload-demo" accept=".pdf" action="http://petrocoke-ops-dev.obaymax.com/file/uploadImage"  type="file" :on-preview="handlePreview" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess">
 					<el-button size="small" type="primary">添加质检报告</el-button>
 					<el-col slot="tip" class="el-upload__tip">一份标准的质检报告会大大缩短交易时间 （请上传小于5MB的pdf文件）</el-col>
 				</el-upload>
 			</el-form-item>
-
-			<el-form-item label="其他"></el-form-item>
+			</el-collapse-item>
+			<el-collapse-item title="其他" name="5" >
 			<span v-if="form.petrolType == 2">
 				<el-form-item label="吨袋">
 					<el-col :span="2">
@@ -189,111 +193,225 @@
 					<div>上传历史</div>
 				</el-upload>
 			</el-form-item>
+			</el-collapse-item>
+			<el-collapse-item title="联系人信息" name="6" >
+				<el-form-item label="用户昵称">
+				<el-col :span="4">
+					<el-input v-model="form.nickname" :disabled="disabled"></el-input>
+				</el-col>
+				</el-form-item>
+				<el-form-item label="用户名">
+					<el-col :span="4">
+						<el-select v-model="form.friendRealname" placeholder="焦小姐的朋友1" :disabled="disabled" @change="checkFriend(form.friendRealname)">
+							<el-option v-for="item in friendList"  :label="item.realname" :value="item.realname">
+	        				</el-option>
+						</el-select>
+					</el-col>
+					<el-col :span="8" style="text-align: center;">找不到用户？尝试&nbsp;
+						<router-link :to="{path:'/message/addContact'}" style="color: #1482F0;">刷新本页</router-link>&nbsp;或者&nbsp;
+						<router-link :to="{path:'/friends/create'}" style="color: #1482F0;">新建一个朋友</router-link>
+					</el-col>
+				</el-form-item>
+				<el-form-item label="电话*">
+					<el-col :span="4"> 
+						<el-input  v-model="form.mobile" disabled></el-input>
+					</el-col>
+				</el-form-item>
+				<el-form-item label="QQ">
+					<el-col :span="4">
+						<el-input  v-model="form.qq" disabled></el-input>
+					</el-col>
+				</el-form-item>
+				<el-form-item label="微信">
+					<el-col :span="4">
+						<el-input  v-if="form.mobile !== ''" v-model="form.mobile" disabled></el-input>
+						<el-input  v-else disabled></el-input>
+					</el-col>
+				</el-form-item>
+				<el-form-item label="一句话简介">
+					<el-input v-model="form.introduction" disabled></el-input>
+				</el-form-item>
+			</el-collapse-item>
+			<el-collapse-item title="其他" name="7" >
+				<div style="float: right;">
+					公开
+				<el-switch v-model="companyList.isCompanyPublic" active-color="#13ce66" inactive-color="gray">
+				</el-switch>
+				</div>
+				</el-form-item>
+				<el-form-item label="公司名称">
+					<el-col :span="8">
+						<el-input v-model="companyList.companyName " placeholder="400-777-8700" disabled></el-input>
+					</el-col>
+				</el-form-item>
+				<el-form-item label="公司性质">
+					<el-col :span="8">
+						<span v-if="companyList.companyType == 0">
+							<el-input  placeholder="其他" disabled></el-input>
+						</span>
+						<span v-else-if="companyList.companyType == 1">
+							<el-input  placeholder="炼油厂" disabled></el-input>
+						</span>
+						<span v-else-if="companyList.companyType == 2">
+							<el-input  placeholder="碳素厂" disabled></el-input>
+						</span>
+						<span v-else-if="companyList.companyType == 3">
+							<el-input  placeholder="贸易商" disabled></el-input>
+						</span>
+						<span v-else>
+							<el-input  placeholder="铝厂" disabled></el-input>
+						</span>
+					</el-col>
+				</el-form-item>
+				<el-form-item label="公司位置"> 
+					<el-col :span="8">
+						<el-input  v-model="companyList.city" disabled></el-input>
+					</el-col>
+				</el-form-item>
+				<el-form-item label="联系电话"> 
+					<el-col :span="8">
+						<el-input v-model="companyList.connectTelephone" disabled></el-input>
+					</el-col>
+				</el-form-item>
+				<!--<el-form-item label="信誉值">
+					<el-col :span="4">50</el-col>
+				</el-form-item>-->
+			</el-collapse-item>
+			<el-form-item>
+				<!--<router-link :to="{path:'/message/addContent/'}"><el-button>上一步</el-button></router-link>-->
+				<el-button type="primary" >发布</el-button>
+			</el-form-item>
 		</el-form>
-		<div slot="footer" class="dialog-footer">
-			<!--<el-button v-if="cancelStatus=='create'">取消编辑</el-button>-->
-			<el-button v-if="editStatus" @click="fetchEdit">编辑</el-button>
-			<el-button v-else @click="cancelEditMs">取消编辑</el-button>
-			<el-button v-if="editStatus" type="primary" @click="nextDetailMs">下一步</el-button>
-			<el-button v-else type="primary" @click="nextEditMs">下一步</el-button>
-			<!--<el-button type="primary" @click="editNext()">下一步</el-button>-->
-			<!--<el-button v-else type="primary" @click="dataDetail">下一步</el-button>-->
-		</div>
+		</el-collapse>
 	</div>
 </template>
 
 <script>
-	import {detailMessage,editMessage} from '@/api/message'
+	import {detailCompany,editMessage,detailMessage} from '@/api/message'
+	import {getList,detailFriend} from '@/api/friends'
 	import {bus} from '@/bus'
 	export default {
 		data() {
 			return {
-				disabled:true,
+				disabled:false,
+				activeNames: ['1'],
 				id:this.$route.params.id,
 				typeOptions: ['供给标', '采购标'],
 				petrolTypeOptions: ['石油焦', '煅后焦'],
 				productAreaOptions: ['东北地区', '华北地区', '华东地区', '华南地区', '华中地区', '西北地区', '西南地区', '其他', '请选择产地'],
-				editStatus: true,
-				form:{}
+				form:{},
+				friendList: [],
+				companyList:{}
 			}
 		},
 		created(){
 			this.fetchDetail()
+			this.getFriend();
 		},
 		methods: {
 			//获取详情页信息
 			fetchDetail(){
-				bus.$on('sub', (msg) => {
-					this.disabled=msg;
-				})
-				if(this.disabled){
-					detailMessage(this.id).then(response => {
-			        	this.form = response.data;
-	      			})
-				}else{
-					this.disabled=false;
-					detailMessage(this.id).then(response => {
-			        	this.form = response.data;
-			        	console.log(11)
-	      			})
-				}
+				console.log(this.id)
+				detailMessage(this.id).then(response => {
+		        	this.form = response.data;
+      			})
+//				bus.$on('sub', (msg) => {
+//					this.disabled=msg;
+//				})
+//				if(this.disabled){
+//					detailMessage(this.id).then(response => {
+//			        	this.form = response.data;
+//	      			})
+//				}else{
+//					this.disabled=false;
+//					detailMessage(this.id).then(response => {
+//			        	this.form = response.data;
+//	      			})
+//				}
 				
 			},
-			//获取编辑页信息
-			fetchEdit(){
-				this.editStatus = !this.editStatus;
-				this.disabled=false;
-//				bus.$emit('sub', this.disabled);
-			},
-			//下一个编辑页面
-			nextEditMs(){
-				var params={
-					'ai': this.form.ai,
-					'ash': this.form.ash,
-					'bagPrice': this.form.bagPrice,
-					'ca': this.form.ca,
-					'density': this.form.density,
-					'description': this.form.description,
-					'fe': this.form.fe,
-					'images': this.form.images,
-					'inspectionReport': this.form.inspectionReport,
-					'label': this.form.label,
-					'na': this.form.na,
-					'ni': this.form.ni,
-					'particle': this.form.particle,
-					'type': this.form.type,
-					'petrolType': this.form.petrolType,
-					'ph': this.form.ph,
-					'pi': this.form.pi,
-					'reservePrice': this.form.reservePrice,
-					'resistance': this.form.resistance,
-					'si': this.form.si,
-					'status': this.form.status,
-					'su': this.form.su,
-					'productArea': this.form.productArea,
-					'va': this.form.va,
-					'vibration': this.form.vibration,
-					'volatiles': this.form.volatiles,
-					'water': this.form.water,
-					'totalQuantity':this.form.totalQuantity ,
-					'buckleWaterRate':this.form.buckleWaterRate
-				}
-				//提交编辑内容页面
-				editMessage(params).then(response => {
-			        this.form = response.data;
+			//获取焦小姐的朋友列表
+			getFriend(){
+				var params={pageSize:0,status:1}
+				getList(params).then(response => {
+					this.friendList=response.data.content;
 	      		})
-				this.$router.push({path:'/message/editContact/'+this.id})
+				
 			},
+			//选中当前焦小姐
+			checkFriend(val){
+				var me=this;
+				me.friendList.map(function(v,i){
+					if(v.realname === val){
+						var dd=v.id;
+						var ss=v.companyId;
+						//朋友详情
+						detailFriend(dd).then(response => {
+					        me.form = response.data
+			      		})
+						//公司详情
+						detailCompany(ss).then(response => {
+					        me.companyList = response.data
+			      		})
+						
+					}
+				})
+			},
+			//获取编辑页信息
+//			fetchEdit(){
+//				this.editStatus = !this.editStatus;
+//				this.disabled=false;
+////				bus.$emit('sub', this.disabled);
+//			},
+			//下一个编辑页面
+//			nextEditMs(){
+//				var params={
+//					'ai': this.form.ai,
+//					'ash': this.form.ash,
+//					'bagPrice': this.form.bagPrice,
+//					'ca': this.form.ca,
+//					'density': this.form.density,
+//					'description': this.form.description,
+//					'fe': this.form.fe,
+//					'images': this.form.images,
+//					'inspectionReport': this.form.inspectionReport,
+//					'label': this.form.label,
+//					'na': this.form.na,
+//					'ni': this.form.ni,
+//					'particle': this.form.particle,
+//					'type': this.form.type,
+//					'petrolType': this.form.petrolType,
+//					'ph': this.form.ph,
+//					'pi': this.form.pi,
+//					'reservePrice': this.form.reservePrice,
+//					'resistance': this.form.resistance,
+//					'si': this.form.si,
+//					'status': this.form.status,
+//					'su': this.form.su,
+//					'productArea': this.form.productArea,
+//					'va': this.form.va,
+//					'vibration': this.form.vibration,
+//					'volatiles': this.form.volatiles,
+//					'water': this.form.water,
+//					'totalQuantity':this.form.totalQuantity ,
+//					'buckleWaterRate':this.form.buckleWaterRate
+//				}
+//				//提交编辑内容页面
+//				editMessage(params).then(response => {
+//			        this.form = response.data;
+//	      		})
+//				this.$router.push({path:'/message/editContact/'+this.id})
+//			},
 			//下一个详情页面
-			nextDetailMs(){
-				this.$router.push({path:'/message/editContact/'+this.id})
-			},
-			//取消编辑
-			cancelEditMs(){
-				this.editStatus = !this.editStatus;
-				this.disabled=true;
-				bus.$emit('sub', this.disabled);
-			},
+//			nextDetailMs(){
+//				this.$router.push({path:'/message/editContact/'+this.id})
+//			},
+//			//取消编辑
+//			cancelEditMs(){
+//				this.editStatus = !this.editStatus;
+//				this.disabled=true;
+//				bus.$emit('sub', this.disabled);
+//			},
 			//添加质检报告
 			 beforeAvatarUpload(file) {
 		        const isPDF = file.type === 'image/pdf';
