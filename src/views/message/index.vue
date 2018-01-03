@@ -185,9 +185,9 @@
 				date:'',
 				listQuery:{
 					pageNum: 1,
-          			pageSize: 10,
-          			totalPages:'',
-          			totalElements:'',
+          pageSize: 10,
+          totalPages:'',
+          totalElements:'',
 					tenderNum: '',
 					createTime: '',
 					consultCount: '',
@@ -260,7 +260,7 @@
 		      	})
 			},
 			//查询列表
-			query(){
+			query() {
 				if (this.date.length !== 0) {
 		          var start = new Date(this.date[0])
 		          var end = new Date(this.date[1])
