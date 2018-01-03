@@ -177,7 +177,7 @@
 			<el-form-item label="用户名">
 				<el-col :span="4">
 					<el-select v-model="form.friendRealname" placeholder="焦小姐的朋友1" :disabled="disabled" @change="checkFriend(form.friendRealname)">
-						<el-option v-for="item in friendList"  :label="item.realname" :value="item.realname" :key="index">
+						<el-option v-for="(item,index) in friendList"  :label="item.realname" :value="item.realname">
         				</el-option>
 					</el-select>
 				</el-col>
@@ -216,8 +216,6 @@
 				<el-col :span="8">
 					<el-input v-model="companyList.companyName " placeholder="400-777-8700" disabled></el-input>
 				</el-col>
-				<el-switch v-model="companyList.isCompanyPublic" active-color="#13ce66" inactive-color="#ccc" style="float: right;">
-				</el-switch>
 			</el-form-item>
 			<el-form-item label="公司性质">
 				<el-col :span="8">
@@ -253,7 +251,7 @@
 			</el-form-item>-->
 			<el-form-item>
 				<router-link :to="{path:'/message/addContent/'}"><el-button>上一步</el-button></router-link>
-				<el-button type="primary" @click="preview">确定</el-button>
+				<el-button type="primary" @click="preview">预览</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -277,7 +275,6 @@
 			this.getFriend();
 			bus.$on('adds', (msg) => {
 				this.form=Object.assign(this.form, msg);
-				console.log(this.form)
 			})
 		},
 		methods: {
