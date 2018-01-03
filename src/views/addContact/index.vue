@@ -10,7 +10,7 @@
 			<el-form-item label="用户名">
 				<el-col :span="4">
 					<el-select v-model="form.friendRealname" placeholder="焦小姐的朋友1" :disabled="disabled" @change="checkFriend(form.friendRealname)">
-						<el-option v-for="item in friendList"  :label="item.realname" :value="item.realname">
+						<el-option v-for="item in friendList"  :label="item.realname" :value="item.realname" :key="index">
         				</el-option>
 					</el-select>
 				</el-col>
@@ -20,7 +20,7 @@
 				</el-col>
 			</el-form-item>
 			<el-form-item label="电话*">
-				<el-col :span="4"> 
+				<el-col :span="4">
 					<el-input  v-model="form.mobile" disabled></el-input>
 				</el-col>
 			</el-form-item>
@@ -71,12 +71,12 @@
 					</span>
 				</el-col>
 			</el-form-item>
-			<el-form-item label="公司位置"> 
+			<el-form-item label="公司位置">
 				<el-col :span="8">
 					<el-input  v-model="companyList.city" disabled></el-input>
 				</el-col>
 			</el-form-item>
-			<el-form-item label="联系电话"> 
+			<el-form-item label="联系电话">
 				<el-col :span="8">
 					<el-input v-model="companyList.connectTelephone" disabled></el-input>
 				</el-col>
@@ -135,7 +135,7 @@
 				getList(params).then(response => {
 					this.friendList=response.data.content;
 	      		})
-				
+
 			},
 			//选中当前焦小姐
 			checkFriend(val){
@@ -152,7 +152,7 @@
 						detailCompany(ss).then(response => {
 					        me.companyList = response.data
 			      		})
-						
+
 					}
 				})
 			}
@@ -164,7 +164,7 @@
 //		      	})
 //				this.$router.push({path:'/message/editContact'})
 //			}
-			
+
 		}
 	}
 </script>
