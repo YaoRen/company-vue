@@ -7,7 +7,7 @@
           <el-button  @click="editFriend" v-show='!isShow' size="mini">完成</el-button>
           <el-button  @click="cancelEdit" v-show='!isShow' size="mini" >取消编辑</el-button>
         </p>
-        <el-form :label-position="right" label-width="96px">
+        <el-form label-position="right" label-width="96px">
           <el-form-item label="昵称：" >
             <el-input v-model="info.nickname" :disabled="disabled" ></el-input>
           </el-form-item>
@@ -16,8 +16,8 @@
           </el-form-item>
           <el-form-item label="性别：" >
             <el-select v-model="info.sex" :disabled="disabled">
-              <el-option :label = "boy" value = "1"></el-option>
-              <el-option :label = "girl" value = "2"></el-option>
+              <el-option label = "男" value = "1"></el-option>
+              <el-option label = "女" value = "2"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="联系电话：" >
@@ -40,7 +40,7 @@
           <el-button  @click="doneEdit" v-show='!hasShow' size="mini">完成</el-button>
           <el-button  @click="offEdit" v-show='!hasShow' size="mini">取消编辑</el-button>
         </p>
-        <el-form :label-position="right" label-width="100px">
+        <el-form label-width="100px">
           <el-form-item label="公司名称：">
             <el-select v-model="info.companyId" :disabled="able" placeholder="请选择">
               <el-option
@@ -120,7 +120,7 @@
         id: this.$route.params.id,
         list: [],
         listLoading: true,
-        info: 'hi',
+        info: '',
         input: '',
         activeNames: ['1'],
         disabled: true,
@@ -128,9 +128,6 @@
         isShow: true,
         hasShow: true,
         companyList: [],
-        right: 'right',
-        boy: '男',
-        girl: '女'
       }
     },
     filters: {
@@ -187,40 +184,17 @@
       },
       editFriend() {
         var params = {
-          'companyId': '2',
-          'companyName': '',
-          'creator': '',
-          'department': '',
-          'endDate': '',
-          'endTime': '',
+
           'id': this.id,
-          'idcard': this.info.idcard,
           'introduction': this.info.introduction,
-          'isCompanyPublic': true,
           'mobile': this.info.mobile,
-          'modifier': '',
-          'modifyTime': '',
           'nickname': this.info.nickname,
-          'order': '',
-          'pageNum': 1,
-          'pageSize': 10,
-          'password': '',
-          'position': '',
           'qq': this.info.qq,
           'realname': this.info.realname,
-          'searchWord': '',
-          'sex': this.info.sex,
-          'sort': '',
-          'startDate': '',
-          'startTime': '2017-12-25',
-          'status': '',
-          'companyId' : this.info.companyId,
-          'department': this.info.department,
-          'position': this.info.position
+          'sex': this.info.sex
         }
         editFriend(params).then(response => {
           // 后面需要改一下
-          console.log(response.data)
           this.info = response.data || this.info
         })
         this.isShow = !this.isShow
@@ -231,35 +205,8 @@
         }
       },
       doneEdit() {
-        console.log('done')
         var params = {
-          'companyId': '2',
-          'companyName': '',
-          'creator': '',
-          'department': '',
-          'endDate': '',
-          'endTime': '',
           'id': this.id,
-          'idcard': this.info.idcard,
-          'introduction': this.info.introduction,
-          'isCompanyPublic': true,
-          'mobile': this.info.mobile,
-          'modifier': '',
-          'modifyTime': '',
-          'nickname': this.info.nickname,
-          'order': '',
-          'pageNum': 1,
-          'pageSize': 10,
-          'password': '',
-          'position': '',
-          'qq': this.info.qq,
-          'realname': this.info.realname,
-          'searchWord': '',
-          'sex': this.info.sex,
-          'sort': '',
-          'startDate': '',
-          'startTime': '2017-12-25',
-          'status': '',
           'companyId' : this.info.companyId,
           'department': this.info.department,
           'position': this.info.position
@@ -278,7 +225,6 @@
       },
       cancelEdit() {
         this.fetchData()
-        console.log('cancel')
         this.isShow = !this.isShow
         if (this.isShow) {
           this.disabled = true
