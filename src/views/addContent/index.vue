@@ -1,3 +1,4 @@
+
 <template>
 	<div class="app-container">
 		<el-form ref="form" :model="form" label-width="120px">
@@ -39,7 +40,7 @@
 			</el-form-item>
 			<el-form-item label="类型标签*">
 				<el-radio-group v-model="form.label">
-					<el-radio-button v-for="(tag,index) in labelTag" :label=index+1>{{tag}}</el-radio-button>
+					<el-radio-button v-for="(tag,index) in labelTag" :label=index+1 :key="index">{{tag}}</el-radio-button>
 				</el-radio-group>
 				<!--<span v-for="item in form.label" :key="item">
 					<el-tag v-if="item ==1">海绵焦</el-tag>
@@ -177,7 +178,7 @@
 					<el-col :span="2" style="text-align: center;"> 元/吨</el-col>
 					<el-col :span="10">如您可提供此项服务供买家选择，请填写相关价格（选填）</el-col>
 				</el-form-item>
-			</span>	
+			</span>
 			<span v-if="form.petrolType == 1">
 				<el-form-item label="扣水量*">
 					<el-col :span="2">
@@ -320,7 +321,7 @@
 			 beforeAvatarUpload(file) {
 		        const isPDF = file.type !== 'image/pdf';
 		        const isLt5M = file.size / 1024 / 1024 < 5;
-		
+
 		        if (!isPDF) {
 		          this.$message.error('上传头像图片只能是 PDF 格式!');
 		        }
@@ -339,7 +340,7 @@
 			beforeUpload(file) {
 		        const isImg = file.type !== 'image/pdf';
 		        const isLt2M = file.size / 1024 / 1024 < 2;
-		
+
 		        if (!isImg) {
 		          this.$message.error('上传头像图片只能是 PNG、JPG、GIF、JPEG 格式!');
 		        }

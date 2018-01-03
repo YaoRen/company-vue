@@ -59,7 +59,7 @@
 		<!--消息列表-->
 		<el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
 			<el-table-column align="center" label='招标号' width="95px">
-			
+
 				<template slot-scope="scope">
 					<router-link :to="{path:'/message/editContent/'+scope.row.id}">{{scope.row.tenderNum}}</router-link>
 				</template>
@@ -169,9 +169,9 @@
 				date:'',
 				listQuery:{
 					pageNum: 1,
-          			pageSize: 10,
-          			totalPages:'',
-          			totalElements:'',
+          pageSize: 10,
+          totalPages:'',
+          totalElements:'',
 					tenderNum: '',
 					createTime: '',
 					consultCount: '',
@@ -236,7 +236,7 @@
 		      	})
 			},
 			//查询列表
-			query(){
+			query() {
 				if (this.date.length !== 0) {
 		          var start = new Date(this.date[0])
 		          var end = new Date(this.date[1])
