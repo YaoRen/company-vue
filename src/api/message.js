@@ -4,7 +4,7 @@ export function getList(params) {
   return request({
     url: '/xdXiaoxi/list',
     method: 'post',
-    data: { params }
+    data: params
   })
 }
 //添加消息列表
@@ -12,33 +12,39 @@ export function addMessage(params) {
 	return request({
 	    url: '/xdXiaoxi/add',
 	    method: 'post',
-	    data: {params}
+	    data: params
 	})
 }
-////编辑消息
-//export function editMessage(params) {
-//return request({
-//  url: '/xdXiaoxi/edit',
-//  method: 'post',
-//  params: { params }
-//})
-//}
-////消息详情
-//export function detailMessage(params) {
-//return request({
-//  url: '/xdXiaoxi/detail/{id}',
-//  method: 'get',
-//  data: {params}
-//})
-//}
-////验真
-//export function confirmMessage(params) {
-//	return request({
-//	    url: '/xdXiaoxi/verify',
-//	    method: 'post',
-//	    data: {params}
-//	})
-//}
+//编辑消息
+export function editMessage(params) {
+	return request({
+	    url: '/xdXiaoxi/edit',
+	    method: 'post',
+	    data: params
+	})
+}
+//消息详情
+export function detailMessage(id) {
+	return request({
+	    url: '/xdXiaoxi/detail/'+id,
+	    method: 'get'
+	})
+}
+//验真
+export function confirmMessage(params) {
+	return request({
+	    url: '/xdXiaoxi/verify',
+	    method: 'post',
+	    data: params
+	})
+}
+//公司详情
+export function detailCompany(id) {
+	return request({
+	    url: '/company/info/'+id,
+	    method: 'post'
+	})
+}
 //发布消息
 //export function detailMessage(params) {
 //return request({

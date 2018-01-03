@@ -37,24 +37,18 @@ export const constantRouterMap = [
     path: '/friends',
     component: Layout,
     redirect: '/friends/index',
-    name: 'Example',
-    meta: { title: '焦小姐的朋友', icon: 'example' },
     children: [
       {
         path: 'index',
-        // name: 'Index',
-        component: _import('index/index')
+        component: _import('friends/index')
+      },
+      {
+        path: 'create',
+        component: _import('friends/createFriend')
       },
       {
         path: 'detail/:id',
-        // name: 'Table',
-        component: _import('table/index')
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: _import('tree/index'),
-        meta: { title: '编辑朋友', icon: 'tree' }
+        component: _import('friends/detailFriend')
       }
     ]
   },
@@ -67,21 +61,27 @@ export const constantRouterMap = [
     children: [
       {
         path: 'index',
-        name: 'Index',
-        component: _import('message/index'),
-        meta: { title: '小道消息', icon: 'form' }
+        component: _import('message/index')
       },
       {
-        path: 'editContent',
-        name: 'EditContent',
-        component: _import('editContent/index'),
-        meta: { title: '编辑内容', icon: 'form' }
+        path: 'editContent/:id',
+        component: _import('message/editContent')
+      },
+	  {
+        path: 'addContent',
+        component: _import('message/addContent')
       },
       {
-        path: 'editContact',
-        name: 'EditContact',
-        component: _import('editContact/index'),
-        meta: { title: '编辑联系人', icon: 'form' }
+        path: 'editContact/:id',
+        component: _import('message/editContact')
+      },
+	  {
+        path: 'addContact/:id',
+        component: _import('message/addContact')
+     },
+     {
+        path: 'detail/:id',
+        component: _import('message/detail')
       }
     ]
   },
@@ -102,7 +102,7 @@ export const constantRouterMap = [
 ]
 
 export default new Router({
- 	mode: 'history', 
+ 	mode: 'history',
   	scrollBehavior: () => ({
   		y: 0
   	}),
