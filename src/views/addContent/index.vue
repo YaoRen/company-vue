@@ -226,7 +226,8 @@
 //						console.log('无输入个人信息')
 //						return
 //					}
-					var list = {'ai': this.form.ai,
+					var list = {
+					'ai': this.form.ai,
 					'ash': this.form.ash,
 					'bagPrice': this.form.bagPrice,
 					'ca': this.form.ca,

@@ -222,7 +222,6 @@
 				if(this.disabled){
 					detailMessage(this.id).then(response => {
 			        	this.form = response.data;
-			        	console.log(11)
 	      			})
 				}else{
 					this.disabled=false;
