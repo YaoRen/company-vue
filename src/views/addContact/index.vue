@@ -86,7 +86,7 @@
 			</el-form-item>-->
 			<el-form-item>
 				<router-link :to="{path:'/message/addContent/'}"><el-button>上一步</el-button></router-link>
-				<el-button type="primary" @click="preview">确定</el-button>
+				<el-button type="primary" @click="preview">预览</el-button>
 			</el-form-item>
 		</el-form>
 	</div>
@@ -110,7 +110,6 @@
 			this.getFriend();
 			bus.$on('adds', (msg) => {
 				this.form=Object.assign(this.form, msg);
-				console.log(this.form)
 			})
 		},
 		methods: {

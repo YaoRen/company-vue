@@ -206,36 +206,7 @@
 				petrolTypeOptions: ['石油焦', '煅后焦'],
 				productAreaOptions: ['东北地区', '华北地区', '华东地区', '华南地区', '华中地区', '西北地区', '西南地区', '其他', '请选择产地'],
 				labelTag:['海绵焦','弹丸焦','针状焦','煅后石油焦','增碳剂','收尘粉'],
-				form:{
-					ai: '',
-					ash: '',
-					bagPrice: '',
-					ca: '',
-					density: '',
-					description: '',
-					fe: '',
-					images: '',
-					inspectionReport: '',
-					label: '',
-					na: '',
-					ni: '',
-					particle: '',
-					petrolType: '',
-					ph: '',
-					pi: '',
-					reservePrice: '',
-					resistance: '',
-					si: '',
-					status: '',
-					su: '',
-					totalQuantity :'',
-					productArea: '',
-					va: '',
-					vibration: '',
-					volatiles: '',
-					water: '',
-					buckleWaterRate:''
-				}
+				form:{}
 			}
 		},
 		created(){
@@ -282,11 +253,12 @@
 					'vibration': this.form.vibration,
 					'volatiles': this.form.volatiles,
 					'water': this.form.water,
-					'totalQuantity':this.totalQuantity ,
+					'totalQuantity':this.form.totalQuantity ,
 					'buckleWaterRate':this.form.buckleWaterRate
 				};
 				addMessage(list).then(response => {
 			        this.form = response.data;
+			        console.log(response.data)
 			        var str=JSON.stringify(this.form);
 			        localStorage.setItem("table",str);
 			        bus.$emit('adds', this.form);
