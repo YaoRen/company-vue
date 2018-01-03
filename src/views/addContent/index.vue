@@ -33,7 +33,7 @@
 			</el-form-item>
 			<el-form-item label="类型标签*">
 				<el-radio-group v-model="form.label">
-					<el-radio-button v-for="(tag,index) in labelTag" :label=tag :value="index+1" ></el-radio-button>
+					<el-radio-button v-for="(tag,index) in labelTag" :label=index+1>{{tag}}</el-radio-button>
 				</el-radio-group>
 				<!--<span v-for="item in form.label" :key="item">
 					<el-tag v-if="item ==1">海绵焦</el-tag>
@@ -100,7 +100,7 @@
 			</el-form-item>
 			<el-form-item label="微量元素指标"></el-form-item>
 			<el-form-item>
-				<el-col :span="2" style="text-align: center;">钒*</el-col>
+				<el-col :span="2" style="text-align: center;">钒</el-col>
 				<el-col :span="2">
 					<el-input v-model="form.va" ></el-input>
 				</el-col>
@@ -206,35 +206,7 @@
 				petrolTypeOptions: ['石油焦', '煅后焦'],
 				productAreaOptions: ['东北地区', '华北地区', '华东地区', '华南地区', '华中地区', '西北地区', '西南地区', '其他', '请选择产地'],
 				labelTag:['海绵焦','弹丸焦','针状焦','煅后石油焦','增碳剂','收尘粉'],
-				form:{
-					ai: '',
-					ash: '',
-					bagPrice: '',
-					ca: '',
-					density: '',
-					description: '',
-					fe: '',
-					images: '',
-					inspectionReport: '',
-					label: '',
-					na: '',
-					ni: '',
-					particle: '',
-					petrolType: '',
-					ph: '',
-					pi: '',
-					reservePrice: '',
-					resistance: '',
-					si: '',
-					status: '',
-					su: '',
-					productArea: '',
-					va: '',
-					vibration: '',
-					volatiles: '',
-					water: '',
-					buckleWaterRate:''
-				}
+				form:{}
 			}
 		},
 		created(){
@@ -281,15 +253,16 @@
 					'vibration': this.form.vibration,
 					'volatiles': this.form.volatiles,
 					'water': this.form.water,
+					'totalQuantity':this.form.totalQuantity ,
 					'buckleWaterRate':this.form.buckleWaterRate
 				};
 				addMessage(list).then(response => {
 			        this.form = response.data;
 			        var str=JSON.stringify(this.form);
 			        localStorage.setItem("table",str);
-//			        bus.$emit('adds', this.form);
+			        bus.$emit('adds', this.form);
 	      		})
-				this.$router.push({path:'/message/addContact'});
+				this.$router.push({path:'/message/addContact/'+this.id});
 			},
 			//取消添加
 			cancelAdd(){
@@ -297,17 +270,9 @@
 				this.form = {}
 				this.$router.push({path:'/message/index'});
 			},
-			//获取添加页面
-//			addMessages(){
-//				this.disabled = !this.disabled;
-//				this.form=null;
-//				addMessage(this.list).then(response => {
-//			        console.log(response.data)
-//	      		})
-//			}
 			//添加质检报告
 			 beforeAvatarUpload(file) {
-		        const isPDF = file.type !== 'image/pdf';
+		        const isPDF = file.type == 'image/pdf';
 		        const isLt5M = file.size / 1024 / 1024 < 5;
 		
 		        if (!isPDF) {
@@ -326,23 +291,26 @@
 	      	},
 		    //添加图片
 			beforeUpload(file) {
-		        const isImg = file.type !== 'image/pdf';
+		        const isImg1 = file.type == 'image/PNG';
+		        const isImg2 = file.type == 'image/JPG';
+		        const isImg3 = file.type == 'image/GIF';
+		        const isImg4 = file.type == 'image/JPEG';
 		        const isLt2M = file.size / 1024 / 1024 < 2;
 		
-		        if (!isImg) {
+		        if (!(isImg1 || isImg2 || isImg3 || isImg4)) {
 		          this.$message.error('上传头像图片只能是 PNG、JPG、GIF、JPEG 格式!');
 		        }
 		        if (!isLt2M) {
 		          this.$message.error('上传头像图片大小不能超过 2MB!');
 		        }
-		        return isImg && isLt2M;
+		        return isImg1 && isImg2 && isImg3 && isImg4 && isLt2M;
       		},
 		    handleSuccess(res, file) {
 	        	this.form.images = res.data;
-	      },
+	      	},
 			handlePreviews(file){
 	      		window.open(file.response.data,'_blank');
-	      	},
+	      	}
 		}
 	}
 </script>

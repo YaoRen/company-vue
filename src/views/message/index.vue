@@ -61,59 +61,76 @@
 			<el-table-column align="center" label='招标号' width="95px">
 			
 				<template slot-scope="scope">
-					<router-link :to="{path:'/message/editContent/'+scope.row.id}">{{scope.row.tenderNum}}</router-link>
+					<router-link :to="{path:'/message/editContent/'+scope.row.id}">
+						{{scope.row.tenderNum}}
+					</router-link>
 				</template>
 			</el-table-column>
 			<el-table-column label="商品类型" align="center">
 				<template slot-scope="scope">
-					<span v-if="scope.row.petrolType === 1">石油焦</span>
-					<span v-else>煅后焦</span>
+					<router-link :to="{path:'/message/editContent/'+scope.row.id}">
+						<span v-if="scope.row.petrolType === 1">石油焦</span>
+						<span v-else>煅后焦</span>
+					</router-link>
 				</template>
 			</el-table-column>
 			<el-table-column label="消息类型" width="110px" align="center">
 				<template slot-scope="scope">
-					<span v-if="scope.row.type === 1">供给标</span>
-					<span v-else-if="scope.row.type === 2">需求标</span>
+					<router-link :to="{path:'/message/editContent/'+scope.row.id}">
+						<span v-if="scope.row.type === 1">供给标</span>
+						<span v-else-if="scope.row.type === 2">需求标</span>
+					</router-link>
 				</template>
 			</el-table-column>
 			<el-table-column label="创建时间" width="110px" align="center">
 				<template slot-scope="scope">
-					{{scope.row.createTime | date}}
+					<router-link :to="{path:'/message/editContent/'+scope.row.id}">
+						{{scope.row.createTime | date}}
+					</router-link>
 				</template>
 			</el-table-column>
 			<el-table-column align="center" prop="created_at" label="消息状态" width="200px">
 				<template slot-scope="scope">
-					<span v-if="scope.row.status === 0">草稿</span>
-					<span v-else-if="scope.row.status === 1">未验证</span>
-					<span v-else-if="scope.row.status === 2">验证中</span>
-					<span v-else-if="scope.row.status === 3">已验证</span>
-					<span v-else>已招标</span>
+					<router-link :to="{path:'/message/editContent/'+scope.row.id}">
+						<span v-if="scope.row.status === 0">草稿</span>
+						<span v-else-if="scope.row.status === 1">未验证</span>
+						<span v-else-if="scope.row.status === 2">验证中</span>
+						<span v-else-if="scope.row.status === 3">已验证</span>
+						<span v-else>已招标</span>
+					</router-link>
 				</template>
 			</el-table-column>
 			<el-table-column align="center" prop="created_at" label="发布人 " width="200px">
 				<template slot-scope="scope">
-					<span>{{scope.row.friendNickname}}</span>
+					<router-link :to="{path:'/message/editContent/'+scope.row.id}">
+						<span>{{scope.row.friendNickname}}</span>
+					</router-link>
 				</template>
 			</el-table-column>
 			<el-table-column align="center" prop="created_at" label="货量（吨）" width="200px">
 				<template slot-scope="scope">
-					<span>{{scope.row.totalQuantity}}</span>
+					<router-link :to="{path:'/message/editContent/'+scope.row.id}">
+						<span>{{scope.row.totalQuantity}}</span>
+					</router-link>
 				</template>
 			</el-table-column>
 			<el-table-column align="center" prop="created_at" label="询价量" width="200px">
 				<template slot-scope="scope">
-					<span>{{scope.row.consultCount}}</span>
+					<router-link :to="{path:'/message/editContent/'+scope.row.id}">
+						<span>{{scope.row.consultCount}}</span>
+					</router-link>
 				</template>
 			</el-table-column>
 			<el-table-column align="center" prop="created_at" label="焦小姐" width="200px">
 				<template slot-scope="scope">
-					<span>{{scope.row.friendRealname}}</span>
+					<router-link :to="{path:'/message/editContent/'+scope.row.id}">
+						<span>{{scope.row.friendRealname}}</span>
+					</router-link>
 				</template>
 			</el-table-column>
 			<el-table-column class-name="status-col" label="操作" width="110" align="center">
 				<template slot-scope="scope">
 					<span @click="confirmTrue(scope.row.id)" style="color: #1482F0;cursor: pointer;">验真</span>
-					<!--<span v-else>验真</span>-->
 				</template>
 			</el-table-column>
 		</el-table>
@@ -212,6 +229,7 @@
 			},
 			//补充完善资料
 			addData(){
+				
 				var opts=this.temp.options.join(',');
 				var params={
 					  "id": this.id,
@@ -219,9 +237,16 @@
 					  "remark": this.temp.remark
 				}
 				//验真
-//				confirmMessage(params).then(reponse => {
-//					console.log(response)
-//				})
+				confirmMessage(params).then(response => {
+					var me=this;
+					me.list.map(function(v,i){
+						if(v.id === me.id){
+							v.status=3;
+						}
+					})
+					console.log(this.id)
+//					this.list[this.id].status = 3;
+				})
 				//跳转到详情页
 				this.$router.push({path:'/message/editContent/'+this.id})
 			},
@@ -231,6 +256,7 @@
 			 	getList(this.listQuery).then(response => {
 			        this.list = response.data.content
 			        this.all = response.data.totalElements
+			        this.total = response.data.totalElements
 			        this.listLoading = false
 		      	})
 			},
