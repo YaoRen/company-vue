@@ -2,6 +2,12 @@
 	<div class="app-container">
 		<el-form ref="form" :model="form" label-width="120px">
 			<el-form-item label="基本信息"></el-form-item>
+			<el-form-item label="消息类型*">
+				<el-select v-model="form.type === 1 ? '供应标' : '采购标'" placeholder="供应标" :disabled="disabled">
+					<el-option v-for="(item,index) in typeOptions" :key="item" :label="item" :value="index+1">
+					</el-option>
+				</el-select>
+			</el-form-item>
 			<el-form-item label="商品类型*">
 				<el-select v-model="form.petrolType === 1 ? '石油焦' : '煅后焦'" placeholder="煅后焦" :disabled="disabled">
 					<el-option v-for="(item,index) in petrolTypeOptions" :key="item" :label="item" :value="index+1">
@@ -195,6 +201,7 @@
 			return {
 				disabled:true,
 				id:this.$route.params.id,
+				typeOptions: ['供给标', '采购标'],
 				petrolTypeOptions: ['石油焦', '煅后焦'],
 				productAreaOptions: ['东北地区', '华北地区', '华东地区', '华南地区', '华中地区', '西北地区', '西南地区', '其他', '请选择产地'],
 				editStatus: true,
@@ -249,6 +256,7 @@
 					'na': this.form.na,
 					'ni': this.form.ni,
 					'particle': this.form.particle,
+					'type': this.form.type,
 					'petrolType': this.form.petrolType,
 					'ph': this.form.ph,
 					'pi': this.form.pi,

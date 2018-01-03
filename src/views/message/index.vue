@@ -59,7 +59,6 @@
 		<!--消息列表-->
 		<el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
 			<el-table-column align="center" label='招标号' width="95px">
-			
 				<template slot-scope="scope">
 					<router-link :to="{path:'/message/editContent/'+scope.row.id}">
 						{{scope.row.tenderNum}}
