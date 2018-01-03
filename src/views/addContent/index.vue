@@ -639,7 +639,7 @@
 //			}
 			//添加质检报告
 			 beforeAvatarUpload(file) {
-		        const isPDF = file.type !== 'image/pdf';
+		        const isPDF = file.type === 'image/pdf';
 		        const isLt5M = file.size / 1024 / 1024 < 5;
 
 		        if (!isPDF) {
@@ -658,7 +658,7 @@
 	      	},
 		    //添加图片
 			beforeUpload(file) {
-		        const isImg = file.type !== 'image/pdf';
+		        const isImg = file.type === 'image/png' || file.type == 'image/jpg' || file.type == 'image/gif' || file.type == 'image/jpeg';
 		        const isLt2M = file.size / 1024 / 1024 < 2;
 
 		        if (!isImg) {
