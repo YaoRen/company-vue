@@ -262,7 +262,7 @@
 			        localStorage.setItem("table",str);
 			        bus.$emit('adds', this.form);
 	      		})
-				this.$router.push({path:'/message/addContact'});
+				this.$router.push({path:'/message/addContact/'+this.id});
 			},
 			//取消添加
 			cancelAdd(){
@@ -270,14 +270,6 @@
 				this.form = {}
 				this.$router.push({path:'/message/index'});
 			},
-			//获取添加页面
-//			addMessages(){
-//				this.disabled = !this.disabled;
-//				this.form=null;
-//				addMessage(this.list).then(response => {
-//			        console.log(response.data)
-//	      		})
-//			}
 			//添加质检报告
 			 beforeAvatarUpload(file) {
 		        const isPDF = file.type == 'image/pdf';
@@ -315,10 +307,10 @@
       		},
 		    handleSuccess(res, file) {
 	        	this.form.images = res.data;
-	      },
+	      	},
 			handlePreviews(file){
 	      		window.open(file.response.data,'_blank');
-	      	},
+	      	}
 		}
 	}
 </script>

@@ -124,7 +124,7 @@
 			        this.form = Object.assign(this.form, response.data);
 	      		})
 				localStorage.removeItem("table");
-				this.$router.push({path:'/message/index'});
+				this.$router.push({path:'/message/editContent/'+this.id});
 			},
 			//获取焦小姐的朋友列表
 			getFriend(){
@@ -153,15 +153,6 @@
 					}
 				})
 			}
-			//编辑下一步
-//			editNext() {
-//				addMessage(this.list).then(response => {
-//			 		console.log(response.data)
-//			        this.form = response.data.content
-//		      	})
-//				this.$router.push({path:'/message/editContact'})
-//			}
-			
 		}
 	}
 </script>

@@ -76,7 +76,7 @@ export const constantRouterMap = [
         component: _import('editContact/index')
       },
 	  {
-        path: 'addContact',
+        path: 'addContact/:id',
         component: _import('addContact/index')
       }
     ]

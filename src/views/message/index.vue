@@ -229,6 +229,7 @@
 			},
 			//补充完善资料
 			addData(){
+				
 				var opts=this.temp.options.join(',');
 				var params={
 					  "id": this.id,
@@ -236,9 +237,16 @@
 					  "remark": this.temp.remark
 				}
 				//验真
-//				confirmMessage(params).then(reponse => {
-//					console.log(response)
-//				})
+				confirmMessage(params).then(response => {
+					var me=this;
+					me.list.map(function(v,i){
+						if(v.id === me.id){
+							v.status=3;
+						}
+					})
+					console.log(this.id)
+//					this.list[this.id].status = 3;
+				})
 				//跳转到详情页
 				this.$router.push({path:'/message/editContent/'+this.id})
 			},
