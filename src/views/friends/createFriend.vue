@@ -12,8 +12,8 @@
           </el-form-item>
           <el-form-item label="性别：" >
             <el-select v-model="info.sex" placeholder="">
-              <el-option :label = "boy" value = "男"></el-option>
-              <el-option :label = "girl" value = "女"></el-option>
+              <el-option :label = "boy" value = "1"></el-option>
+              <el-option :label = "girl" value = "2"></el-option>
             </el-select>
           </el-form-item>
 
@@ -34,13 +34,13 @@
       <el-collapse-item title="公司信息" name="2">
         <el-form :label-position="right" label-width="100px">
           <el-form-item label="公司名称：">
-            <el-select v-model="value" placeholder="请选择公司名称">
+            <el-select v-model="info.companyId" placeholder="请选择公司名称">
 
               <el-option
                 v-for="item in companyList"
                 :key="item.id"
                 :label="item.companyName"
-                :value="item.companyName">
+                :value="item.id">
               </el-option>
             </el-select>
           </el-form-item>
@@ -133,7 +133,10 @@
           'pageSize': 10,
           'qq': this.info.qq,
           'realname': this.info.realname,
-          'sex': this.info.sex
+          'sex': this.info.sex,
+          'companyId': this.info.companyId,
+          'department': this.info.department,
+          'position': this.info.position
         }
         addFriend(params).then(response => {
           this.$notify({
