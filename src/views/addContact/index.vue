@@ -41,7 +41,7 @@
 			<el-form-item label="公司信息" style="border-bottom: 1px solid #ccc;">
 				<div style="float: right;">
 					公开
-				<el-switch v-model="companyList.isCompanyPublic" active-color="#13ce66" inactive-color="#ff4949">
+				<el-switch v-model="companyList.isCompanyPublic" active-color="#13ce66" inactive-color="gray">
 				</el-switch>
 				</div>
 			</el-form-item>
@@ -49,8 +49,6 @@
 				<el-col :span="8">
 					<el-input v-model="companyList.companyName " placeholder="400-777-8700" disabled></el-input>
 				</el-col>
-				<el-switch v-model="companyList.isCompanyPublic" active-color="#13ce66" inactive-color="#ccc" style="float: right;">
-				</el-switch>
 			</el-form-item>
 			<el-form-item label="公司性质">
 				<el-col :span="8">
@@ -117,8 +115,8 @@
 			preview(){
 //				var list={
 //					'friendNickname': this.form.nickname ,
-//					'friendRealname': this.form.realname ,
-//					'friendId': this.form.friendId,
+//					'friendRealname': this.form.realname 
+//					'friendId': this.form.id
 //					'companyId': this.companyList.id,
 //					'companyName': this.companyList.companyName
 //				}

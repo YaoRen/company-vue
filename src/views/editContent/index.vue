@@ -4,7 +4,7 @@
 			<el-form-item label="基本信息"></el-form-item>
 			<el-form-item label="商品类型*">
 				<el-select v-model="form.petrolType === 1 ? '石油焦' : '煅后焦'" placeholder="煅后焦" :disabled="disabled">
-					<el-option v-for="item in petrolTypeOptions" :key="item" :label="item" :value="index+1">
+					<el-option v-for="(item,index) in petrolTypeOptions" :key="item" :label="item" :value="index+1">
 					</el-option>
 				</el-select>
 			</el-form-item>
@@ -91,7 +91,7 @@
 			</el-form-item>
 			<el-form-item label="微量元素指标"></el-form-item>
 			<el-form-item>
-				<el-col :span="2" style="text-align: center;">钒*</el-col>
+				<el-col :span="2" style="text-align: center;">钒</el-col>
 				<el-col :span="2">
 					<el-input v-model="form.va" :disabled="disabled"></el-input>
 				</el-col>
