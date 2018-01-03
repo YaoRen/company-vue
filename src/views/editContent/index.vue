@@ -41,51 +41,56 @@
 					<el-tag v-else>收尘粉</el-tag>
 				</span>
 			</el-form-item>
-
 			<el-form-item label="常规指标"></el-form-item>
 			<el-form-item>
 				<el-col :span="2" style="text-align: center;">硫*</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.su" :disabled="disabled"></el-input>
+					<el-input v-model="form.su" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">%</el-col>
-				<el-col :span="2" style="text-align: center;">真密度</el-col>
-				<el-col :span="2">
-					<el-input v-model="form.density" :disabled="disabled"></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;">g/cm³</el-col>
+				<span v-if="form.petrolType == 2">
+					<el-col :span="2" style="text-align: center;">真密度</el-col>
+					<el-col :span="2">
+						<el-input v-model="form.density" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;">g/cm³</el-col>
+				</span>
 				<el-col :span="2" style="text-align: center;">灰分*</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.ash" :disabled="disabled"></el-input>
+					<el-input v-model="form.ash" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">%</el-col>
 			</el-form-item>
 			<el-form-item>
 				<el-col :span="2" style="text-align: center;">挥发分*</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.volatiles" :disabled="disabled"></el-input>
+					<el-input v-model="form.volatiles" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">%</el-col>
 				<el-col :span="2" style="text-align: center;">水分</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.water" :disabled="disabled"></el-input>
+					<el-input v-model="form.water" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">%</el-col>
-				<el-col :span="2" style="text-align: center;">粉末比电阻</el-col>
-				<el-col :span="2">
-					<el-input v-model="form.resistance" :disabled="disabled"></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;">μΩm</el-col>
+				<span v-if="form.petrolType == 2">
+					<el-col :span="2" style="text-align: center;">粉末比电阻</el-col>
+					<el-col :span="2">
+						<el-input v-model="form.resistance" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;">μΩm</el-col>
+				</span>
 			</el-form-item>
 			<el-form-item>
-				<el-col :span="2" style="text-align: center;">振实密度</el-col>
-				<el-col :span="2">
-					<el-input v-model="form.vibration" :disabled="disabled"></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;">g/cm³</el-col>
+				<span v-if="form.petrolType == 2">
+					<el-col :span="2" style="text-align: center;">振实密度</el-col>
+					<el-col :span="2">
+						<el-input v-model="form.vibration" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;">g/cm³</el-col>
+				</span>
 				<el-col :span="2" style="text-align: center;">粒度</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.particle" :disabled="disabled"></el-input>
+					<el-input v-model="form.particle" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">mm</el-col>
 			</el-form-item>
@@ -93,76 +98,90 @@
 			<el-form-item>
 				<el-col :span="2" style="text-align: center;">钒</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.va" :disabled="disabled"></el-input>
+					<el-input v-model="form.va" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">ppm</el-col>
 				<el-col :span="2" style="text-align: center;">铝</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.ai" :disabled="disabled"></el-input>
+					<el-input v-model="form.ai" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">ppm</el-col>
 				<el-col :span="2" style="text-align: center;">钙</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.ca" :disabled="disabled"></el-input>
+					<el-input v-model="form.ca" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">ppm</el-col>
 			</el-form-item>
 			<el-form-item>
 				<el-col :span="2" style="text-align: center;">硅</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.si" :disabled="disabled"></el-input>
+					<el-input v-model="form.si" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">ppm</el-col>
 				<el-col :span="2" style="text-align: center;">铁</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.fe" :disabled="disabled"></el-input>
+					<el-input v-model="form.fe" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">ppm</el-col>
 				<el-col :span="2" style="text-align: center;">磷</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.ph" :disabled="disabled"></el-input>
+					<el-input v-model="form.ph" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">ppm</el-col>
 			</el-form-item>
 			<el-form-item>
 				<el-col :span="2" style="text-align: center;">钠</el-col>
 				<el-col :span="2">
-					<el-input v-model="form.na" :disabled="disabled"></el-input>
+					<el-input v-model="form.na" ></el-input>
 				</el-col>
 				<el-col :span="2" style="text-align: center;">ppm</el-col>
-				<el-col :span="2" style="text-align: center;">镍</el-col>
-				<el-col :span="2">
-					<el-input v-model="form.ni" :disabled="disabled"></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;">ppm</el-col>
-				<el-col :span="2" style="text-align: center;">铅</el-col>
-				<el-col :span="2">
-					<el-input v-model="form.pi" :disabled="disabled"></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;">ppm</el-col>
-			</el-form-item>
+				<span v-if="form.petrolType == 2">
+					<el-col :span="2" style="text-align: center;">镍</el-col>
+					<el-col :span="2">
+						<el-input v-model="form.ni" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;">ppm</el-col>
+				</span>
+				<span v-if="form.petrolType == 2">
+					<el-col :span="2" style="text-align: center;">铅</el-col>
+					<el-col :span="2">
+						<el-input v-model="form.pi" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;">ppm</el-col>
+				</span>
+			</el-form-item>			
 			<el-form-item label="质检报告"></el-form-item>
 			<el-form-item>
-				<!--<el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" multiple :limit="3" :on-exceed="handleExceed" :file-list="fileList">
+				<el-upload class="upload-demo" accept=".pdf" action="http://petrocoke-ops-dev.obaymax.com/file/uploadImage"  type="file" :on-preview="handlePreview" :before-upload="beforeAvatarUpload" :on-success="handleAvatarSuccess">
 					<el-button size="small" type="primary">添加质检报告</el-button>
-					<e-col slot="tip" class="el-upload__tip" style="margin-left: 20px;">一份标准的质检报告会大大缩短交易时间 （请上传小于5MB的pdf文件）</e-col>
-				</el-upload>-->
+					<el-col slot="tip" class="el-upload__tip">一份标准的质检报告会大大缩短交易时间 （请上传小于5MB的pdf文件）</el-col>
+				</el-upload>
 			</el-form-item>
 
 			<el-form-item label="其他"></el-form-item>
-			<el-form-item label="吨袋">
-				<el-col :span="2">
-					<el-input v-model="form.bagPrice" :disabled="disabled"></el-input>
-				</el-col>
-				<el-col :span="2" style="text-align: center;"> 元/吨</el-col>
-				<el-col :span="6">如您可提供此项服务供买家选择，请填写相关价格（选填）</el-col>
-			</el-form-item>
+			<span v-if="form.petrolType == 2">
+				<el-form-item label="吨袋">
+					<el-col :span="2">
+						<el-input v-model="form.bagPrice" ></el-input>
+					</el-col>
+					<el-col :span="2" style="text-align: center;"> 元/吨</el-col>
+					<el-col :span="10">如您可提供此项服务供买家选择，请填写相关价格（选填）</el-col>
+				</el-form-item>
+			</span>	
+			<span v-if="form.petrolType == 1">
+				<el-form-item label="扣水量*">
+					<el-col :span="2">
+						<el-input v-model="form.buckleWaterRate" placeholder="输入扣水量或扣水方式"></el-input>
+					</el-col>
+					<el-col :span="10" style="margin-left: 20px;">实际发货量=发货量x(1-扣水量)</el-col>
+				</el-form-item>
+			</span>
 			<el-form-item label="商品图片">
-				<!--<el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/" :on-preview="handlePreview" :on-remove="handleRemove" :file-list="fileList2" list-type="picture">
+				<el-upload class="upload-demo" action="http://petrocoke-ops-dev.obaymax.com/file/uploadImage" list-type="picture" type="file" :on-preview="handlePreviews" :before-upload="beforeUpload" :on-success="handleSuccess">
 					<el-button size="small" type="primary">+相关图片</el-button>
-					<e-col slot="tip" class="el-upload__tip" style="margin-left: 20px;">请上传小于2M PNG、JPG、GIF、JPEG商品相关图片</e-col>
+					<el-col slot="tip" class="el-upload__tip" style="margin-left: 20px;">请上传小于2M PNG、JPG、GIF、JPEG商品相关图片</el-col>
 					<div>上传历史</div>
-				</el-upload>-->
+				</el-upload>
 			</el-form-item>
 		</el-form>
 		<div slot="footer" class="dialog-footer">
@@ -188,38 +207,7 @@
 				petrolTypeOptions: ['石油焦', '煅后焦'],
 				productAreaOptions: ['东北地区', '华北地区', '华东地区', '华南地区', '华中地区', '西北地区', '西南地区', '其他', '请选择产地'],
 				editStatus: true,
-				textMap: {
-					update: '编辑',
-					create: '添加'
-				},
 				form:{}
-//				list:{
-//					ai: '',
-//					ash: '',
-//					bagPrice: '',
-//					ca: '',
-//					density: '',
-//					description: '',
-//					fe: '',
-////					images: '',
-////					inspectionReport: '',
-//					label: '',
-//					na: '',
-//					ni: '',
-//					particle: '',
-//					petrolType: '',
-//					ph: '',
-//					pi: '',
-//					reservePrice: '',
-//					resistance: '',
-//					si: '',
-//					su: '',
-//					productArea: '',
-//					va: '',
-//					vibration: '',
-//					volatiles: '',
-//					water: ''
-//				}
 			}
 		},
 		created(){
@@ -261,8 +249,8 @@
 					'density': this.form.density,
 					'description': this.form.description,
 					'fe': this.form.fe,
-//					'images': this.form.images,
-//					'inspectionReport': this.form.inspectionReport,
+					'images': this.form.images,
+					'inspectionReport': this.form.inspectionReport,
 					'label': this.form.label,
 					'na': this.form.na,
 					'ni': this.form.ni,
@@ -273,13 +261,15 @@
 					'reservePrice': this.form.reservePrice,
 					'resistance': this.form.resistance,
 					'si': this.form.si,
+					'status': this.form.status,
 					'su': this.form.su,
 					'productArea': this.form.productArea,
 					'va': this.form.va,
 					'vibration': this.form.vibration,
 					'volatiles': this.form.volatiles,
 					'water': this.form.water,
-					'id':this.$route.params.id
+					'totalQuantity':this.form.totalQuantity ,
+					'buckleWaterRate':this.form.buckleWaterRate
 				}
 				//提交编辑内容页面
 				editMessage(params).then(response => {
@@ -296,8 +286,45 @@
 				this.editStatus = !this.editStatus;
 				this.disabled=true;
 				bus.$emit('sub', this.disabled);
-			}
-			
+			},
+			//添加质检报告
+			 beforeAvatarUpload(file) {
+		        const isPDF = file.type === 'image/pdf';
+		        const isLt5M = file.size / 1024 / 1024 < 5;
+		
+		        if (!isPDF) {
+		          this.$message.error('上传头像图片只能是 PDF 格式!');
+		        }
+		        if (!isLt5M) {
+		          this.$message.error('上传头像图片大小不能超过 5MB!');
+		        }
+		        return isPDF && isLt5M;
+      		},
+      		handleAvatarSuccess(res, file) {
+		        this.form.inspectionReport = res.data;
+	      	},
+	      	handlePreview(file){
+	      		window.open(file.response.data,'_blank');
+	      	},
+		    //添加图片
+			beforeUpload(file) {
+		        const isImg = file.type === 'image/png' || file.type == 'image/jpg' || file.type == 'image/gif' || file.type == 'image/jpeg';
+		        const isLt2M = file.size / 1024 / 1024 < 2;
+		
+		        if (!isImg) {
+		          this.$message.error('上传头像图片只能是 PNG、JPG、GIF、JPEG 格式!');
+		        }
+		        if (!isLt2M) {
+		          this.$message.error('上传头像图片大小不能超过 2MB!');
+		        }
+		        return isImg && isLt2M;
+      		},
+		    handleSuccess(res, file) {
+	        	this.form.images = res.data;
+	      	},
+			handlePreviews(file){
+	      		window.open(file.response.data,'_blank');
+	      	}
 			
 		}
 	}

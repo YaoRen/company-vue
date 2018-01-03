@@ -33,7 +33,7 @@
 			</el-form-item>
 			<el-form-item label="类型标签*">
 				<el-radio-group v-model="form.label">
-					<el-radio-button v-for="(tag,index) in labelTag" :label=index+1>{{tag}}</el-radio-button>
+					<el-radio-button v-for="(tag,index) in labelTag" :label="index+1">{{tag}}</el-radio-button>
 				</el-radio-group>
 				<!--<span v-for="item in form.label" :key="item">
 					<el-tag v-if="item ==1">海绵焦</el-tag>
@@ -161,7 +161,6 @@
 					<el-col slot="tip" class="el-upload__tip">一份标准的质检报告会大大缩短交易时间 （请上传小于5MB的pdf文件）</el-col>
 				</el-upload>
 			</el-form-item>
-
 			<el-form-item label="其他"></el-form-item>
 			<span v-if="form.petrolType == 2">
 				<el-form-item label="吨袋">
@@ -280,7 +279,7 @@
 //			}
 			//添加质检报告
 			 beforeAvatarUpload(file) {
-		        const isPDF = file.type == 'image/pdf';
+		        const isPDF = file.type === 'image/pdf';
 		        const isLt5M = file.size / 1024 / 1024 < 5;
 		
 		        if (!isPDF) {
@@ -299,19 +298,16 @@
 	      	},
 		    //添加图片
 			beforeUpload(file) {
-		        const isImg1 = file.type == 'image/PNG';
-		        const isImg2 = file.type == 'image/JPG';
-		        const isImg3 = file.type == 'image/GIF';
-		        const isImg4 = file.type == 'image/JPEG';
+		        const isImg = file.type === 'image/png' || file.type == 'image/jpg' || file.type == 'image/gif' || file.type == 'image/jpeg';
 		        const isLt2M = file.size / 1024 / 1024 < 2;
 		
-		        if (!(isImg1 || isImg2 || isImg3 || isImg4)) {
+		        if (!isImg) {
 		          this.$message.error('上传头像图片只能是 PNG、JPG、GIF、JPEG 格式!');
 		        }
 		        if (!isLt2M) {
 		          this.$message.error('上传头像图片大小不能超过 2MB!');
 		        }
-		        return isImg1 && isImg2 && isImg3 && isImg4 && isLt2M;
+		        return isImg && isLt2M;
       		},
 		    handleSuccess(res, file) {
 	        	this.form.images = res.data;
