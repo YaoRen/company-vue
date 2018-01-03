@@ -7,7 +7,7 @@
         <el-input v-model="form.mobile"></el-input>
       </el-form-item>
       <el-form-item label="用户名" class = "left width_280 mr_40">
-        <el-input v-model="form.username"></el-input>
+        <el-input v-model="form.realname"></el-input>
       </el-form-item>
       <el-form-item label="注册时间" class = "left mr_40">
         <el-date-picker
@@ -20,7 +20,7 @@
         </el-date-picker>
       </el-form-item>
       <el-form-item label="所属公司" class = "left width_280 mr_40">
-        <el-input v-model="form.company"></el-input>
+        <el-input v-model="form.companyName"></el-input>
       </el-form-item>
 
       <el-form-item label="冻结状态" class = "left width_280 mr_40">
@@ -75,8 +75,8 @@
       return {
         form: {
           mobile: '',
-          username: '',
-          company: '',
+          realname: '',
+          companyName: '',
           status: '',
           userType: ''
         },
