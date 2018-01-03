@@ -33,9 +33,9 @@
     <el-col>
       <el-button type="primary" @click="fetchData" size = "small">查询数据</el-button>
       <el-button type="primary" @click="onSubmit" size = "small">导出数据</el-button>
-      <el-button type="primary" @click="addFriend" class = "right" size = "small">新建朋友</el-button>
+
     </el-col>
-    <p class="rownum">查询数量：{{listSize}}</p>
+    <p class="rownum">查询数量：{{listSize}}<el-button type="primary" @click="addFriend" class = "right" size = "small">新建朋友</el-button></p>
       <el-table :data="list" style="width: 100%" align="left">
         <el-table-column prop="mobile" label="手机号" min-width="120" >
         </el-table-column>
